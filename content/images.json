@@ -305,7 +305,7 @@
   },
   "mascotte": {
     "width": 2048,
-    "height": 1060,
+    "height": 860,
     "sources": {
       "avif": [
         {
@@ -511,6 +511,51 @@
         }
       ]
     },
+    "placeholder": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAACQBACdASogABIAPu1mpU4ppaMiMBgMATAdiWMAsR9VwavB+/s86t7rlLeE3AAA/ovRehKV2oxb64jIe9tjfWJNra9mm71c7G3FC0hc8FgeO8aNXI71iZ0xbQAxkVA5sBOdGNhxLAVxEBz5t5YWPAAA",
     "fallback": "/images/hero-clean.jpg"
+  },
+  "hero-clean-portrait": {
+    "width": 1238,
+    "height": 1536,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/hero-clean-portrait-620.avif",
+          "w": 620
+        },
+        {
+          "src": "/images/hero-clean-portrait-930.avif",
+          "w": 930
+        },
+        {
+          "src": "/images/hero-clean-portrait-1238.avif",
+          "w": 1238
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/hero-clean-portrait-620.webp",
+          "w": 620
+        },
+        {
+          "src": "/images/hero-clean-portrait-930.webp",
+          "w": 930
+        },
+        {
+          "src": "/images/hero-clean-portrait-1238.webp",
+          "w": 1238
+        }
+      ]
+    },
+    "region": {
+      "left": 1445,
+      "top": 0,
+      "width": 1238,
+      "height": 1536,
+      "plateWidth": 2752,
+      "plateHeight": 1536
+    },
+    "placeholder": "data:image/webp;base64,UklGRroAAABXRUJQVlA4IK4AAABwBgCdASogACgAPulcp02pJSOiNVgIASAdCUAWo2MARvE0VCi9uLJrr2PG3oBiFo59FWFVrYCvL1q6/3gA/t5/ORVlj53/kt3fBrg8WAs4A4bs/5HVWl1iSLOxafMYhFQNudvqdUVAqMYNzU7bILVhHWswKY0zKLGO1lPMKxXFrUJZWkcmcBvxorcfBliLCVqDsVs8zxEzlEwspixBo/vWBtdvspXjw84vu40QAAA=",
+    "fallback": "/images/hero-clean-portrait.jpg"
   }
 }

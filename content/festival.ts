@@ -44,17 +44,17 @@ export const festival = {
     terms: "Terrains sans service, sans réservation : premier arrivé, premier servi.",
   },
   rules: [
-    { id: "alcool", text: "Boissons alcoolisées et bouteilles de verre interdites sur le site." },
+    { id: "alcool", text: "N'apportez ni alcool ni bouteilles de verre : le bar est sous le chapiteau." },
     { id: "chiens", text: "Chiens en laisse en tout temps, interdits dans les gradins." },
     { id: "securite", text: "Respect des consignes de sécurité équestre aux abords de l'arène." },
   ],
-  infrastructure: [
-    "Manège de compétition avec gradins",
-    "Chapiteau des spectacles et de la danse, avec bar",
-    "Chalet des loisirs",
-    "Zone familiale",
-    "Camping temporaire",
-    "Stationnement",
+  // What visitors find on site (the temporary camping has its own card).
+  amenities: [
+    { id: "gradins", text: "Manège de compétition avec gradins" },
+    { id: "chapiteau", text: "Chapiteau des spectacles et de la danse, avec bar" },
+    { id: "chalet", text: "Chalet des loisirs, où sont servis les déjeuners" },
+    { id: "famille", text: "Zone familiale" },
+    { id: "stationnement", text: "Stationnement sur place" },
   ],
 } as const;
 

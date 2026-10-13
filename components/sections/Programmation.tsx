@@ -1,22 +1,53 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MoonStars } from "@phosphor-icons/react";
+import { ArrowUpRight, MoonStars } from "@phosphor-icons/react";
 import { programme, type Jour } from "@/content/programmation";
-import { getGsap, whenIdle } from "@/lib/motion";
+import { festival } from "@/content/festival";
+import { getGsap, scrollToY, whenIdle } from "@/lib/motion";
 import { fr } from "@/lib/typo";
 
 const HIGHLIGHT = "Grand Prix barils et sauvetage";
 
 // The programme reads like a show bill. The section is sand by day; when the
 // selected day reaches its evening events, the whole section turns to night.
+// Each day has its own address (#jour-samedi) so it can be shared or bookmarked.
 export default function Programmation() {
   const jours = programme.jours as Jour[];
   const [active, setActive] = useState("samedi");
   const sectionRef = useRef<HTMLElement>(null);
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  // Set when the reader switches day from below the top of the list.
+  const keepPlace = useRef(false);
   const jour = jours.find((j) => j.id === active) ?? jours[0];
   const firstEvening = jour.evenements.findIndex((e) => e.soir);
+
+  // #jour-samedi opens that day and brings its list into view. The address
+  // matches no element, so the browser leaves the scrolling to us.
+  useEffect(() => {
+    const fromHash = (jump: boolean) => {
+      const id = window.location.hash.match(/^#jour-([a-z]+)$/)?.[1];
+      if (!id || !jours.some((j) => j.id === id)) return;
+      setActive(id);
+      requestAnimationFrame(() => {
+        const grid = sectionRef.current?.querySelector(".prog__grid");
+        const nav = document.querySelector<HTMLElement>(".nav")?.offsetHeight ?? 0;
+        if (grid) scrollToY(grid.getBoundingClientRect().top + window.scrollY - nav - 24, jump);
+      });
+    };
+    fromHash(true);
+    const onHash = () => fromHash(false);
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, [jours]);
+
+  const select = (id: string) => {
+    if (id === active) return;
+    const panel = document.getElementById("prog-panel");
+    keepPlace.current = !!panel && panel.getBoundingClientRect().top < stickyOffset();
+    window.history.replaceState(null, "", `#jour-${id}`);
+    setActive(id);
+  };
 
   // Day to night, driven by the evening marker of the selected day.
   const mounted = useRef(false);
@@ -50,6 +81,12 @@ export default function Programmation() {
     if (mounted.current) {
       setup();
       ScrollTrigger.refresh();
+      // A shorter or longer day must not leave the reader outside the list.
+      if (keepPlace.current) {
+        keepPlace.current = false;
+        const panel = document.getElementById("prog-panel");
+        if (panel) scrollToY(panel.getBoundingClientRect().top + window.scrollY - stickyOffset());
+      }
     } else {
       mounted.current = true;
       cancel = whenIdle(setup);
@@ -69,7 +106,7 @@ export default function Programmation() {
     if (e.key === "End") next = n - 1;
     if (next >= 0) {
       e.preventDefault();
-      setActive(jours[next].id);
+      select(jours[next].id);
       tabsRef.current[next]?.focus();
     }
   };
@@ -84,7 +121,11 @@ export default function Programmation() {
 
         <div className="prog__grid">
           <div className="prog__side">
-            <div className="prog__tabs" role="tablist" aria-label="Jours du festival">
+            <p className="prog__edition">
+              <span className="prog__tag">Aperçu</span>
+              {programme.edition}, {fr(programme.dates)}
+            </p>
+            <div className="prog__tabs" role="tablist" aria-label="Jours de l'édition 2024">
               {jours.map((j, i) => {
                 const [num] = j.date.split(" ");
                 return (
@@ -99,7 +140,7 @@ export default function Programmation() {
                     aria-controls="prog-panel"
                     tabIndex={j.id === active ? 0 : -1}
                     className="prog__tab"
-                    onClick={() => setActive(j.id)}
+                    onClick={() => select(j.id)}
                     onKeyDown={(e) => onKey(e, i)}
                   >
                     <span className="prog__tab-day">{j.nom}</span> <span className="prog__tab-num tabular">{num}</span>
@@ -108,9 +149,10 @@ export default function Programmation() {
               })}
             </div>
             <p className="prog__note">
-              {fr(programme.note)}
-              <br />
-              <strong>{programme.edition}</strong>, du 8 au 11 août.
+              {fr(programme.note)}{" "}
+              <a href={festival.contact.facebook} target="_blank" rel="noopener noreferrer" className="prog__follow">
+                Suivre la page <ArrowUpRight size={14} weight="bold" aria-hidden />
+              </a>
             </p>
           </div>
 
@@ -147,4 +189,14 @@ export default function Programmation() {
       </div>
     </section>
   );
+}
+
+// Height of what stays pinned above the list: the menu bar, plus the day
+// tabs on narrow screens where they stick under it.
+function stickyOffset() {
+  const nav = document.querySelector<HTMLElement>(".nav")?.offsetHeight ?? 0;
+  const side = window.matchMedia("(max-width: 1023px)").matches
+    ? (document.querySelector<HTMLElement>(".prog__side")?.offsetHeight ?? 0)
+    : 0;
+  return nav + side + 12;
 }

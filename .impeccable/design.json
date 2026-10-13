@@ -161,8 +161,8 @@
         "purpose": "GYMKHANA in the hero and footer, fitted to the measure."
       },
       "heading": {
-        "displayName": "Section title",
-        "purpose": "Wide black uppercase section titles."
+        "displayName": "Section heading",
+        "purpose": "Le gymkhana, En famille, Planifier ma visite, Partenaires: one step below the banners, capped by the measure."
       },
       "statement": {
         "displayName": "Statement",
@@ -179,6 +179,18 @@
       "label": {
         "displayName": "Label",
         "purpose": "Metadata after or beside a title, never above."
+      },
+      "banner": {
+        "displayName": "Banner",
+        "purpose": "PROGRAMMATION only, fitted to the measure."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Programme rows, steps, site rows, tiles."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Buttons, event cards, site rows, footer columns (15px)."
       }
     },
     "shadows": [
@@ -186,11 +198,6 @@
         "name": "curtain",
         "value": "0 -2.5rem 5rem rgb(20 22 25 / 0.35)",
         "purpose": "Top edge of the section sliding over the pinned hero."
-      },
-      {
-        "name": "lifted-photo",
-        "value": "0 1.5rem 3rem -1rem rgb(20 22 25 / 0.45)",
-        "purpose": "Hover photograph in the pillar rows."
       },
       {
         "name": "floating-action",
@@ -257,9 +264,9 @@
       "name": "Ghost Button",
       "kind": "button",
       "refersTo": "button-ghost",
-      "description": "Secondary action on sand or night; 1px outline in currentColor.",
+      "description": "Secondary action; 1px outline, fills with its resting ink on hover (never currentColor).",
       "html": "<a class=\"ds-ghost\" href=\"#\">Planifier ma visite</a>",
-      "css": ".ds-ghost{display:inline-flex;align-items:center;height:2.75rem;padding:0 1.1rem;color:#141619;box-shadow:inset 0 0 0 1px currentColor;font:800 13px/1 Archivo,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:background-color 240ms,color 240ms}.ds-ghost:hover{background:#141619;color:#e6cfa3}.ds-ghost:focus-visible{outline:2px solid #c4381f;outline-offset:3px}"
+      "css": ".ds-ghost{--ink:#141619;position:relative;display:inline-flex;align-items:center;height:2.75rem;padding:0 1.1rem;color:var(--ink);box-shadow:inset 0 0 0 1px currentColor;font:800 13px/1 Archivo,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;overflow:hidden;isolation:isolate}.ds-ghost::before{content:'';position:absolute;inset:0;z-index:-1;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform 240ms cubic-bezier(.23,1,.32,1)}.ds-ghost:hover{color:#e6cfa3}.ds-ghost:hover::before{transform:scaleX(1)}.ds-ghost:focus-visible{outline:2px solid #c4381f;outline-offset:3px}"
     },
     {
       "name": "Badge",
@@ -321,13 +328,18 @@
         "section": "typography"
       },
       {
+        "name": "The Two Banners Rule",
+        "body": "Only two words are banners: GYMKHANA (the hero, and the footer mark that closes the page) and PROGRAMMATION. Every other section takes the heading step, so the banners keep their weight.",
+        "section": "typography"
+      },
+      {
         "name": "The No Kicker Rule",
         "body": "No small label above a heading. Dates, places and categories sit after the title or in a side column.",
         "section": "typography"
       },
       {
         "name": "The Real Depth Rule",
-        "body": "Depth is made from the photograph itself (cut-outs, planes, parallax), never from bevels, glows or imitation materials.",
+        "body": "Depth is made from the photograph itself (cut-outs, planes, parallax), never from bevels, glows or imitation materials. The one light effect is the low sun of the hero photograph, a slow pulse of the light already in the picture; it is not reused anywhere else.",
         "section": "elevation"
       }
     ],

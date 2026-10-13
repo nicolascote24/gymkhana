@@ -44,3 +44,18 @@ export function whenIdle(fn: () => void): () => void {
   const id = window.setTimeout(fn, 300);
   return () => window.clearTimeout(id);
 }
+
+// The smooth-scroll instance, when one runs (desktop fine pointers only).
+type Scroller = { scrollTo: (target: number, options?: { immediate?: boolean }) => void };
+let scroller: Scroller | null = null;
+export const setScroller = (s: Scroller | null) => {
+  scroller = s;
+};
+
+// Scroll the page to a y position through Lenis when it runs, so the two
+// never fight; instant under reduced motion.
+export function scrollToY(y: number, jump = false) {
+  const immediate = jump || prefersReducedMotion();
+  if (scroller) scroller.scrollTo(y, { immediate });
+  else window.scrollTo({ top: y, behavior: immediate ? "auto" : "smooth" });
+}

@@ -20,7 +20,8 @@ export type Jour = { id: string; nom: string; court: string; date: string; evene
 export const programme = {
   apercu: true,
   edition: "Édition 2024",
-  note: "Aperçu de l'édition précédente. La programmation 2027 sera dévoilée sur notre page Facebook.",
+  dates: "du 8 au 11 août 2024",
+  note: "La programmation 2027 sera annoncée sur notre page Facebook.",
   jours: [
     {
       id: "jeudi",

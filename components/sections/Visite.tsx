@@ -1,8 +1,28 @@
-import { ArrowUpRight, Wine, Dog, Horse, Phone, EnvelopeSimple, Tent } from "@phosphor-icons/react/dist/ssr";
+import {
+  ArrowUpRight,
+  Balloon,
+  Car,
+  Chair,
+  Coffee,
+  Dog,
+  EnvelopeSimple,
+  Horse,
+  MicrophoneStage,
+  Phone,
+  Tent,
+  Wine,
+} from "@phosphor-icons/react/dist/ssr";
 import { festival, mapsUrl } from "@/content/festival";
 import { fr } from "@/lib/typo";
 
 const RULE_ICONS = { alcool: Wine, chiens: Dog, securite: Horse } as const;
+const AMENITY_ICONS = {
+  gradins: Chair,
+  chapiteau: MicrophoneStage,
+  chalet: Coffee,
+  famille: Balloon,
+  stationnement: Car,
+} as const;
 
 export default function Visite() {
   const a = festival.address;
@@ -57,6 +77,21 @@ export default function Visite() {
 
         <div className="visit__rules" data-reveal>
           <h3 className="visit__rules-title">Sur le site</h3>
+          <ul>
+            {festival.amenities.map((a) => {
+              const Icon = AMENITY_ICONS[a.id];
+              return (
+                <li key={a.id}>
+                  <Icon size={28} weight="light" aria-hidden />
+                  <span>{fr(a.text)}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        <div className="visit__rules" data-reveal>
+          <h3 className="visit__rules-title">À savoir</h3>
           <ul>
             {festival.rules.map((r) => {
               const Icon = RULE_ICONS[r.id as keyof typeof RULE_ICONS];

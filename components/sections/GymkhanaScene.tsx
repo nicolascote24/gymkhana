@@ -37,7 +37,9 @@ export default function GymkhanaScene({ steps, definition }: { steps: Step[]; de
     let ctx: ReturnType<typeof gsap.context> | undefined;
     const cancel = whenIdle(() => {
       ctx = gsap.context(() => {
-        gsap.set(path, { strokeDasharray: 1, strokeDashoffset: 1 });
+        // pathLength is 1000 (not 1): GSAP rounds px values to whole units,
+        // so a 1 to 0 offset would jump instead of drawing.
+        gsap.set(path, { strokeDasharray: 1000, strokeDashoffset: 1000 });
         const mm = gsap.matchMedia();
         const update = (p: number) => {
           barrels.forEach((b, i) => b.classList.toggle("is-lit", p >= lit[i]));
@@ -50,7 +52,7 @@ export default function GymkhanaScene({ steps, definition }: { steps: Step[]; de
             scrollTrigger: {
               trigger: root,
               start: "top top",
-              end: "+=160%",
+              end: "+=110%",
               pin: true,
               scrub: 0.6,
               onUpdate: (self) => update(self.progress),
@@ -108,7 +110,7 @@ export default function GymkhanaScene({ steps, definition }: { steps: Step[]; de
               DÉPART
             </text>
             <path d={PATH} className="arena__ghost" />
-            <path d={PATH} className="arena__path" data-course pathLength={1} />
+            <path d={PATH} className="arena__path" data-course pathLength={1000} />
             {BARRELS.map((b, i) => (
               <g key={i} data-barrel className="arena__barrel" transform={`translate(${b.x} ${b.y})`}>
                 <circle r="16" className="arena__halo" />

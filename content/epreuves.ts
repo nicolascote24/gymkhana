@@ -7,7 +7,8 @@ export type Epreuve = {
   description: string;
   // Simplified course drawn on a 100x100 grid (SVG path), for the event cards.
   trace: string;
-  marks: { x: number; y: number; kind: "baril" | "piquet" | "drapeau" | "cercle" }[];
+  // relais: the hand-off zone across the track; fleche: direction of travel.
+  marks: { x: number; y: number; kind: "baril" | "piquet" | "drapeau" | "cercle" | "relais" | "fleche" }[];
 };
 
 export const epreuves: Epreuve[] = [
@@ -77,7 +78,7 @@ export const epreuves: Epreuve[] = [
     famille: "tour",
     description: "Des équipes de cavaliers se passent un témoin autour du ring.",
     trace: "M50 94 C 88 94, 94 70, 94 50 C 94 18, 70 8, 50 8 C 26 8, 8 22, 8 50 C 8 78, 22 94, 50 94",
-    marks: [{ x: 94, y: 50, kind: "cercle" }],
+    marks: [{ x: 94, y: 50, kind: "relais" }],
   },
   {
     id: "tour-de-ring",
@@ -85,7 +86,7 @@ export const epreuves: Epreuve[] = [
     famille: "tour",
     description: "Un tour complet de l'arène, à pleine vitesse.",
     trace: "M50 94 C 88 94, 94 70, 94 50 C 94 18, 70 8, 50 8 C 26 8, 8 22, 8 50 C 8 78, 22 94, 50 94",
-    marks: [],
+    marks: [{ x: 50, y: 8, kind: "fleche" }],
   },
 ];
 

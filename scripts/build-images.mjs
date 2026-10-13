@@ -27,7 +27,24 @@ const jobs = [
   { id: "hero", src: "photo_clients/hero_idee.jpg", widths: [828, 1280, 1920, 2752], quality: 62 },
   // Same plate with the rider removed (inpainted): the background layer of the
   // living hero, so rider and background can move on separate depth planes.
-  { id: "hero-clean", src: "assets/cutouts/hero-clean.jpg", widths: [828, 1280, 1920, 2752], quality: 62 },
+  {
+    id: "hero-clean",
+    src: "assets/cutouts/hero-clean.jpg",
+    widths: [828, 1280, 1920, 2752],
+    quality: 62,
+    placeholder: true,
+  },
+  // Portrait screens only see a narrow band of the plate around the rider:
+  // this crop, centred on x = 0.75 of the plate (the portrait --fx), carries
+  // the same pixels at full resolution for less than half the weight.
+  {
+    id: "hero-clean-portrait",
+    src: "assets/cutouts/hero-clean.jpg",
+    widths: [620, 930, 1238],
+    quality: 62,
+    placeholder: true,
+    trim: { left: 1445, top: 0, width: 1238, height: 1536 },
+  },
   {
     id: "hero-rider",
     src: "assets/cutouts/hero-rider.png",
@@ -60,8 +77,9 @@ const jobs = [
     id: "mascotte",
     src: `${BANK}/487212465_1082643843907274_8083644331164335370_n.jpg`,
     widths: [640, 1080, 1600],
-    // Same bottom band as the dog photo.
-    trim: { left: 0, top: 0, width: 2048, height: 1060 },
+    // The bottom band (signature and badge) and the top of the sky, so the
+    // faces clear the tile's title.
+    trim: { left: 0, top: 200, width: 2048, height: 860 },
   },
   { id: "jeune-cavaliere", src: `${BANK}/432-680x1024.jpg`, widths: [480, 680] },
   { id: "presidente", src: `${BANK}/Presidente.jpg`, widths: [640, 1080, 1600] },
@@ -87,6 +105,13 @@ for (const job of jobs.filter((j) => !only.length || only.includes(j.id))) {
   const src = () => sharp(data, { raw: info });
 
   const entry = { width: box.width, height: box.height, sources: {} };
+  // Where a trimmed image sits in its source, for layers that must stay aligned with it.
+  if (job.trim) entry.region = { ...job.trim, plateWidth: full.width, plateHeight: full.height };
+  // A tiny blurred preview, inlined, painted while the real file loads.
+  if (job.placeholder) {
+    const tiny = await src().resize({ width: 32 }).blur(1.2).webp({ quality: 40 }).toBuffer();
+    entry.placeholder = `data:image/webp;base64,${tiny.toString("base64")}`;
+  }
   if (job.crop) {
     // Position of the cut-out inside the full plate, in percent, for absolute layering.
     entry.frame = {

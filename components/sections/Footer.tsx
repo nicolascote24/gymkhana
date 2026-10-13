@@ -1,4 +1,4 @@
-import { FacebookLogo } from "@phosphor-icons/react/dist/ssr";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { festival, mapsUrl } from "@/content/festival";
 import { fr } from "@/lib/typo";
 import { keepPlaces } from "@/lib/places";
@@ -10,9 +10,17 @@ export default function Footer() {
   return (
     <footer className="foot on-night" aria-labelledby="foot-title">
       <div className="wrap">
-        <p id="foot-title" className="foot__slogan" data-reveal="title">
-          {fr(festival.slogans.main)}
-        </p>
+        <div className="foot__close">
+          <p id="foot-title" className="foot__slogan" data-reveal="title">
+            {fr(festival.slogans.main)}
+          </p>
+          <div className="foot__follow" data-reveal>
+            <p>{fr("Les dates et la programmation 2027 seront annoncées sur notre page Facebook.")}</p>
+            <a className="btn" href={c.facebook} target="_blank" rel="noopener noreferrer">
+              Suivre sur Facebook <ArrowUpRight size={18} weight="bold" aria-hidden />
+            </a>
+          </div>
+        </div>
 
         <div className="foot__cols">
           <div>
@@ -50,13 +58,6 @@ export default function Footer() {
               </a>
             </p>
           </div>
-          <div>
-            <p className="foot__label">Suivre</p>
-            <a href={c.facebook} target="_blank" rel="noopener noreferrer" className="foot__social">
-              <FacebookLogo size={22} weight="fill" aria-hidden /> Facebook
-            </a>
-            <p className="foot__note">{fr("La programmation 2027 y sera annoncée en premier.")}</p>
-          </div>
           <nav aria-label="Pied de page">
             <p className="foot__label">Sur cette page</p>
             <ul>
@@ -78,6 +79,11 @@ export default function Footer() {
               <li>
                 <a href="#visite" className="foot__link">
                   Planifier ma visite
+                </a>
+              </li>
+              <li>
+                <a href="#equipe" className="foot__link">
+                  L&apos;équipe
                 </a>
               </li>
               <li>

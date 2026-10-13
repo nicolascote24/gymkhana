@@ -6,36 +6,49 @@ import { fr } from "@/lib/typo";
 
 // The statement fills word by word as it is read; the emphasised words carry
 // the festival's motto.
+// The hero already says "compétition, country, famille": the statement keeps
+// only the festival's promise, and the three rows below give the proof.
 const STATEMENT: { t: string; em?: boolean }[] = [
   { t: "Depuis 2007, Saint-David-de-Falardeau accueille le public et les compétiteurs" },
   { t: "comme des membres de la famille.", em: true },
-  { t: "Quatre jours de gymkhana, de musique country et de plaisirs en famille, au cœur du Saguenay." },
 ];
 
-const PILLARS: { id: string; title: string; text: string; href: string; img: ImageId; alt: string }[] = [
+// One photograph per row, none repeated elsewhere on the page. `focus` and
+// `zoom` frame the part of the photo that tells the row's story (the crowd in
+// hats for Country, the trailers and lawn chairs for Famille).
+const PILLARS: {
+  id: string;
+  title: string;
+  text: string;
+  href: string;
+  img: ImageId;
+  focus?: string;
+  zoom?: number;
+}[] = [
   {
     id: "competition",
     title: "Compétition",
-    text: "Barils, sauvetage, slalom et relais : une compétition officielle de gymkhana, sanctionnée par le CBSLC.",
+    text: "Barils, sauvetage, slalom et relais, sanctionnés par le CBSLC. Le Grand Prix se court le samedi soir.",
     href: "#gymkhana",
     img: "baril-gradins",
-    alt: "Une cavalière contourne un baril devant les gradins remplis.",
   },
   {
     id: "country",
     title: "Country",
-    text: "Spectacles sous le chapiteau, danse en ligne et soirées DJ.",
+    text: "Spectacles, soirées DJ et danse en ligne sous le chapiteau, où se trouve le bar.",
     href: "#programmation",
     img: "baril-foule",
-    alt: "La foule en chapeaux de cowboy dans les gradins du manège.",
+    focus: "100% 0%",
+    zoom: 2.4,
   },
   {
     id: "famille",
     title: "Famille",
-    text: "Jeux gonflables, spectacle canin, déjeuners communautaires et camping sur place.",
+    text: "Zone familiale, spectacle canin, déjeuners au chalet des loisirs et camping sur place.",
     href: "#activites",
-    img: "mascotte",
-    alt: "La mascotte du festival, un cheval en costume, pose avec un visiteur.",
+    img: "baril-roulottes",
+    focus: "0% 55%",
+    zoom: 2.2,
   },
 ];
 
@@ -72,13 +85,18 @@ export default function EnBref() {
           {PILLARS.map((p, i) => (
             <li key={p.id} className="pillar" data-reveal style={{ ["--d" as string]: i }}>
               <a href={p.href} className="pillar__link">
-                <span className="pillar__title">{p.title}</span>
-                <span className="pillar__text">{fr(p.text)}</span>
-                <span className="pillar__arrow" aria-hidden>
-                  <ArrowRight size={28} weight="bold" />
+                <span className="pillar__title">
+                  {p.title}
+                  <ArrowRight className="pillar__arrow" size={28} weight="bold" aria-hidden />
                 </span>
+                <span className="pillar__text">{fr(p.text)}</span>
                 <span className="pillar__media" aria-hidden>
-                  <Picture id={p.img} alt="" sizes="(max-width: 767px) 92vw, 30vw" />
+                  <Picture
+                    id={p.img}
+                    alt=""
+                    sizes={`(max-width: 1023px) ${Math.round(92 * (p.zoom ?? 1))}vw, ${Math.round(15 * (p.zoom ?? 1))}vw`}
+                    style={p.zoom ? ({ "--zoom": p.zoom, transformOrigin: p.focus } as React.CSSProperties) : undefined}
+                  />
                 </span>
               </a>
             </li>

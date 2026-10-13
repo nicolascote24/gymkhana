@@ -19,11 +19,23 @@ typography:
     fontWeight: 900
     lineHeight: 0.74
     letterSpacing: "0"
-  heading:
+  banner:
     fontFamily: "Archivo, Arial Narrow, Arial, sans-serif"
-    fontSize: "clamp(2.5rem, 6.4vw, 6.25rem)"
+    fontSize: "fitted to the measure (PROGRAMMATION only)"
     fontWeight: 900
     lineHeight: 0.82
+    letterSpacing: "0"
+  heading:
+    fontFamily: "Archivo, Arial Narrow, Arial, sans-serif"
+    fontSize: "min(clamp(2.5rem, 5.6vw, 6rem), measure / longest word in em)"
+    fontWeight: 900
+    lineHeight: 0.82
+    letterSpacing: "0"
+  title:
+    fontFamily: "Archivo, Arial Narrow, Arial, sans-serif"
+    fontSize: "clamp(1.25rem, 1.8vw, 1.75rem)"
+    fontWeight: 800
+    lineHeight: 1.1
     letterSpacing: "0"
   statement:
     fontFamily: "Archivo, Arial Narrow, Arial, sans-serif"
@@ -40,6 +52,12 @@ typography:
   body:
     fontFamily: "Archivo, Arial, sans-serif"
     fontSize: "clamp(1rem, 1.05vw, 1.0625rem)"
+    fontWeight: 400
+    lineHeight: 1.6
+    letterSpacing: "0"
+  small:
+    fontFamily: "Archivo, Arial, sans-serif"
+    fontSize: "0.9375rem"
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "0"
@@ -134,48 +152,57 @@ Two grounds and one accent. Sand is the day, night is the evening and the arena;
 ### Hierarchy
 
 - **Display** (900, wdth 125, line-height 0.74): GYMKHANA in the hero and footer, fitted to the measure from its measured width (8.068 em at wdth 125).
-- **Section titles** (900, wdth 125, uppercase): fitted to the measure where the title is the section's only headline (Programmation, En famille, Planifier ma visite); otherwise clamped.
+- **Banner** (900, wdth 125, uppercase): PROGRAMMATION only, fitted to the measure. It is the page's one section banner because the programme is its first job.
+- **Heading** (900, wdth 125, uppercase, 2.5 to 6 rem): Le gymkhana, En famille, Planifier ma visite, Partenaires. Never wider than a phone: the size is capped by the measure divided by the longest word's width in em. The team title uses wdth 115 in its narrower column; the footer slogan sits on the same step.
 - **Statement** (700, wdth 100, 1.875 to 4.25 rem): the "en bref" paragraph, filled word by word on scroll.
+- **Title** (800 to 900, 1.25 to 1.75 rem; tiles 1.5 to 2.25 rem): programme rows, gymkhana steps, site rows, camping card, activity tiles.
 - **Time** (900, wdth 75, tabular): programme hours.
 - **Body** (400, 16 to 17 px, line-height 1.6, max 65 ch).
-- **Label** (700, 13 px, uppercase, tracking 0.08 to 0.14 em): metadata placed after or beside a title, never above it.
+- **Small** (15 px): buttons, event cards, site rows, footer columns.
+- **Label** (700, 13 px, uppercase, tracking 0.08 to 0.14 em): metadata placed after or beside a title, never above it. 11 px only for the "Moment fort" flag.
 
 ### Named Rules
 
 **The Fitted Word Rule.** A display word fills the measure exactly; its size comes from its measured width, never from a guess. Phones switch to wdth 75 rather than shrinking.
 
+**The Two Banners Rule.** Only two words are banners: GYMKHANA (the hero, and the footer mark that closes the page) and PROGRAMMATION. Every other section takes the heading step, so the banners keep their weight.
+
 **The No Kicker Rule.** No small label above a heading. Dates, places and categories sit after the title or in a side column.
 
 ## Layout
 
-12-column logic on a 1440 px measure with a fluid gutter (16 to 48 px). Sections are separated by large vertical rhythm (6 to 11 rem). Compositions are asymmetric: sticky side columns (programme days, team photo), 7/4/1 rows (pillars), a 12-column mosaic for activities. Every multi-column layout collapses to one column under 768 or 1024 px, declared per section. The hero is pinned and the first section slides over it like a curtain.
+12-column logic on a 1440 px measure with a fluid gutter (16 to 48 px). Sections are separated by large vertical rhythm (6 to 11 rem). Compositions are asymmetric: sticky side columns (programme days, team photo), 7/4/photo rows (pillars), a 12-column mosaic for activities. Every multi-column layout collapses to one column under 768 or 1024 px, declared per section. The hero is pinned and the first section slides over it like a curtain.
 
 ## Elevation & Depth
 
-Depth comes from layering, not shadows: the hero is four planes (background with the rider removed, the name, the rider cut-out, dust) that drift at their own depth with the pointer and on their own when idle. Shadows exist only where a surface physically lifts: the curtain section's top edge, the hover photograph in the pillars, the floating mobile programme button.
+Depth comes from layering, not shadows: the hero is four planes (background with the rider removed, the name, the rider cut-out, dust) that drift at their own depth with the pointer and on their own when idle. Shadows exist only where a surface physically lifts: the curtain section's top edge and the floating mobile shortcut.
 
 ### Named Rules
 
-**The Real Depth Rule.** Depth is made from the photograph itself (cut-outs, planes, parallax), never from bevels, glows or imitation materials.
+**The Real Depth Rule.** Depth is made from the photograph itself (cut-outs, planes, parallax), never from bevels, glows or imitation materials. The one light effect is the low sun of the hero photograph, a slow pulse of the light already in the picture; it is not reused anywhere else.
 
 ## Shapes
 
-Square everywhere: buttons, cards, tiles, photographs, the camping card. The only round elements are the arrow buttons of the pillar rows and the barrels of the course diagrams.
+Square everywhere: buttons, cards, tiles, photographs, the camping card, the "Aperçu" tag. The only round elements are the barrels of the course diagrams.
 
 ## Components
 
 ### Buttons
 
 - **Primary:** rouge baril, crème text, uppercase wdth 110, 52 px tall. On hover a night fill wipes in from the left (the direction of the run) in 240 ms; press scales to 0.97.
-- **Ghost:** 1 px inset outline in currentColor, same wipe on hover.
+- **Ghost:** 1 px inset outline, same wipe on hover. The fill is the button's resting ink, named per context (`--ghost-ink`: sand over the hero, night on sand), never `currentColor`, which would resolve to the hover colour and hide the label.
 
 ### Navigation
 
-Fixed bar, transparent over the hero, sand with blur once the hero is covered. Hides on the way down, returns on the way up. Below 1152 px the links fold into a full-screen night menu with condensed display links; the festival name stays beside the logo down to 380 px. Phones also get a floating "Voir la programmation" button after the hero, hidden over the programme and the footer.
+Fixed bar, transparent over the hero, sand with blur once the hero is covered. Hides on the way down, returns on the way up. The link of the section on screen keeps its underline. Below 1152 px the links fold into a full-screen night menu with condensed display links; it is a modal sheet (focus moves in and stays inside, the page behind is inert, Escape closes it and focus returns to the menu button). The festival name stays beside the logo down to 380 px. Phones also get a floating shortcut after the hero: "Voir la programmation", or "Itinéraire vers le site" in the visit section; it hides over the programme and the footer.
+
+### Pillar rows
+
+Three full-width link rows (Compétition, Country, Famille): heading-step word with a red arrow, one line of concrete proof, and an always-visible photograph framed on the part of the picture that tells the row's story. No photograph appears twice on the page.
 
 ### Programme (signature)
 
-Vertical day tabs (full keyboard tablist) beside show-bill rows: condensed time, title, detail, place. The Grand Prix row is the only red one and carries a "Moment fort" flag after its title. An "En soirée" divider marks the evening and triggers the night.
+Vertical day tabs (full keyboard tablist) beside show-bill rows: condensed time, title, detail, place. On phones the tabs become four calendar-leaf segments stuck under the menu bar. A square "Aperçu" tag with the edition and its dates sits with the tabs at every size while the programme shown is a past edition. Each day has its own address (#jour-samedi); switching day from deep in a list brings the new list into view. The Grand Prix row is the only red one and carries a "Moment fort" flag after its title. An "En soirée" divider marks the evening and triggers the night.
 
 ### Course diagrams (signature)
 
@@ -189,7 +216,7 @@ The cloverleaf and each event drawn as a single red line with barrels or poles; 
 - **Do** use real festival photographs, graded warm and slightly desaturated.
 - **Do** keep red for action, the course line and the single programme highlight.
 - **Do** keep content visible without JavaScript and under reduced motion.
-- **Do** label any provisional content (programme preview, 2027 dates).
+- **Do** label any provisional content (programme preview, 2027 dates), next to the content itself and at every screen size.
 
 ### Don't:
 

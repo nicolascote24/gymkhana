@@ -62,9 +62,10 @@ export default function HeroMotion() {
       };
       gsap.to(qa('[data-scroll="bg"], [data-scroll="rider"]'), { yPercent: 6, ease: "none", scrollTrigger: scroll });
       gsap.to(q('[data-scroll="word"]'), { yPercent: -110, ease: "none", scrollTrigger: scroll });
+      // autoAlpha: once faded out, the action is hidden from pointer and keyboard too.
       gsap.to(qa('[data-scroll="lead"], [data-scroll="name"]'), {
         yPercent: -30,
-        opacity: 0,
+        autoAlpha: 0,
         ease: "none",
         scrollTrigger: { ...scroll, end: () => `+=${root.offsetHeight * 0.5}` },
       });
@@ -165,6 +166,8 @@ function startDust(root: HTMLElement) {
   let raf = 0;
   let running = false;
   let wanted = true;
+  // Dust takes the palette's pale sand, read once from the tokens.
+  const dustColor = getComputedStyle(root).getPropertyValue("--color-sable-clair").trim() || "#efdfc0";
   const draw = () => {
     c.clearRect(0, 0, w, h);
     for (const p of ps) {
@@ -174,7 +177,7 @@ function startDust(root: HTMLElement) {
       if (p.x < -4) p.x = w + 4;
       if (p.y < h * 0.5) p.y = h + 4;
       c.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(p.t * 1.7));
-      c.fillStyle = "#f3dfb6";
+      c.fillStyle = dustColor;
       c.beginPath();
       c.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       c.fill();

@@ -17,6 +17,17 @@ function Course({ e }: { e: Epreuve }) {
       {e.marks.map((m, i) =>
         m.kind === "cercle" ? (
           <circle key={i} cx={m.x} cy={m.y} r={11} className="course__ring" />
+        ) : m.kind === "relais" ? (
+          <g key={i} className="course__mark">
+            <rect x={m.x - 7} y={m.y - 6} width={14} height={3} />
+            <rect x={m.x - 7} y={m.y + 3} width={14} height={3} />
+          </g>
+        ) : m.kind === "fleche" ? (
+          <path
+            key={i}
+            d={`M${m.x - 6} ${m.y} L${m.x + 3} ${m.y - 5.5} L${m.x + 3} ${m.y + 5.5} Z`}
+            className="course__mark"
+          />
         ) : m.kind === "piquet" ? (
           <rect key={i} x={m.x - 1.5} y={m.y - 4} width={3} height={8} className="course__mark" />
         ) : (

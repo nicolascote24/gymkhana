@@ -69,7 +69,7 @@ html.js [data-reveal="image"].is-in img {
   margin-top: -100svh;
   padding-block: var(--section-y) clamp(4rem, 8vw, 7rem);
   background: var(--color-sable);
-  box-shadow: 0 -2.5rem 5rem rgb(20 22 25 / 0.35);
+  box-shadow: 0 -2.5rem 5rem color-mix(in srgb, var(--color-nuit) 35%, transparent);
 }
 .bref__statement {
   max-width: 21em;
@@ -82,6 +82,14 @@ html.js [data-reveal="image"].is-in img {
 .bref__statement .em {
   color: var(--color-rouge);
 }
+/* while the scrub runs, the motto fills in ink, then turns red as one */
+.is-scrub .bref__statement .em {
+  color: var(--color-nuit);
+  transition: color 500ms var(--ease-out-strong);
+}
+.is-scrub.is-motto .bref__statement .em {
+  color: var(--color-rouge);
+}
 .bref__free {
   display: flex;
   flex-wrap: wrap;
@@ -89,7 +97,7 @@ html.js [data-reveal="image"].is-in img {
   gap: 0.75rem 1.75rem;
   margin-top: clamp(2.5rem, 5vw, 4.5rem);
   padding-top: 1.25rem;
-  border-top: 1px solid rgb(20 22 25 / 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
 }
 .bref__free-big {
   font-size: clamp(1.5rem, 2.6vw, 2.5rem);
@@ -100,27 +108,30 @@ html.js [data-reveal="image"].is-in img {
 }
 .bref__free-text {
   max-width: 40ch;
-  color: rgb(20 22 25 / 0.75);
+  color: color-mix(in srgb, var(--color-nuit) 82%, transparent);
 }
 
 .pillars {
   margin-top: clamp(4rem, 9vw, 8rem);
-  border-bottom: 1px solid rgb(20 22 25 / 0.2);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
 }
 .pillar {
-  border-top: 1px solid rgb(20 22 25 / 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
 }
 .pillar__link {
-  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr) auto;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr) clamp(9rem, 13vw, 12.5rem);
   align-items: center;
   gap: clamp(1.5rem, 4vw, 4rem);
-  padding-block: clamp(1.75rem, 3.4vw, 3rem);
+  padding-block: clamp(1.5rem, 2.6vw, 2.25rem);
 }
 .pillar__title {
-  /* COMPÉTITION is about 8.5em wide at wdth 112: it must fit small phones */
-  font-size: min(clamp(2.5rem, 5.4vw, 5.5rem), (100vw - 2 * var(--gutter)) / 8.7);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  /* COMPÉTITION plus its arrow is about 9.2em wide at wdth 112: it fits the
+     title column, and the screen on small phones */
+  font-size: min(clamp(2.5rem, 4.8vw, 5rem), (100vw - 2 * var(--gutter)) / 9.3);
   font-weight: 900;
   line-height: 0.85;
   text-transform: uppercase;
@@ -129,75 +140,58 @@ html.js [data-reveal="image"].is-in img {
     transform 280ms var(--ease-out-strong),
     color 200ms ease;
 }
+/* The arrow says the row is a way in, on touch as well as with a pointer. */
+.pillar__arrow {
+  flex: none;
+  width: 0.42em;
+  height: 0.42em;
+  color: var(--color-rouge);
+  transition: transform 280ms var(--ease-out-strong);
+}
 .pillar__text {
   max-width: 30ch;
   font-size: 1.0625rem;
-  color: rgb(20 22 25 / 0.78);
+  color: color-mix(in srgb, var(--color-nuit) 86%, transparent);
 }
-.pillar__arrow {
-  display: grid;
-  place-items: center;
-  width: 3.75rem;
-  height: 3.75rem;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 1px currentColor;
-  transition:
-    background-color 200ms ease,
-    color 200ms ease,
-    transform 280ms var(--ease-out-strong);
-}
+/* Every row shows its photograph; the image itself carries the proof. */
 .pillar__media {
-  position: absolute;
-  z-index: 2;
-  right: 6rem;
-  top: 50%;
-  width: clamp(13rem, 19vw, 19rem);
+  display: block;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(-50%) rotate(-4deg) scale(0.92);
-  clip-path: inset(50% 0 50% 0);
-  /* An image reveal on a marketing row: slightly longer than UI, still brief. */
-  transition:
-    opacity 200ms ease,
-    transform 380ms var(--ease-out-strong),
-    clip-path 380ms var(--ease-out-strong);
-  box-shadow: 0 1.5rem 3rem -1rem rgb(20 22 25 / 0.45);
+  background: var(--color-poussiere);
 }
 .pillar__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  scale: var(--zoom, 1);
+  transition: transform 600ms var(--ease-out-strong);
 }
 @media (hover: hover) and (pointer: fine) {
   .pillar__link:hover .pillar__title,
   .pillar__link:focus-visible .pillar__title {
-    transform: translateX(1.25rem);
+    transform: translateX(0.75rem);
     color: var(--color-rouge);
   }
   .pillar__link:hover .pillar__arrow,
   .pillar__link:focus-visible .pillar__arrow {
-    background: var(--color-rouge);
-    color: var(--color-creme);
-    box-shadow: none;
-    transform: rotate(-45deg);
+    transform: translateX(0.35rem);
   }
-  .pillar__link:hover .pillar__media,
-  .pillar__link:focus-visible .pillar__media {
-    opacity: 1;
-    transform: translateY(-50%) rotate(-4deg) scale(1);
-    clip-path: inset(0 0 0 0);
+  .pillar__link:hover .pillar__media img,
+  .pillar__link:focus-visible .pillar__media img {
+    transform: scale(1.05);
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .pillar__title,
   .pillar__arrow,
-  .pillar__media {
-    transition-property: opacity, color, background-color;
+  .pillar__media img {
+    transition-property: color;
   }
   .pillar__link:hover .pillar__title,
-  .pillar__link:focus-visible .pillar__title {
+  .pillar__link:focus-visible .pillar__title,
+  .pillar__link:hover .pillar__arrow,
+  .pillar__link:hover .pillar__media img {
     transform: none;
   }
 }
@@ -207,22 +201,12 @@ html.js [data-reveal="image"].is-in img {
     gap: 1rem;
   }
   .pillar__media {
-    position: relative;
-    inset: auto;
     order: 2;
-    width: 100%;
     aspect-ratio: 16 / 9;
-    opacity: 1;
-    transform: none;
-    clip-path: none;
-    box-shadow: none;
   }
   .pillar__text {
     order: 3;
     max-width: 46ch;
-  }
-  .pillar__arrow {
-    display: none;
   }
 }
 
@@ -255,9 +239,9 @@ html.js [data-reveal="image"].is-in img {
 .prog__title {
   --f: 12.182;
 }
-.prog__title,
-.act__title,
-.visit__title {
+/* PROGRAMMATION is the page's one section banner, fitted to the measure.
+   The other sections use the heading step below (see .act__title). */
+.prog__title {
   font-size: calc(var(--measure) / var(--f) * 0.985);
   font-weight: 900;
   line-height: 0.82;
@@ -266,9 +250,7 @@ html.js [data-reveal="image"].is-in img {
   font-variation-settings: "wdth" 125;
 }
 @media (max-width: 767px) {
-  .prog__title,
-  .act__title,
-  .visit__title {
+  .prog__title {
     font-size: calc(var(--measure) / (var(--f) * 0.6345) * 0.96);
     font-variation-settings: "wdth" 75;
   }
@@ -319,9 +301,26 @@ html.js [data-reveal="image"].is-in img {
 }
 .prog__tab[aria-selected="true"] .prog__tab-num {
   text-decoration: underline;
-  text-decoration-color: var(--color-rouge);
   text-decoration-thickness: 0.18em;
   text-underline-offset: 0.2em;
+}
+/* the preview status sits on the tabs themselves, at every size */
+.prog__edition {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+.prog__tag {
+  padding: 0.3rem 0.5rem 0.25rem;
+  box-shadow: inset 0 0 0 1px currentColor;
+  font-size: var(--fs-label);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 @media (hover: hover) and (pointer: fine) {
   .prog__tab:hover {
@@ -332,7 +331,16 @@ html.js [data-reveal="image"].is-in img {
   max-width: 34ch;
   font-size: var(--fs-small);
   line-height: 1.5;
-  opacity: 0.75;
+}
+.prog__follow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding-block: 0.35rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
 }
 .prog__panel:focus-visible {
   outline-offset: 0.5rem;
@@ -385,7 +393,7 @@ html.js [data-reveal="image"].is-in img {
 .prog__detail {
   margin-top: 0.35rem;
   font-size: var(--fs-small);
-  opacity: 0.7;
+  opacity: 0.82;
 }
 .prog__where {
   justify-self: end;
@@ -393,7 +401,8 @@ html.js [data-reveal="image"].is-in img {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  opacity: 0.75;
+  white-space: nowrap;
+  opacity: 0.85;
 }
 .prog__flag {
   display: inline-block;
@@ -439,7 +448,7 @@ html.js [data-reveal="image"].is-in img {
   .prog__side {
     top: calc(var(--nav-h) - 1px);
     z-index: 2;
-    gap: 1rem;
+    gap: 0.6rem;
     margin-inline: calc(var(--gutter) * -1);
     padding: 0.75rem var(--gutter);
     background: var(--prog-bg);
@@ -479,6 +488,13 @@ html.js [data-reveal="image"].is-in img {
   .prog__note {
     display: none;
   }
+  .prog__edition {
+    order: 2;
+    font-size: var(--fs-label);
+  }
+  .prog__tag {
+    padding: 0.25rem 0.4rem 0.2rem;
+  }
   .prog__row {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
@@ -499,9 +515,6 @@ html.js [data-reveal="image"].is-in img {
   .prog__where {
     grid-area: where;
   }
-}
-.prog__mobile-note {
-  display: none;
 }
 
 /* ------------------------- 4. Le gymkhana ------------------------- */
@@ -527,13 +540,21 @@ html.js [data-reveal="image"].is-in img {
   gap: clamp(2rem, 6vw, 6rem);
   align-items: center;
 }
-.gym__title {
-  /* GYMKHANA (8.07em at wdth 125) must fit the text column, and the screen on small phones. */
-  font-size: min(clamp(2.75rem, 5.6vw, 6rem), (100vw - 2 * var(--gutter)) / 8.2);
+/* Section headings, one step below the banners. --fp is the width of the
+   longest word in em, so it never overflows a small phone. */
+.gym__title,
+.act__title,
+.visit__title,
+.part__title {
+  font-size: min(clamp(2.5rem, 5.6vw, 6rem), (100vw - 2 * var(--gutter)) / var(--fp));
   font-weight: 900;
   line-height: 0.82;
   text-transform: uppercase;
+  text-wrap: balance;
   font-variation-settings: "wdth" 125;
+}
+.gym__title {
+  --fp: 8.2;
 }
 .gym__def {
   max-width: 44ch;
@@ -545,7 +566,7 @@ html.js [data-reveal="image"].is-in img {
 .gym__steps {
   display: grid;
   margin-top: clamp(2rem, 4vw, 3.5rem);
-  border-top: 1px solid rgb(230 207 163 / 0.18);
+  border-top: 1px solid color-mix(in srgb, var(--color-sable) 18%, transparent);
 }
 .gym__step {
   display: grid;
@@ -553,7 +574,7 @@ html.js [data-reveal="image"].is-in img {
   gap: 1.5rem;
   align-items: baseline;
   padding-block: 1.1rem;
-  border-bottom: 1px solid rgb(230 207 163 / 0.18);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-sable) 18%, transparent);
   opacity: 0.58;
   transition: opacity 400ms ease;
 }
@@ -584,8 +605,8 @@ html.js [data-reveal="image"].is-in img {
   overflow: visible;
 }
 .arena__fence {
-  fill: rgb(230 207 163 / 0.04);
-  stroke: rgb(230 207 163 / 0.25);
+  fill: color-mix(in srgb, var(--color-sable) 4%, transparent);
+  stroke: color-mix(in srgb, var(--color-sable) 25%, transparent);
   stroke-width: 1;
 }
 .arena__line {
@@ -600,7 +621,7 @@ html.js [data-reveal="image"].is-in img {
 }
 .arena__ghost {
   fill: none;
-  stroke: rgb(230 207 163 / 0.14);
+  stroke: color-mix(in srgb, var(--color-sable) 14%, transparent);
   stroke-width: 1.5;
   stroke-dasharray: 3 6;
 }
@@ -626,7 +647,7 @@ html.js [data-reveal="image"].is-in img {
   transition: fill 300ms ease;
 }
 .arena__num {
-  fill: rgb(230 207 163 / 0.6);
+  fill: color-mix(in srgb, var(--color-sable) 78%, transparent);
   font: 800 12px var(--font-sans);
 }
 .arena__barrel.is-lit .arena__halo {
@@ -654,7 +675,7 @@ html.js [data-reveal="image"].is-in img {
 }
 .gym__family-name {
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgb(230 207 163 / 0.18);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-sable) 18%, transparent);
   font-size: var(--fs-label);
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -714,7 +735,7 @@ html.js [data-reveal="image"].is-in img {
 .gym__card-text {
   max-width: 32ch;
   font-size: var(--fs-small);
-  color: rgb(251 243 228 / 0.72);
+  color: color-mix(in srgb, var(--color-creme) 80%, transparent);
 }
 
 .gym__photos {
@@ -744,13 +765,13 @@ html.js [data-reveal="image"].is-in img {
 .gym__photo figcaption {
   padding-top: 0.75rem;
   font-size: var(--fs-small);
-  color: rgb(251 243 228 / 0.65);
+  color: color-mix(in srgb, var(--color-creme) 78%, transparent);
 }
 .gym__sanction {
   margin-top: clamp(3rem, 5vw, 4rem);
   max-width: 60ch;
   font-size: var(--fs-small);
-  color: rgb(251 243 228 / 0.6);
+  color: color-mix(in srgb, var(--color-creme) 78%, transparent);
 }
 @media (max-width: 1023px) {
   .gym__scene {
@@ -795,13 +816,23 @@ html.js [data-reveal="image"].is-in img {
   background: var(--color-sable-clair);
 }
 .act__title {
-  --f: 7.853;
+  --fp: 7.95;
+}
+.act__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 28rem);
+  align-items: end;
+  gap: 1.25rem clamp(2rem, 5vw, 5rem);
 }
 .act__intro {
   max-width: 44ch;
-  margin-top: clamp(1.25rem, 2.5vw, 2rem);
   font-size: var(--fs-lead);
   line-height: 1.4;
+}
+@media (max-width: 1023px) {
+  .act__head {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .act__grid {
   display: grid;
@@ -837,7 +868,21 @@ html.js [data-reveal="image"].is-in img {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgb(20 22 25 / 0.88) 0%, rgb(20 22 25 / 0.55) 40%, rgb(20 22 25 / 0) 78%);
+  background: linear-gradient(0deg, color-mix(in srgb, var(--color-nuit) 50%, transparent) 0%, transparent 60%);
+}
+/* The scrim follows the text block, whatever the tile's height, so the
+   words always sit on at least 70% night and the photo stays open above. */
+.act__tile--photo .act__body::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -3.5rem 0 0 0;
+  background: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--color-nuit) 82%, transparent) 0%,
+    color-mix(in srgb, var(--color-nuit) 72%, transparent) calc(100% - 3.5rem),
+    transparent 100%
+  );
 }
 @media (hover: hover) and (pointer: fine) {
   .act__tile--photo:hover .act__media img {
@@ -925,7 +970,7 @@ html.js [data-reveal="image"].is-in img {
   background: var(--color-sable);
 }
 .visit__title {
-  --f: 14.071;
+  --fp: 6.8;
 }
 .visit__grid {
   display: grid;
@@ -949,7 +994,7 @@ html.js [data-reveal="image"].is-in img {
   color: var(--color-terre);
 }
 .visit__street {
-  font-size: clamp(2.5rem, 5.4vw, 5.5rem);
+  font-size: clamp(2rem, 3.8vw, 4rem);
   font-weight: 900;
   /* room for the comma of "51," above the second line */
   line-height: 0.98;
@@ -1037,13 +1082,15 @@ html.js [data-reveal="image"].is-in img {
   color: var(--color-creme);
 }
 .visit__camp-phone a {
+  display: inline-block;
+  padding-block: 0.65rem;
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
 .visit__camp-note {
-  font-size: 0.75rem;
-  opacity: 0.6;
+  font-size: var(--fs-label);
+  opacity: 0.82;
 }
 .visit__rules {
   display: grid;
@@ -1051,7 +1098,10 @@ html.js [data-reveal="image"].is-in img {
   gap: 1.5rem;
   margin-top: clamp(3rem, 6vw, 5rem);
   padding-top: 1.5rem;
-  border-top: 1px solid rgb(20 22 25 / 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
+}
+.visit__rules + .visit__rules {
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
 }
 .visit__rules-title {
   font-size: clamp(1.25rem, 1.8vw, 1.75rem);
@@ -1077,7 +1127,7 @@ html.js [data-reveal="image"].is-in img {
   gap: 1rem 2.5rem;
   margin-top: clamp(2.5rem, 4vw, 3.5rem);
   padding-top: 1.5rem;
-  border-top: 1px solid rgb(20 22 25 / 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
   font-size: 0.9375rem;
 }
 .visit__contacts li {
@@ -1086,9 +1136,11 @@ html.js [data-reveal="image"].is-in img {
   gap: 0.6rem;
 }
 .visit__contacts span {
-  color: rgb(20 22 25 / 0.7);
+  color: color-mix(in srgb, var(--color-nuit) 80%, transparent);
 }
 .visit__contacts a {
+  display: inline-block;
+  padding-block: 0.65rem;
   font-weight: 700;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -1166,14 +1218,14 @@ html.js [data-reveal="image"].is-in img {
 .team__comite {
   display: grid;
   width: 100%;
-  border-top: 1px solid rgb(20 22 25 / 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
 }
 .team__comite div {
   display: grid;
   grid-template-columns: minmax(7.5rem, 1fr) minmax(0, 2.4fr);
   gap: 1rem;
   padding-block: 0.8rem;
-  border-bottom: 1px solid rgb(20 22 25 / 0.12);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-nuit) 12%, transparent);
   font-size: 0.9375rem;
 }
 .team__comite dt {
@@ -1206,15 +1258,11 @@ html.js [data-reveal="image"].is-in img {
 }
 .part__head {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
 }
 .part__title {
-  /* never wider than the measure: PARTENAIRES is 9.46em wide at wdth 125 */
-  font-size: min(clamp(2.75rem, 7vw, 7.25rem), (100vw - 2 * var(--gutter)) / 9.6);
-  font-weight: 900;
-  line-height: 0.82;
-  text-transform: uppercase;
-  font-variation-settings: "wdth" 125;
+  --fp: 9.6;
 }
 .part__intro {
   max-width: 44ch;
@@ -1227,7 +1275,7 @@ html.js [data-reveal="image"].is-in img {
   gap: 1.5rem;
   margin-top: clamp(3rem, 6vw, 5rem);
   padding-top: 1.25rem;
-  border-top: 1px solid rgb(20 22 25 / 0.25);
+  border-top: 1px solid color-mix(in srgb, var(--color-nuit) 25%, transparent);
 }
 .part__tier--media {
   margin-top: clamp(1.5rem, 3vw, 2.5rem);
@@ -1242,7 +1290,7 @@ html.js [data-reveal="image"].is-in img {
 .part__major {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-left: 1px solid rgb(20 22 25 / 0.15);
+  border-left: 1px solid color-mix(in srgb, var(--color-nuit) 15%, transparent);
 }
 .part__major li {
   container-type: inline-size;
@@ -1250,8 +1298,8 @@ html.js [data-reveal="image"].is-in img {
   align-items: center;
   min-height: 7.5rem;
   padding: 1.25rem 1.5rem;
-  border-right: 1px solid rgb(20 22 25 / 0.15);
-  border-bottom: 1px solid rgb(20 22 25 / 0.15);
+  border-right: 1px solid color-mix(in srgb, var(--color-nuit) 15%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-nuit) 15%, transparent);
   font-size: clamp(1.0625rem, 1.4vw, 1.375rem);
   font-weight: 800;
   line-height: 1.15;
@@ -1259,7 +1307,7 @@ html.js [data-reveal="image"].is-in img {
   text-wrap: balance;
 }
 .part__major li:nth-child(-n + 3) {
-  border-top: 1px solid rgb(20 22 25 / 0.15);
+  border-top: 1px solid color-mix(in srgb, var(--color-nuit) 15%, transparent);
 }
 /* a long place name kept on one line scales down rather than overflow its tile */
 .part__major .place {
@@ -1276,7 +1324,7 @@ html.js [data-reveal="image"].is-in img {
 .part__marquee {
   margin-top: clamp(3rem, 6vw, 5rem);
   padding-block: 1.25rem;
-  border-block: 1px solid rgb(20 22 25 / 0.2);
+  border-block: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 .part__track {
@@ -1302,7 +1350,7 @@ html.js [data-reveal="image"].is-in img {
   background: var(--color-rouge);
   rotate: 45deg;
 }
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
   .part__track {
     animation: marquee 90s linear infinite;
   }
@@ -1315,7 +1363,12 @@ html.js [data-reveal="image"].is-in img {
     transform: translateX(-50%);
   }
 }
-@media (prefers-reduced-motion: reduce) {
+/* Phones and reduced motion: every name in view at once, as a set list
+   (on a phone the loop showed one name at a time). */
+@media (prefers-reduced-motion: reduce), (max-width: 767px) {
+  .part__marquee {
+    mask-image: none;
+  }
   .part__track {
     flex-wrap: wrap;
     width: auto;
@@ -1324,6 +1377,15 @@ html.js [data-reveal="image"].is-in img {
   }
   .part__track li[aria-hidden="true"] {
     display: none;
+  }
+}
+@media (max-width: 767px) {
+  .part__track,
+  .part__track li {
+    column-gap: 1rem;
+  }
+  .part__track {
+    font-size: 0.9375rem;
   }
 }
 .part__cta {
@@ -1345,7 +1407,7 @@ html.js [data-reveal="image"].is-in img {
     border-top: 0;
   }
   .part__major li:nth-child(-n + 2) {
-    border-top: 1px solid rgb(20 22 25 / 0.15);
+    border-top: 1px solid color-mix(in srgb, var(--color-nuit) 15%, transparent);
   }
 }
 @media (max-width: 1023px) {
@@ -1361,7 +1423,7 @@ html.js [data-reveal="image"].is-in img {
     border-top: 0;
   }
   .part__major li:first-child {
-    border-top: 1px solid rgb(20 22 25 / 0.15);
+    border-top: 1px solid color-mix(in srgb, var(--color-nuit) 15%, transparent);
   }
   .part__major li {
     min-height: 0;
@@ -1375,23 +1437,42 @@ html.js [data-reveal="image"].is-in img {
   padding-top: var(--section-y);
   overflow: hidden;
 }
+/* The close: the slogan, and the one thing to do while the 2027 dates are
+   unknown. The page's last banner is the GYMKHANA mark below. */
+.foot__close {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  align-items: end;
+  gap: clamp(2rem, 5vw, 5rem);
+}
 .foot__slogan {
-  --f: 24.738;
-  font-size: clamp(2.25rem, calc(var(--measure) / var(--f) * 1.9), 7rem);
+  font-size: clamp(2.25rem, 5.2vw, 5.5rem);
   font-weight: 900;
   line-height: 0.88;
   text-transform: uppercase;
   font-variation-settings: "wdth" 125;
-  max-width: 14em;
   text-wrap: balance;
+}
+.foot__follow {
+  display: grid;
+  justify-items: start;
+  gap: 1.5rem;
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+  color: var(--color-creme);
+}
+@media (max-width: 1023px) {
+  .foot__close {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .foot__cols {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2rem;
   margin-top: clamp(3.5rem, 7vw, 6rem);
   padding-top: 2rem;
-  border-top: 1px solid rgb(230 207 163 / 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--color-sable) 20%, transparent);
   font-size: 0.9375rem;
   line-height: 1.7;
 }
@@ -1410,7 +1491,7 @@ html.js [data-reveal="image"].is-in img {
 }
 .foot__link {
   text-decoration: underline;
-  text-decoration-color: rgb(230 207 163 / 0.35);
+  text-decoration-color: color-mix(in srgb, var(--color-sable) 35%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.3em;
   transition: text-decoration-color 200ms ease;
@@ -1420,18 +1501,14 @@ html.js [data-reveal="image"].is-in img {
     text-decoration-color: currentColor;
   }
 }
-.foot__social {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-weight: 700;
-}
-.foot__note {
-  color: rgb(251 243 228 / 0.6);
-}
 .foot nav ul {
   display: grid;
-  gap: 0.35rem;
+}
+/* links stand alone in their lines, so each gets a full thumb-height row */
+.foot nav a,
+.foot__cols a {
+  display: inline-block;
+  padding-block: 0.6rem;
 }
 .foot__mark {
   display: grid;
@@ -1463,13 +1540,16 @@ html.js [data-reveal="image"].is-in img {
   gap: 0.5rem 2rem;
   padding-block: 2rem calc(env(safe-area-inset-bottom, 0px) + 2rem);
   margin-top: clamp(2rem, 4vw, 3rem);
-  border-top: 1px solid rgb(230 207 163 / 0.15);
+  border-top: 1px solid color-mix(in srgb, var(--color-sable) 15%, transparent);
   font-size: 0.8125rem;
-  color: rgb(251 243 228 / 0.55);
+  color: color-mix(in srgb, var(--color-creme) 70%, transparent);
 }
 @media (max-width: 1023px) {
   .foot__cols {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .foot__cols > nav {
+    grid-column: 1 / -1;
   }
 }
 @media (max-width: 600px) {
@@ -1506,7 +1586,7 @@ html.js [data-reveal="image"].is-in img {
     pointer-events: none;
   }
   .quickbar .btn {
-    box-shadow: 0 0.75rem 2rem -0.5rem rgb(20 22 25 / 0.5);
+    box-shadow: 0 0.75rem 2rem -0.5rem color-mix(in srgb, var(--color-nuit) 50%, transparent);
   }
 }
 
