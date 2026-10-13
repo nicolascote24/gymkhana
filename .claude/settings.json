@@ -14,5 +14,8 @@
         "repo": "JaimeJunr/claude-code-frontend-skills"
       }
     }
-  }
+  },
+  "enabledMcpjsonServers": [
+    "playwright"
+  ]
 }
