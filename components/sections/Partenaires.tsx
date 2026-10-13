@@ -19,7 +19,7 @@ export default function Partenaires() {
         </div>
 
         <div className="part__tier" data-reveal>
-          <h3 className="part__tier-name">Au grand galop</h3>
+          <p className="part__tier-name">Au grand galop</p>
           <ul className="part__major">
             {grandGalop.map((p) => (
               <li key={p}>{p}</li>
@@ -28,7 +28,7 @@ export default function Partenaires() {
         </div>
 
         <div className="part__tier part__tier--media" data-reveal>
-          <h3 className="part__tier-name">Médias</h3>
+          <p className="part__tier-name">Médias</p>
           <ul className="part__media">
             {medias.map((p) => (
               <li key={p}>{p}</li>

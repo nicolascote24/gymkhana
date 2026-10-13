@@ -33,7 +33,12 @@ export default function Visite() {
             </a>
           </div>
 
-          <aside className="visit__camp on-night" data-reveal style={{ ["--d" as string]: 1 }} aria-labelledby="camp-title">
+          <aside
+            className="visit__camp on-night"
+            data-reveal
+            style={{ ["--d" as string]: 1 }}
+            aria-labelledby="camp-title"
+          >
             <Tent size={34} weight="light" aria-hidden />
             <h3 id="camp-title" className="visit__camp-title">
               Camping sur place

@@ -33,7 +33,7 @@ export default function Picture({ id, alt, sizes, className, priority = false, s
         className={className}
         style={style}
         loading={priority ? "eager" : "lazy"}
-        decoding={priority ? "sync" : "async"}
+        decoding="async"
         fetchPriority={priority ? "high" : "auto"}
         draggable={false}
       />

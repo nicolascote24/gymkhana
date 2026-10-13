@@ -86,9 +86,6 @@ h4 {
   line-height: 0.92;
   letter-spacing: -0.01em;
 }
-p {
-  text-wrap: pretty;
-}
 :focus-visible {
   outline: 2px solid var(--color-rouge);
   outline-offset: 3px;
@@ -196,10 +193,10 @@ body::after {
   background: var(--btn-fill);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 420ms var(--ease-out-strong);
+  transition: transform 240ms var(--ease-out-strong);
 }
 .btn svg {
-  transition: transform 420ms var(--ease-out-strong);
+  transition: transform 240ms var(--ease-out-strong);
 }
 @media (hover: hover) and (pointer: fine) {
   .btn:hover::before {
@@ -233,9 +230,9 @@ body::after {
   padding-top: env(safe-area-inset-top, 0px);
   color: var(--color-sable);
   transition:
-    transform 500ms var(--ease-out-strong),
-    background-color 300ms ease,
-    color 300ms ease;
+    transform 280ms var(--ease-out-strong),
+    background-color 280ms ease,
+    color 280ms ease;
 }
 .nav[data-hidden="true"] {
   transform: translateY(-100%);
@@ -296,7 +293,7 @@ body::after {
   background: currentColor;
   transform: scaleX(0);
   transform-origin: right;
-  transition: transform 380ms var(--ease-out-strong);
+  transition: transform 240ms var(--ease-out-strong);
 }
 @media (hover: hover) and (pointer: fine) {
   .nav__links a:not(.btn):hover::after {
@@ -348,14 +345,14 @@ body::after {
   clip-path: inset(0 0 100% 0);
   visibility: hidden;
   transition:
-    clip-path 600ms var(--ease-in-out-strong),
-    visibility 0s linear 600ms;
+    clip-path 420ms var(--ease-in-out-strong),
+    visibility 0s linear 420ms;
 }
 .menu[data-open="true"] {
   clip-path: inset(0 0 0 0);
   visibility: visible;
   transition:
-    clip-path 600ms var(--ease-in-out-strong),
+    clip-path 420ms var(--ease-in-out-strong),
     visibility 0s;
 }
 .menu__links {
@@ -375,13 +372,35 @@ body::after {
   opacity: 0;
   transform: translateY(1.25rem);
   transition:
-    opacity 400ms ease,
-    transform 600ms var(--ease-out-strong);
+    opacity 300ms ease,
+    transform 420ms var(--ease-out-strong);
 }
 .menu[data-open="true"] .menu__links a {
   opacity: 1;
   transform: none;
-  transition-delay: calc(180ms + var(--i) * 60ms);
+  transition-delay: calc(120ms + var(--i) * 40ms);
+}
+/* Reduced motion: the menu fades, links appear in place, the bar never slides. */
+@media (prefers-reduced-motion: reduce) {
+  .menu {
+    clip-path: none;
+    opacity: 0;
+    transition:
+      opacity 200ms ease,
+      visibility 0s linear 200ms;
+  }
+  .menu[data-open="true"] {
+    opacity: 1;
+    transition:
+      opacity 200ms ease,
+      visibility 0s;
+  }
+  .menu__links a {
+    transform: none;
+  }
+  .nav[data-hidden="true"] {
+    transform: none;
+  }
 }
 .menu__foot {
   display: grid;

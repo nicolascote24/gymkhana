@@ -61,7 +61,9 @@ export default function EnBref() {
 
         <div className="bref__free" data-reveal>
           <span className="bref__free-big">Entrée gratuite</span>
-          <span className="bref__free-text">{fr("Compétitions, spectacles et activités : tout le site est accessible sans billet.")}</span>
+          <span className="bref__free-text">
+            {fr("Compétitions, spectacles et activités : tout le site est accessible sans billet.")}
+          </span>
         </div>
 
         <ul className="pillars">

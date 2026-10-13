@@ -8,6 +8,7 @@ import Visite from "@/components/sections/Visite";
 import Equipe from "@/components/sections/Equipe";
 import Partenaires from "@/components/sections/Partenaires";
 import Footer from "@/components/sections/Footer";
+import QuickBar from "@/components/QuickBar";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
         <Partenaires />
       </main>
       <Footer />
+      <QuickBar />
     </>
   );
 }

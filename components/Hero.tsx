@@ -27,7 +27,7 @@ export default function Hero() {
                 id="hero-clean"
                 priority
                 alt="Une cavalière en plein virage autour d'un baril, dans la poussière, au coucher du soleil."
-                sizes="(max-aspect-ratio: 3/4) 210svh, max(120vw, 215svh)"
+                sizes="(max-aspect-ratio: 3/4) 120vh, max(120vw, 215vh)"
               />
             </div>
           </div>
@@ -50,7 +50,7 @@ export default function Hero() {
           <div className="hero__depth" data-depth="rider">
             <div className="hero__frame">
               <div className="hero__rider" style={riderBox}>
-                <Picture id="hero-rider" alt="" priority sizes="(max-aspect-ratio: 3/4) 57svh, max(33vw, 58svh)" />
+                <Picture id="hero-rider" alt="" priority sizes="(max-aspect-ratio: 3/4) 40vh, max(33vw, 58vh)" />
               </div>
             </div>
           </div>

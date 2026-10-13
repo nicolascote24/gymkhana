@@ -27,7 +27,14 @@ export const metadata: Metadata = {
     siteName: festival.name,
     title: festival.name,
     description: "Compétition de gymkhana, spectacles country et activités familiales. Entrée gratuite.",
-    images: [{ url: "/images/og-festival-gymkhana.jpg", width: 1200, height: 630, alt: "Cavalière en plein virage autour d'un baril" }],
+    images: [
+      {
+        url: "/images/og-festival-gymkhana.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Cavalière en plein virage autour d'un baril",
+      },
+    ],
   },
   icons: { icon: "/images/logo-96.webp" },
 };

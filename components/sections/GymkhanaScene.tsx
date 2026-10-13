@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getGsap, prefersReducedMotion } from "@/lib/motion";
+import { getGsap, prefersReducedMotion, whenIdle } from "@/lib/motion";
 
 // The cloverleaf barrel pattern, drawn by the reader's scroll. On wide
 // screens the scene is pinned while the course draws and the three steps
@@ -33,43 +33,49 @@ export default function GymkhanaScene({ steps, definition }: { steps: Step[]; de
     const { gsap, ScrollTrigger } = getGsap();
     // Fractions of the path where each barrel is rounded, then the finish.
     const lit = [0.38, 0.62, 0.86];
-    const ctx = gsap.context(() => {
-      gsap.set(path, { strokeDasharray: 1, strokeDashoffset: 1 });
-      const mm = gsap.matchMedia();
-      const update = (p: number) => {
-        barrels.forEach((b, i) => b.classList.toggle("is-lit", p >= lit[i]));
-        setStep(p < 0.3 ? 0 : p < 0.88 ? 1 : 2);
-      };
-      mm.add("(min-width: 1024px)", () => {
-        gsap.to(path, {
-          strokeDashoffset: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: root,
-            start: "top top",
-            end: "+=160%",
-            pin: true,
-            scrub: 0.6,
-            onUpdate: (self) => update(self.progress),
-          },
+    let ctx: ReturnType<typeof gsap.context> | undefined;
+    const cancel = whenIdle(() => {
+      ctx = gsap.context(() => {
+        gsap.set(path, { strokeDasharray: 1, strokeDashoffset: 1 });
+        const mm = gsap.matchMedia();
+        const update = (p: number) => {
+          barrels.forEach((b, i) => b.classList.toggle("is-lit", p >= lit[i]));
+          setStep(p < 0.3 ? 0 : p < 0.88 ? 1 : 2);
+        };
+        mm.add("(min-width: 1024px)", () => {
+          gsap.to(path, {
+            strokeDashoffset: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: root,
+              start: "top top",
+              end: "+=160%",
+              pin: true,
+              scrub: 0.6,
+              onUpdate: (self) => update(self.progress),
+            },
+          });
         });
-      });
-      mm.add("(max-width: 1023px)", () => {
-        gsap.to(path, {
-          strokeDashoffset: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: path,
-            start: "top 80%",
-            end: "bottom 45%",
-            scrub: 0.6,
-            onUpdate: (self) => update(self.progress),
-          },
+        mm.add("(max-width: 1023px)", () => {
+          gsap.to(path, {
+            strokeDashoffset: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: path,
+              start: "top 80%",
+              end: "bottom 45%",
+              scrub: 0.6,
+              onUpdate: (self) => update(self.progress),
+            },
+          });
         });
-      });
-    }, root);
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
+      }, root);
+      ScrollTrigger.refresh();
+    });
+    return () => {
+      cancel();
+      ctx?.revert();
+    };
   }, []);
 
   return (

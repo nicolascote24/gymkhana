@@ -14,7 +14,7 @@ export default function Footer() {
 
         <div className="foot__cols">
           <div>
-            <h2 className="foot__label">Le site</h2>
+            <p className="foot__label">Le site</p>
             <p>
               {a.venue}
               <br />
@@ -27,7 +27,7 @@ export default function Footer() {
             </a>
           </div>
           <div>
-            <h2 className="foot__label">Nous joindre</h2>
+            <p className="foot__label">Nous joindre</p>
             <p>
               {c.info.label}
               <br />
@@ -49,14 +49,14 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <h2 className="foot__label">Suivre</h2>
+            <p className="foot__label">Suivre</p>
             <a href={c.facebook} target="_blank" rel="noopener noreferrer" className="foot__social">
               <FacebookLogo size={22} weight="fill" aria-hidden /> Facebook
             </a>
             <p className="foot__note">{fr("La programmation 2027 y sera annoncée en premier.")}</p>
           </div>
           <nav aria-label="Pied de page">
-            <h2 className="foot__label">Sur cette page</h2>
+            <p className="foot__label">Sur cette page</p>
             <ul>
               <li>
                 <a href="#programmation" className="foot__link">

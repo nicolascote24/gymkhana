@@ -49,7 +49,7 @@ export default function Nav() {
     <>
       <header className="nav" data-solid={solid} data-hidden={hidden && !open} data-hero-in>
         <div className="wrap nav__bar">
-          <a href="#top" className="nav__brand" aria-label={`${festival.name}, retour en haut`}>
+          <a href="#top" className="nav__brand" aria-label="Festival Gymkhana de Falardeau, retour en haut">
             <picture>
               <source type="image/avif" srcSet="/images/logo-96.avif 1x, /images/logo-192.avif 2x" />
               <img src="/images/logo-96.webp" width={44} height={44} alt="" />
@@ -85,7 +85,12 @@ export default function Nav() {
       <div id="menu" className="menu" data-open={open} role="dialog" aria-modal="true" aria-label="Menu" inert={!open}>
         <div className="nav__bar">
           <span className="label">{festival.shortName}</span>
-          <button type="button" className="nav__toggle" style={{ display: "inline-flex" }} onClick={() => setOpen(false)}>
+          <button
+            type="button"
+            className="nav__toggle"
+            style={{ display: "inline-flex" }}
+            onClick={() => setOpen(false)}
+          >
             Fermer <X size={26} weight="bold" aria-hidden />
           </button>
         </div>
@@ -101,7 +106,17 @@ export default function Nav() {
           <span>
             {festival.address.street}, {festival.address.city}
           </span>
-          <a href={festival.contact.facebook} className="label" style={{ display: "inline-flex", gap: ".5rem", alignItems: "center", marginTop: ".75rem", color: "var(--color-sable)" }}>
+          <a
+            href={festival.contact.facebook}
+            className="label"
+            style={{
+              display: "inline-flex",
+              gap: ".5rem",
+              alignItems: "center",
+              marginTop: ".75rem",
+              color: "var(--color-sable)",
+            }}
+          >
             Suivre sur Facebook <ArrowRight size={16} weight="bold" aria-hidden />
           </a>
         </div>

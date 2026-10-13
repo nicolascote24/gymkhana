@@ -29,3 +29,18 @@ export const dur = {
   reveal: 0.9,
   hero: 1.6,
 };
+
+// Run below-the-fold motion setup once the browser is idle, after the first
+// paint, so it never competes with the hero for the main thread.
+export function whenIdle(fn: () => void): () => void {
+  const w = window as Window & {
+    requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+    cancelIdleCallback?: (id: number) => void;
+  };
+  if (w.requestIdleCallback) {
+    const id = w.requestIdleCallback(fn, { timeout: 1500 });
+    return () => w.cancelIdleCallback?.(id);
+  }
+  const id = window.setTimeout(fn, 300);
+  return () => window.clearTimeout(id);
+}

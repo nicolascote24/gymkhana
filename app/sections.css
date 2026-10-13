@@ -78,7 +78,6 @@ html.js [data-reveal="image"].is-in img {
   line-height: 1.06;
   letter-spacing: -0.015em;
   font-variation-settings: "wdth" 100;
-  text-wrap: pretty;
 }
 .bref__statement .em {
   color: var(--color-rouge);
@@ -126,8 +125,8 @@ html.js [data-reveal="image"].is-in img {
   text-transform: uppercase;
   font-variation-settings: "wdth" 112;
   transition:
-    transform 600ms var(--ease-out-strong),
-    color 300ms ease;
+    transform 280ms var(--ease-out-strong),
+    color 200ms ease;
 }
 .pillar__text {
   max-width: 30ch;
@@ -142,9 +141,9 @@ html.js [data-reveal="image"].is-in img {
   border-radius: 50%;
   box-shadow: inset 0 0 0 1px currentColor;
   transition:
-    background-color 300ms ease,
-    color 300ms ease,
-    transform 500ms var(--ease-out-strong);
+    background-color 200ms ease,
+    color 200ms ease,
+    transform 280ms var(--ease-out-strong);
 }
 .pillar__media {
   position: absolute;
@@ -158,10 +157,11 @@ html.js [data-reveal="image"].is-in img {
   opacity: 0;
   transform: translateY(-50%) rotate(-4deg) scale(0.92);
   clip-path: inset(50% 0 50% 0);
+  /* An image reveal on a marketing row: slightly longer than UI, still brief. */
   transition:
-    opacity 300ms ease,
-    transform 700ms var(--ease-out-strong),
-    clip-path 700ms var(--ease-out-strong);
+    opacity 200ms ease,
+    transform 380ms var(--ease-out-strong),
+    clip-path 380ms var(--ease-out-strong);
   box-shadow: 0 1.5rem 3rem -1rem rgb(20 22 25 / 0.45);
 }
 .pillar__media img {
@@ -187,6 +187,17 @@ html.js [data-reveal="image"].is-in img {
     opacity: 1;
     transform: translateY(-50%) rotate(-4deg) scale(1);
     clip-path: inset(0 0 0 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pillar__title,
+  .pillar__arrow,
+  .pillar__media {
+    transition-property: opacity, color, background-color;
+  }
+  .pillar__link:hover .pillar__title,
+  .pillar__link:focus-visible .pillar__title {
+    transform: none;
   }
 }
 @media (max-width: 1023px) {
@@ -215,14 +226,30 @@ html.js [data-reveal="image"].is-in img {
 }
 
 /* ----------------------- 3. Programmation ----------------------- */
-/* --night (0..1) is scrubbed from the evening marker. */
+/* Day to night: a night layer fades in on the GPU as the evening marker
+   scrolls up; text colours switch once, halfway, with a short transition. */
 .prog {
-  --night: 0;
+  --prog-bg: var(--color-sable);
   position: relative;
   z-index: 10;
+  isolation: isolate;
   padding-block: clamp(5rem, 9vw, 8rem) var(--section-y);
-  background: color-mix(in oklab, var(--color-nuit) calc(var(--night) * 100%), var(--color-sable));
-  color: color-mix(in oklab, var(--color-sable) calc(var(--night) * 100%), var(--color-nuit));
+  background: var(--color-sable);
+  color: var(--color-nuit);
+  transition: color 400ms ease;
+}
+.prog.is-night {
+  --prog-bg: var(--color-nuit);
+  color: var(--color-sable);
+}
+.prog__night {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-nuit);
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
 }
 .prog__title {
   --f: 12.182;
@@ -274,7 +301,7 @@ html.js [data-reveal="image"].is-in img {
   line-height: 0.9;
   text-transform: uppercase;
   font-variation-settings: "wdth" 125;
-  color: color-mix(in oklab, currentColor 38%, transparent);
+  color: color-mix(in oklab, currentColor 64%, transparent);
   cursor: pointer;
   transition: color 250ms ease;
 }
@@ -290,7 +317,10 @@ html.js [data-reveal="image"].is-in img {
   color: inherit;
 }
 .prog__tab[aria-selected="true"] .prog__tab-num {
-  color: var(--color-rouge);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rouge);
+  text-decoration-thickness: 0.18em;
+  text-underline-offset: 0.2em;
 }
 @media (hover: hover) and (pointer: fine) {
   .prog__tab:hover {
@@ -303,9 +333,12 @@ html.js [data-reveal="image"].is-in img {
   line-height: 1.5;
   opacity: 0.75;
 }
+.prog__panel:focus-visible {
+  outline-offset: 0.5rem;
+}
 .prog__item {
-  animation: prog-row 700ms var(--ease-out-strong) both;
-  animation-delay: calc(var(--i) * 45ms);
+  animation: prog-row 380ms var(--ease-out-strong) both;
+  animation-delay: calc(var(--i) * 25ms);
 }
 @keyframes prog-row {
   from {
@@ -338,7 +371,7 @@ html.js [data-reveal="image"].is-in img {
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: 0.04em;
-  opacity: 0.6;
+  opacity: 0.8;
   font-variation-settings: "wdth" 100;
 }
 .prog__name {
@@ -408,13 +441,17 @@ html.js [data-reveal="image"].is-in img {
     gap: 1rem;
     margin-inline: calc(var(--gutter) * -1);
     padding: 0.75rem var(--gutter);
-    background: inherit;
+    background: var(--prog-bg);
+    transition: background-color 400ms ease;
   }
   .prog__tabs {
     display: flex;
     gap: 0.5rem;
     overflow-x: auto;
     scrollbar-width: none;
+  }
+  .prog__tab-num {
+    font-size: 0.85em;
   }
   .prog__tab,
   .prog__tab:last-child {
@@ -427,6 +464,11 @@ html.js [data-reveal="image"].is-in img {
     background: var(--color-nuit);
     color: var(--color-sable);
     border-color: var(--color-nuit);
+  }
+  .prog.is-night .prog__tab[aria-selected="true"] {
+    background: var(--color-sable);
+    color: var(--color-nuit);
+    border-color: var(--color-sable);
   }
   .prog__note {
     display: none;
@@ -506,7 +548,7 @@ html.js [data-reveal="image"].is-in img {
   align-items: baseline;
   padding-block: 1.1rem;
   border-bottom: 1px solid rgb(230 207 163 / 0.18);
-  opacity: 0.38;
+  opacity: 0.58;
   transition: opacity 400ms ease;
 }
 .gym__step[data-active="true"],
@@ -783,7 +825,7 @@ html.js [data-reveal="image"].is-in img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.2s var(--ease-out-strong);
+  transition: transform 700ms var(--ease-out-strong);
 }
 .act__tile--photo::after {
   content: "";
@@ -924,14 +966,13 @@ html.js [data-reveal="image"].is-in img {
 .visit__route-line {
   position: relative;
   flex: 1;
-  height: 2px;
-  background: repeating-linear-gradient(90deg, var(--color-nuit) 0 8px, transparent 8px 14px);
+  border-top: 2px dashed var(--color-nuit);
 }
 .visit__route-line::before,
 .visit__route-line::after {
   content: "";
   position: absolute;
-  top: 50%;
+  top: -1px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -1101,7 +1142,7 @@ html.js [data-reveal="image"].is-in img {
 .team__quote p {
   font-size: clamp(1.375rem, 2vw, 1.875rem);
   font-weight: 600;
-  line-height: 1.22;
+  line-height: 1.3;
   letter-spacing: -0.01em;
 }
 .team__quote footer {
@@ -1419,5 +1460,33 @@ html.js [data-reveal="image"].is-in img {
   .foot__mark-word {
     font-size: calc((100vw - 2 * var(--gutter)) / 5.119);
     font-variation-settings: "wdth" 75;
+  }
+}
+
+/* --------------------- Mobile programme shortcut --------------------- */
+/* After the hero, phones keep the programme one tap away, except while the
+   programme itself is on screen. */
+.quickbar {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+  z-index: 45;
+  translate: -50% 0;
+  display: none;
+}
+@media (max-width: 767px) {
+  .quickbar {
+    display: block;
+    transition:
+      transform 300ms var(--ease-out-strong),
+      opacity 200ms ease;
+  }
+  .quickbar[data-show="false"] {
+    transform: translateY(calc(100% + 2rem));
+    opacity: 0;
+    pointer-events: none;
+  }
+  .quickbar .btn {
+    box-shadow: 0 0.75rem 2rem -0.5rem rgb(20 22 25 / 0.5);
   }
 }

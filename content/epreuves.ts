@@ -28,10 +28,15 @@ export const epreuves: Epreuve[] = [
     nom: "Slalom",
     famille: "centre",
     description: "Serpentin aller-retour autour de six piquets.",
-    trace: "M30 96 L30 86 C 50 80, 50 74, 30 68 C 10 62, 10 56, 30 50 C 50 44, 50 38, 30 32 C 10 26, 10 20, 30 14 C 50 8, 70 8, 70 14 C 50 20, 50 26, 70 32 C 90 38, 90 44, 70 50 C 50 56, 50 62, 70 68 C 90 74, 90 80, 70 86 L70 96",
+    trace:
+      "M30 96 L30 86 C 50 80, 50 74, 30 68 C 10 62, 10 56, 30 50 C 50 44, 50 38, 30 32 C 10 26, 10 20, 30 14 C 50 8, 70 8, 70 14 C 50 20, 50 26, 70 32 C 90 38, 90 44, 70 50 C 50 56, 50 62, 70 68 C 90 74, 90 80, 70 86 L70 96",
     marks: [
-      { x: 30, y: 77, kind: "piquet" }, { x: 30, y: 59, kind: "piquet" }, { x: 30, y: 41, kind: "piquet" },
-      { x: 30, y: 23, kind: "piquet" }, { x: 70, y: 23, kind: "piquet" }, { x: 70, y: 41, kind: "piquet" },
+      { x: 30, y: 77, kind: "piquet" },
+      { x: 30, y: 59, kind: "piquet" },
+      { x: 30, y: 41, kind: "piquet" },
+      { x: 30, y: 23, kind: "piquet" },
+      { x: 70, y: 23, kind: "piquet" },
+      { x: 70, y: 41, kind: "piquet" },
     ],
   },
   {

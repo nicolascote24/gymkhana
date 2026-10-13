@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MoonStars } from "@phosphor-icons/react";
 import { programme, type Jour } from "@/content/programmation";
-import { getGsap } from "@/lib/motion";
+import { getGsap, whenIdle } from "@/lib/motion";
 import { fr } from "@/lib/typo";
 
 const HIGHLIGHT = "Grand Prix barils et sauvetage";
@@ -19,23 +19,45 @@ export default function Programmation() {
   const firstEvening = jour.evenements.findIndex((e) => e.soir);
 
   // Day to night, driven by the evening marker of the selected day.
+  const mounted = useRef(false);
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
     const { gsap, ScrollTrigger } = getGsap();
     const marker = section.querySelector("[data-evening]");
-    const ctx = gsap.context(() => {
-      gsap.set(section, { "--night": 0 });
-      if (marker) {
-        gsap.to(section, {
-          "--night": 1,
-          ease: "none",
-          scrollTrigger: { trigger: marker, start: "top 85%", end: "top 40%", scrub: 0.5 },
-        });
-      }
-    }, section);
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
+    let ctx: ReturnType<typeof gsap.context> | undefined;
+    const setup = () => {
+      ctx = gsap.context(() => {
+        const night = section.querySelector("[data-night]");
+        gsap.set(night, { opacity: 0 });
+        section.classList.remove("is-night");
+        if (marker) {
+          gsap.to(night, {
+            opacity: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: marker,
+              start: "top 85%",
+              end: "top 40%",
+              scrub: 0.5,
+              onUpdate: (self) => section.classList.toggle("is-night", self.progress > 0.5),
+            },
+          });
+        }
+      }, section);
+    };
+    let cancel = () => {};
+    if (mounted.current) {
+      setup();
+      ScrollTrigger.refresh();
+    } else {
+      mounted.current = true;
+      cancel = whenIdle(setup);
+    }
+    return () => {
+      cancel();
+      ctx?.revert();
+    };
   }, [active]);
 
   const onKey = (e: React.KeyboardEvent, i: number) => {
@@ -54,6 +76,7 @@ export default function Programmation() {
 
   return (
     <section id="programmation" className="prog" ref={sectionRef} aria-labelledby="prog-title">
+      <div className="prog__night" data-night aria-hidden />
       <div className="wrap">
         <h2 id="prog-title" className="prog__title" data-reveal="title">
           Programmation
@@ -92,33 +115,35 @@ export default function Programmation() {
             </p>
           </div>
 
-          <ol className="prog__list" id="prog-panel" role="tabpanel" aria-labelledby={`tab-${active}`} key={active}>
-            {jour.evenements.map((e, i) => {
-              const hl = e.titre === HIGHLIGHT;
-              return (
-                <li key={`${e.heure}-${e.titre}`} className="prog__item" style={{ ["--i" as string]: i }}>
-                  {i === firstEvening && (
-                    <div className="prog__evening" data-evening aria-hidden>
-                      <MoonStars size={22} weight="regular" />
-                      <span>En soirée</span>
+          <div id="prog-panel" role="tabpanel" aria-labelledby={`tab-${active}`} tabIndex={0} className="prog__panel">
+            <ol className="prog__list" key={active}>
+              {jour.evenements.map((e, i) => {
+                const hl = e.titre === HIGHLIGHT;
+                return (
+                  <li key={`${e.heure}-${e.titre}`} className="prog__item" style={{ ["--i" as string]: i }}>
+                    {i === firstEvening && (
+                      <div className="prog__evening" data-evening aria-hidden>
+                        <MoonStars size={22} weight="regular" />
+                        <span>En soirée</span>
+                      </div>
+                    )}
+                    <div className={hl ? "prog__row prog__row--hl" : "prog__row"}>
+                      <p className="prog__time tabular">
+                        {e.heure}
+                        {e.fin && <span className="prog__end"> à {e.fin}</span>}
+                      </p>
+                      <div className="prog__what">
+                        {hl && <span className="prog__flag">Moment fort</span>}
+                        <h3 className="prog__name">{fr(e.titre)}</h3>
+                        {e.detail && <p className="prog__detail">{fr(e.detail)}</p>}
+                      </div>
+                      <p className="prog__where">{e.lieu}</p>
                     </div>
-                  )}
-                  <div className={hl ? "prog__row prog__row--hl" : "prog__row"}>
-                    <p className="prog__time tabular">
-                      {e.heure}
-                      {e.fin && <span className="prog__end"> à {e.fin}</span>}
-                    </p>
-                    <div className="prog__what">
-                      {hl && <span className="prog__flag">Moment fort</span>}
-                      <h3 className="prog__name">{fr(e.titre)}</h3>
-                      {e.detail && <p className="prog__detail">{fr(e.detail)}</p>}
-                    </div>
-                    <p className="prog__where">{e.lieu}</p>
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
         </div>
       </div>
     </section>
