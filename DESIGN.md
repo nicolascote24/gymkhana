@@ -131,7 +131,7 @@ Two grounds and one accent. Sand is the day, night is the evening and the arena;
 ### Neutral
 
 - **Sable** (#e6cfa3): the main ground and the display colour on night and photographs.
-- **Sable clair** (#efdfc0): quieter ground for the family and team sections.
+- **Sable clair** (#efdfc0): quieter ground for the family and team sections, and the paper of the map.
 - **Nuit** (#141619): evening ground, arena section, camping card, footer, body text on sand.
 - **Crème** (#fbf3e4): body text on night and on photographs.
 - **Poussière** (#b98d58) and **Terre** (#6b4429): small labels and separators; Terre also fills one activity tile.
@@ -153,7 +153,7 @@ Two grounds and one accent. Sand is the day, night is the evening and the arena;
 
 - **Display** (900, wdth 125, line-height 0.74): GYMKHANA in the hero and footer, fitted to the measure from its measured width (8.068 em at wdth 125).
 - **Banner** (900, wdth 125, uppercase): PROGRAMMATION only, fitted to the measure. It is the page's one section banner because the programme is its first job.
-- **Heading** (900, wdth 125, uppercase, 2.5 to 6 rem): Le gymkhana, En famille, Planifier ma visite, Partenaires. Never wider than a phone: the size is capped by the measure divided by the longest word's width in em. The team title uses wdth 115 in its narrower column; the footer slogan sits on the same step.
+- **Heading** (900, wdth 125, uppercase, 2.25 to 4.25 rem): Le gymkhana, En famille, Planifier ma visite, Partenaires. Never wider than a phone: the size is capped by the measure divided by the longest word's width in em. The team title (wdth 115, 3.75 rem max) and the footer slogan (4.25 rem max) sit on the same step. Subheads inside a section (Les épreuves, Camping sur place) drop to the title step: two heavy wide blocks never stack.
 - **Statement** (700, wdth 100, 1.875 to 4.25 rem): the "en bref" paragraph, filled word by word on scroll.
 - **Title** (800 to 900, 1.25 to 1.75 rem; tiles 1.5 to 2.25 rem): programme rows, gymkhana steps, site rows, camping card, activity tiles.
 - **Time** (900, wdth 75, tabular): programme hours.
@@ -171,11 +171,13 @@ Two grounds and one accent. Sand is the day, night is the evening and the arena;
 
 ## Layout
 
-12-column logic on a 1440 px measure with a fluid gutter (16 to 48 px). Sections are separated by large vertical rhythm (6 to 11 rem). Compositions are asymmetric: sticky side columns (programme days, team photo), 7/4/photo rows (pillars), a 12-column mosaic for activities. Every multi-column layout collapses to one column under 768 or 1024 px, declared per section. The hero is pinned and the first section slides over it like a curtain.
+12-column logic on a 1440 px measure with a fluid gutter (16 to 48 px). Sections are separated by large vertical rhythm (6 to 11 rem). Compositions are asymmetric: sticky side columns (programme days, team photo), a three-panel photo triptych, a 12-column mosaic for activities. Every multi-column layout collapses to one column under 768 or 1024 px, declared per section. The hero is pinned and the first section slides over it like a curtain.
 
 ## Elevation & Depth
 
-Depth comes from layering, not shadows: the hero is four planes (background with the rider removed, the name, the rider cut-out, dust) that drift at their own depth with the pointer and on their own when idle. Shadows exist only where a surface physically lifts: the curtain section's top edge and the floating mobile shortcut.
+Depth comes from layering, not shadows: the hero is four planes (background with the rider removed, the name, the rider cut-out, dust) that drift at their own depth with the pointer and on their own when idle. Shadows exist only where a surface physically lifts: the curtain section's top edge, the floating menu plaque, the inset photograph of the widescreen band and the floating mobile shortcut.
+
+The pale grounds carry the terrain: faint contour lines in the earth colour (a generated, seamless texture, `scripts/build-texture.mjs`), under a warm low light from one top corner, each section showing a different part of the terrain. Two line-drawn tumbleweeds roll across once each (the foot of the visit section, the footer rule), in the same single line as the course diagrams; under reduced motion they rest at the edge.
 
 ### Named Rules
 
@@ -194,11 +196,19 @@ Square everywhere: buttons, cards, tiles, photographs, the camping card, the "Ap
 
 ### Navigation
 
-Fixed bar, transparent over the hero, sand with blur once the hero is covered. Hides on the way down, returns on the way up. The link of the section on screen keeps its underline. Below 1152 px the links fold into a full-screen night menu with condensed display links; it is a modal sheet (focus moves in and stays inside, the page behind is inert, Escape closes it and focus returns to the menu button). The festival name stays beside the logo down to 380 px. Phones also get a floating shortcut after the hero: "Voir la programmation", or "Itinéraire vers le site" in the visit section; it hides over the programme and the footer.
+A floating plaque, 12 px from the edges and 56 px tall, square like everything else: transparent over the hero, then a dark night-2 surface with a hairline and a soft lift once the hero is covered, so it reads on sand and on night alike and nothing jumps when it appears. The action is the red primary button. Hides on the way down, returns on the way up. The link of the section on screen turns full sand over a short red rule. Below 1152 px the links fold into a full-screen night menu with condensed display links; it is a modal sheet (focus moves in and stays inside, the page behind is inert, Escape closes it and focus returns to the menu button). The festival name stays beside the logo down to 380 px. Phones also get a floating shortcut after the hero: "Voir la programmation", or "Itinéraire vers le site" in the visit section; it hides over the programme and the footer.
 
-### Pillar rows
+### Triptych (section 2)
 
-Three full-width link rows (Compétition, Country, Famille): heading-step word with a red arrow, one line of concrete proof, and an always-visible photograph framed on the part of the picture that tells the row's story. No photograph appears twice on the page.
+Under the statement, three tall photographs edge to edge like a rodeo poster: Compétition, Country, Famille. Each panel is a link: the word (sized by container query from the longest word, so all three match), a red arrow, one line of concrete proof, night rising from the ground under the text. Pointing at a panel draws a red rule across its top and pushes the photo in slightly. Below a laptop the panels become a strip swiped with the thumb, the next one peeking in. No photograph appears twice on the page.
+
+### Widescreen band (end of Le gymkhana)
+
+The relay race edge to edge, the rescue race set over its corner like a second camera with its own lift; the two planes travel at different speeds with the scroll. Captions sit on the photograph; the sanction note fills the free corner under it.
+
+### Map (Planifier ma visite)
+
+An illustrated map drawn from OpenStreetMap data (`scripts/build-map.mjs`, raw responses kept in `assets/map/`): the Saguenay and the lakes in sage, the municipal boundary dashed in earth, a survey graticule, the real 26 km route drawn in barrel red when the map comes into view, a red cloverleaf on the Place des Festivals. Names are HTML over the drawing so they stay readable; phones get a portrait crop around the route. Credited "© contributeurs OpenStreetMap" with a link.
 
 ### Programme (signature)
 
@@ -206,7 +216,7 @@ Vertical day tabs (full keyboard tablist) beside show-bill rows: condensed time,
 
 ### Course diagrams (signature)
 
-The cloverleaf and each event drawn as a single red line with barrels or poles; the big arena draws with the scroll, event cards redraw on hover, the small "Départ" and "Arrivée" marks draw once.
+The cloverleaf and each event drawn as a single line with barrels or poles; the big arena draws with the scroll, the small "Départ" and "Arrivée" marks draw once. The event cards run as a relay: one course at a time redraws in red with a red dot (the horse) travelling it, 1.7 s per course and a short hold, then the next card takes over; pointing at a card hands it the relay. It runs only on screen and with the tab visible, and every course stays fully drawn at rest.
 
 ## Do's and Don'ts
 
@@ -220,7 +230,7 @@ The cloverleaf and each event drawn as a single red line with barrels or poles; 
 
 ### Don't:
 
-- **Don't** use western clip-art patterns (boots, skulls, guitars, horseshoes) as decoration.
+- **Don't** use western clip-art patterns (boots, skulls, guitars, horseshoes) as decoration. The western world comes from the ground (terrain, dust, tumbleweeds drawn in the course line), the sport and the photographs.
 - **Don't** put a small label above a heading.
 - **Don't** add a second accent colour or a gradient on text.
 - **Don't** round corners on cards, tiles or buttons.

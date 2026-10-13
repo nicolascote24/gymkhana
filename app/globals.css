@@ -249,26 +249,34 @@ body::after {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
-  padding-top: env(safe-area-inset-top, 0px);
+  /* the plaque floats 12px from the edges; the strip around it lets clicks through */
+  padding: calc(env(safe-area-inset-top, 0px) + 0.75rem) 0.75rem 0;
   color: var(--color-sable);
-  transition:
-    transform 280ms var(--ease-out-strong),
-    background-color 280ms ease,
-    color 280ms ease;
+  pointer-events: none;
+  transition: transform 280ms var(--ease-out-strong);
 }
 .nav[data-hidden="true"] {
-  transform: translateY(-100%);
+  transform: translateY(calc(-100% - 1rem));
 }
-.nav[data-solid="true"] {
-  background: color-mix(in oklab, var(--color-sable) 92%, transparent);
-  backdrop-filter: blur(10px) saturate(1.2);
-  -webkit-backdrop-filter: blur(10px) saturate(1.2);
-  color: var(--color-nuit);
-  box-shadow: 0 1px 0 color-mix(in oklab, var(--color-nuit) 12%, transparent);
-}
+/* One plaque, same size over the hero and below it: only its surface changes,
+   so nothing jumps. Dark and detached, it reads on sand as well as on night. */
 .nav .nav__bar {
-  max-width: none;
-  padding-inline: clamp(1rem, 2.4vw, 2.75rem);
+  max-width: 100rem;
+  height: 3.5rem;
+  margin-inline: auto;
+  padding-inline: max(0.75rem, calc(clamp(1rem, 2.4vw, 2.75rem) - 0.75rem));
+  pointer-events: auto;
+  transition:
+    background-color 280ms ease,
+    box-shadow 280ms ease;
+}
+.nav[data-solid="true"] .nav__bar {
+  background: color-mix(in oklab, var(--color-nuit-2) 94%, transparent);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--color-sable) 12%, transparent),
+    0 0.75rem 2rem -1rem color-mix(in srgb, var(--color-nuit) 60%, transparent);
 }
 .nav__bar {
   display: flex;
@@ -280,7 +288,8 @@ body::after {
 .nav__brand {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  min-height: 2.75rem;
+  gap: 0.7rem;
   font-weight: 800;
   font-size: 0.8125rem;
   line-height: 1.05;
@@ -290,13 +299,13 @@ body::after {
   white-space: nowrap;
 }
 .nav__brand img {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
 }
 .nav__links {
   display: flex;
   align-items: center;
-  gap: clamp(1.25rem, 2.4vw, 2.5rem);
+  gap: clamp(1.25rem, 2.2vw, 2.25rem);
   font-weight: 700;
   font-size: 0.8125rem;
   letter-spacing: 0.08em;
@@ -306,39 +315,43 @@ body::after {
 .nav__links a:not(.btn) {
   position: relative;
   padding-block: 0.5rem;
+  color: color-mix(in oklab, currentColor 78%, transparent);
+  transition: color 200ms ease;
 }
+/* The section on screen: its name in full sand over a short red rule. */
 .nav__links a:not(.btn)::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0.2rem;
-  height: 1px;
-  background: currentColor;
+  bottom: 0.15rem;
+  height: 2px;
+  background: var(--color-rouge);
   transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 240ms var(--ease-out-strong);
+  transform-origin: left;
+  transition: transform 260ms var(--ease-out-strong);
 }
-@media (hover: hover) and (pointer: fine) {
-  .nav__links a:not(.btn):hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
+.nav__links a[data-current] {
+  color: currentColor;
 }
-/* the section on screen */
 .nav__links a[data-current]::after {
   transform: scaleX(1);
 }
-.nav .btn {
-  min-height: 2.75rem;
-  padding-inline: 1.1rem;
-  font-size: 0.8125rem;
-  --ghost-ink: var(--color-sable);
-  --btn-hover-fg: var(--color-nuit);
+@media (hover: hover) and (pointer: fine) {
+  .nav__links a:not(.btn):hover {
+    color: currentColor;
+  }
 }
-.nav[data-solid="true"] .btn {
-  --ghost-ink: var(--color-nuit);
-  --btn-hover-fg: var(--color-sable);
+.nav .btn {
+  min-height: 2.5rem;
+  padding-inline: 1rem;
+  font-size: 0.8125rem;
+  --btn-fill: var(--color-sable);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav .btn:hover {
+    color: var(--color-nuit);
+  }
 }
 .nav__toggle {
   display: none;
@@ -387,6 +400,12 @@ body::after {
   transition:
     clip-path 420ms var(--ease-in-out-strong),
     visibility 0s linear 420ms;
+}
+/* the sheet's top bar sits exactly where the plaque was, so Menu turns into Fermer in place */
+.menu > .nav__bar {
+  height: 3.5rem;
+  margin: 0.75rem calc(0.75rem - var(--gutter)) 0;
+  padding-inline: max(0.75rem, calc(clamp(1rem, 2.4vw, 2.75rem) - 0.75rem));
 }
 .menu[data-open="true"] {
   clip-path: inset(0 0 0 0);

@@ -13,15 +13,16 @@ const STATEMENT: { t: string; em?: boolean }[] = [
   { t: "comme des membres de la famille.", em: true },
 ];
 
-// One photograph per row, none repeated elsewhere on the page. `focus` and
-// `zoom` frame the part of the photo that tells the row's story (the crowd in
-// hats for Country, the trailers and lawn chairs for Famille).
-const PILLARS: {
+// A triptych like a rodeo poster: three tall photographs, edge to edge, one
+// per side of the festival. None of them appears anywhere else on the page.
+// `focus` / `zoom` frame the part of the picture that tells the panel's story.
+const PANELS: {
   id: string;
   title: string;
   text: string;
   href: string;
   img: ImageId;
+  alt: string;
   focus?: string;
   zoom?: number;
 }[] = [
@@ -31,6 +32,8 @@ const PILLARS: {
     text: "Barils, sauvetage, slalom et relais, sanctionnés par le CBSLC. Le Grand Prix se court le samedi soir.",
     href: "#gymkhana",
     img: "baril-gradins",
+    alt: "Une cavalière contourne un baril devant les gradins remplis.",
+    focus: "38% 50%",
   },
   {
     id: "country",
@@ -38,17 +41,18 @@ const PILLARS: {
     text: "Spectacles, soirées DJ et danse en ligne sous le chapiteau, où se trouve le bar.",
     href: "#programmation",
     img: "baril-foule",
-    focus: "100% 0%",
-    zoom: 2.4,
+    alt: "La foule en chapeaux de cowboy dans les gradins du manège.",
+    focus: "88% 30%",
+    zoom: 1.12,
   },
   {
     id: "famille",
     title: "Famille",
     text: "Zone familiale, spectacle canin, déjeuners au chalet des loisirs et camping sur place.",
     href: "#activites",
-    img: "baril-roulottes",
-    focus: "0% 55%",
-    zoom: 2.2,
+    img: "jeune-cavaliere",
+    alt: "Une jeune cavalière casquée galope dans l'arène.",
+    focus: "50% 40%",
   },
 ];
 
@@ -74,35 +78,43 @@ export default function EnBref() {
           </p>
         </StatementScrub>
 
-        <div className="bref__free" data-reveal>
-          <span className="bref__free-big">Entrée gratuite</span>
-          <span className="bref__free-text">
-            {fr("Compétitions, spectacles et activités : tout le site est accessible sans billet.")}
-          </span>
-        </div>
-
-        <ul className="pillars">
-          {PILLARS.map((p, i) => (
-            <li key={p.id} className="pillar" data-reveal style={{ ["--d" as string]: i }}>
-              <a href={p.href} className="pillar__link">
-                <span className="pillar__title">
-                  {p.title}
-                  <ArrowRight className="pillar__arrow" size={28} weight="bold" aria-hidden />
-                </span>
-                <span className="pillar__text">{fr(p.text)}</span>
-                <span className="pillar__media" aria-hidden>
-                  <Picture
-                    id={p.img}
-                    alt=""
-                    sizes={`(max-width: 1023px) ${Math.round(92 * (p.zoom ?? 1))}vw, ${Math.round(15 * (p.zoom ?? 1))}vw`}
-                    style={p.zoom ? ({ "--zoom": p.zoom, transformOrigin: p.focus } as React.CSSProperties) : undefined}
-                  />
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <p className="bref__free" data-reveal>
+          <strong>Entrée gratuite.</strong>{" "}
+          {fr("Compétitions, spectacles et activités : tout le site est accessible sans billet.")}
+        </p>
       </div>
+
+      <ul className="tryp">
+        {PANELS.map((p, i) => (
+          <li key={p.id} className="tryp__panel" data-reveal style={{ ["--d" as string]: i }}>
+            <a href={p.href} className="tryp__link">
+              <span className="tryp__media">
+                {/* The panel is about two-thirds as wide as tall, so the photo's
+                    width is driven by the panel height: 72vh x 3:2, x zoom. */}
+                <Picture
+                  id={p.img}
+                  alt={p.alt}
+                  sizes={`${Math.round(108 * (p.zoom ?? 1))}vh`}
+                  style={
+                    {
+                      objectPosition: p.focus,
+                      transformOrigin: p.focus,
+                      "--zoom": p.zoom ?? 1,
+                    } as React.CSSProperties
+                  }
+                />
+              </span>
+              <span className="tryp__body">
+                <span className="tryp__title">
+                  {p.title}
+                  <ArrowRight className="tryp__arrow" size={24} weight="bold" aria-hidden />
+                </span>
+                <span className="tryp__text">{fr(p.text)}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

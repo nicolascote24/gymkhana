@@ -8,7 +8,7 @@ type Tile = {
   when: string;
   img?: ImageId;
   alt?: string;
-  tone?: "terre" | "nuit" | "sauge";
+  tone?: "terre" | "nuit" | "sauge" | "poussiere";
   area: string;
 };
 
@@ -62,8 +62,7 @@ const TILES: Tile[] = [
     title: "La relève",
     text: "Les jeunes cavaliers ont leurs propres classes : initiation, baril jeunes et slalom jeunes.",
     when: "Pendant la compétition",
-    img: "jeune-cavaliere",
-    alt: "Une jeune cavalière casquée galope vers le baril.",
+    tone: "poussiere",
     area: "f",
   },
 ];

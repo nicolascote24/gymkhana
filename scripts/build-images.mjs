@@ -53,7 +53,8 @@ const jobs = [
     alpha: true,
     crop: { left: 1787, top: 611, width: 745, height: 784 },
   },
-  { id: "relais", src: `${BANK}/CB_20220814_145327-1-scaled.jpg`, widths: [640, 1080, 1600] },
+  // Shown edge to edge in the widescreen band, so it goes up to 2400px.
+  { id: "relais", src: `${BANK}/CB_20220814_145327-1-scaled.jpg`, widths: [640, 1080, 1600, 2400] },
   { id: "sauvetage", src: `${BANK}/502.jpg`, widths: [640, 1080, 1600] },
   {
     id: "baril-gradins",

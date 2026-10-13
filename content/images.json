@@ -109,6 +109,10 @@
         {
           "src": "/images/relais-1600.avif",
           "w": 1600
+        },
+        {
+          "src": "/images/relais-2400.avif",
+          "w": 2400
         }
       ],
       "webp": [
@@ -123,6 +127,10 @@
         {
           "src": "/images/relais-1600.webp",
           "w": 1600
+        },
+        {
+          "src": "/images/relais-2400.webp",
+          "w": 2400
         }
       ]
     },

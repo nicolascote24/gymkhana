@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "npx serve out",
     "lint": "tsc --noEmit",
-    "images": "node scripts/build-images.mjs"
+    "images": "node scripts/build-images.mjs",
+    "map": "node scripts/build-map.mjs",
+    "texture": "node scripts/build-texture.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "2.1.10",

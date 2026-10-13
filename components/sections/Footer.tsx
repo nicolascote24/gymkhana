@@ -3,6 +3,7 @@ import { festival, mapsUrl } from "@/content/festival";
 import { fr } from "@/lib/typo";
 import { keepPlaces } from "@/lib/places";
 import CourseMark from "@/components/CourseMark";
+import Tumbleweed from "@/components/Tumbleweed";
 
 export default function Footer() {
   const a = festival.address;
@@ -106,6 +107,7 @@ export default function Footer() {
         <span className="foot__mark-small">de Saint-David-de-Falardeau</span>
       </div>
 
+      <Tumbleweed seed={29} className="tumble--foot" />
       <div className="wrap foot__legal">
         <p>
           © {new Date().getFullYear()} {keepPlaces(festival.name)}

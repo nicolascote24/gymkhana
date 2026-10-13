@@ -67,15 +67,15 @@ html.js [data-reveal="image"].is-in img {
   position: relative;
   z-index: 10;
   margin-top: -100svh;
-  padding-block: var(--section-y) clamp(4rem, 8vw, 7rem);
+  padding-top: var(--section-y);
   background: var(--color-sable);
   box-shadow: 0 -2.5rem 5rem color-mix(in srgb, var(--color-nuit) 35%, transparent);
 }
 .bref__statement {
-  max-width: 21em;
-  font-size: clamp(1.875rem, 4.15vw, 4.25rem);
+  max-width: 20em;
+  font-size: clamp(1.75rem, 3.4vw, 3.5rem);
   font-weight: 700;
-  line-height: 1.06;
+  line-height: 1.08;
   letter-spacing: -0.015em;
   font-variation-settings: "wdth" 100;
 }
@@ -91,122 +91,158 @@ html.js [data-reveal="image"].is-in img {
   color: var(--color-rouge);
 }
 .bref__free {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.75rem 1.75rem;
-  margin-top: clamp(2.5rem, 5vw, 4.5rem);
-  padding-top: 1.25rem;
-  border-top: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
-}
-.bref__free-big {
-  font-size: clamp(1.5rem, 2.6vw, 2.5rem);
-  font-weight: 900;
-  line-height: 0.9;
-  text-transform: uppercase;
-  font-variation-settings: "wdth" 125;
-}
-.bref__free-text {
-  max-width: 40ch;
+  max-width: 44ch;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: var(--fs-lead);
+  line-height: 1.4;
   color: color-mix(in srgb, var(--color-nuit) 82%, transparent);
 }
+.bref__free strong {
+  color: var(--color-nuit);
+  font-weight: 800;
+}
 
-.pillars {
-  margin-top: clamp(4rem, 9vw, 8rem);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
-}
-.pillar {
-  border-top: 1px solid color-mix(in srgb, var(--color-nuit) 20%, transparent);
-}
-.pillar__link {
+/* The triptych: three tall photographs edge to edge, like a rodeo poster.
+   Each panel is a way into its part of the page. */
+.tryp {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr) clamp(9rem, 13vw, 12.5rem);
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 4rem);
-  padding-block: clamp(1.5rem, 2.6vw, 2.25rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+  height: clamp(30rem, 74svh, 50rem);
+  margin-top: clamp(3.5rem, 7vw, 6rem);
 }
-.pillar__title {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25em;
-  /* COMPÉTITION plus its arrow is about 9.2em wide at wdth 112: it fits the
-     title column, and the screen on small phones */
-  font-size: min(clamp(2.5rem, 4.8vw, 5rem), (100vw - 2 * var(--gutter)) / 9.3);
-  font-weight: 900;
-  line-height: 0.85;
-  text-transform: uppercase;
-  font-variation-settings: "wdth" 112;
-  transition:
-    transform 280ms var(--ease-out-strong),
-    color 200ms ease;
+.tryp__panel {
+  min-width: 0;
 }
-/* The arrow says the row is a way in, on touch as well as with a pointer. */
-.pillar__arrow {
-  flex: none;
-  width: 0.42em;
-  height: 0.42em;
-  color: var(--color-rouge);
-  transition: transform 280ms var(--ease-out-strong);
-}
-.pillar__text {
-  max-width: 30ch;
-  font-size: 1.0625rem;
-  color: color-mix(in srgb, var(--color-nuit) 86%, transparent);
-}
-/* Every row shows its photograph; the image itself carries the proof. */
-.pillar__media {
+.tryp__link {
+  --pad: clamp(1.25rem, 2.4vw, 2.25rem);
+  container-type: inline-size;
+  position: relative;
   display: block;
-  aspect-ratio: 4 / 3;
+  height: 100%;
   overflow: hidden;
-  background: var(--color-poussiere);
+  isolation: isolate;
+  color: var(--color-creme);
 }
-.pillar__media img {
+.tryp__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--color-terre);
+}
+.tryp__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   scale: var(--zoom, 1);
-  transition: transform 600ms var(--ease-out-strong);
+  transition: transform 900ms var(--ease-out-strong);
+}
+/* night rises from the ground so the words always sit on dark */
+.tryp__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--color-nuit) 88%, transparent) 0%,
+    color-mix(in srgb, var(--color-nuit) 55%, transparent) 30%,
+    transparent 58%
+  );
+}
+/* a red rule runs across the top of the panel being pointed at */
+.tryp__link::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: var(--color-rouge);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 380ms var(--ease-out-strong);
+}
+.tryp__body {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: grid;
+  gap: 0.75rem;
+  padding: var(--pad);
+}
+.tryp__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  /* every panel uses the size that fits its longest word: COMPÉTITION plus
+     the arrow is 10.3em wide at wdth 125 */
+  font-size: min(3.25rem, (100cqi - 2 * var(--pad)) / 10.4);
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+  color: var(--color-sable);
+  /* wraps rather than clip when a reader widens letter spacing */
+  overflow-wrap: anywhere;
+}
+.tryp__arrow {
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  color: var(--color-rouge);
+  transition: transform 280ms var(--ease-out-strong);
+}
+.tryp__text {
+  max-width: 34ch;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.tryp__link:focus-visible {
+  outline-offset: -4px;
 }
 @media (hover: hover) and (pointer: fine) {
-  .pillar__link:hover .pillar__title,
-  .pillar__link:focus-visible .pillar__title {
-    transform: translateX(0.75rem);
-    color: var(--color-rouge);
-  }
-  .pillar__link:hover .pillar__arrow,
-  .pillar__link:focus-visible .pillar__arrow {
-    transform: translateX(0.35rem);
-  }
-  .pillar__link:hover .pillar__media img,
-  .pillar__link:focus-visible .pillar__media img {
+  .tryp__link:hover .tryp__media img {
     transform: scale(1.05);
+  }
+  .tryp__link:hover::before,
+  .tryp__link:focus-visible::before {
+    transform: scaleX(1);
+  }
+  .tryp__link:hover .tryp__arrow {
+    transform: translateX(0.3rem);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pillar__title,
-  .pillar__arrow,
-  .pillar__media img {
-    transition-property: color;
-  }
-  .pillar__link:hover .pillar__title,
-  .pillar__link:focus-visible .pillar__title,
-  .pillar__link:hover .pillar__arrow,
-  .pillar__link:hover .pillar__media img {
-    transform: none;
+  .tryp__media img,
+  .tryp__arrow,
+  .tryp__link::before {
+    transition: none;
   }
 }
+/* Below a laptop, the panels become a strip swiped with the thumb, the next
+   one peeking in so the gesture is obvious. */
 @media (max-width: 1023px) {
-  .pillar__link {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
+  .tryp {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 58%;
+    gap: 0.5rem;
+    height: clamp(26rem, 68svh, 40rem);
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
   }
-  .pillar__media {
-    order: 2;
-    aspect-ratio: 16 / 9;
+  .tryp::-webkit-scrollbar {
+    display: none;
   }
-  .pillar__text {
-    order: 3;
-    max-width: 46ch;
+  .tryp__panel {
+    scroll-snap-align: start;
+  }
+}
+@media (max-width: 767px) {
+  .tryp {
+    grid-auto-columns: 84%;
   }
 }
 
@@ -525,7 +561,8 @@ html.js [data-reveal="image"].is-in img {
 .gym {
   position: relative;
   z-index: 10;
-  padding-bottom: var(--section-y);
+  /* the widescreen band closes the section; its note reserves the inset's overflow */
+  padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 .gym__scene {
   min-height: 100svh;
@@ -546,7 +583,7 @@ html.js [data-reveal="image"].is-in img {
 .act__title,
 .visit__title,
 .part__title {
-  font-size: min(clamp(2.5rem, 5.6vw, 6rem), (100vw - 2 * var(--gutter)) / var(--fp));
+  font-size: min(clamp(2.25rem, 4.4vw, 4.25rem), (100vw - 2 * var(--gutter)) / var(--fp));
   font-weight: 900;
   line-height: 0.82;
   text-transform: uppercase;
@@ -662,9 +699,9 @@ html.js [data-reveal="image"].is-in img {
   padding-top: clamp(4rem, 8vw, 7rem);
 }
 .gym__events-title {
-  font-size: clamp(2.25rem, 5vw, 5rem);
+  font-size: clamp(1.625rem, 2.6vw, 2.5rem);
   font-weight: 900;
-  line-height: 0.85;
+  line-height: 0.9;
   text-transform: uppercase;
   font-variation-settings: "wdth" 125;
 }
@@ -708,6 +745,28 @@ html.js [data-reveal="image"].is-in img {
   stroke-dasharray: 1;
   stroke-dashoffset: 0;
 }
+/* the line stays faintly visible under a redraw */
+.course__ghost {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-sable) 22%, transparent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* The relay (CourseRelay.tsx): the running card's line turns red as the
+   rider dot travels it; the others rest in sand. */
+.course__rider {
+  fill: var(--color-rouge);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.gym__card[data-running] .course__rider {
+  opacity: 1;
+}
+.gym__card[data-running] .course__path {
+  stroke: var(--color-rouge);
+}
+
 .course__mark {
   fill: var(--color-rouge);
 }
@@ -715,16 +774,6 @@ html.js [data-reveal="image"].is-in img {
   fill: none;
   stroke: var(--color-rouge);
   stroke-width: 2;
-}
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .gym__card:hover .course__path {
-    animation: course-draw 1.4s var(--ease-in-out-strong);
-  }
-}
-@keyframes course-draw {
-  from {
-    stroke-dashoffset: 1;
-  }
 }
 .gym__card-title {
   font-size: clamp(1.125rem, 1.4vw, 1.375rem);
@@ -738,40 +787,114 @@ html.js [data-reveal="image"].is-in img {
   color: color-mix(in srgb, var(--color-creme) 80%, transparent);
 }
 
-.gym__photos {
-  display: grid;
-  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
-  gap: clamp(1rem, 2vw, 1.5rem);
-  align-items: end;
+/* Widescreen band: the relay race edge to edge, the rescue race set over
+   its corner like a second camera, each plane on its own depth. */
+.band {
+  position: relative;
   margin-top: clamp(4rem, 8vw, 7rem);
 }
-.gym__photo {
+.band__wide {
+  position: relative;
   margin: 0;
-}
-.gym__photo-img {
+  height: clamp(22rem, 46vw, 46rem);
   overflow: hidden;
 }
-.gym__photo--wide .gym__photo-img {
-  aspect-ratio: 16 / 10;
+.band__frame {
+  position: absolute;
+  inset: -8% 0;
 }
-.gym__photo--tall .gym__photo-img {
-  aspect-ratio: 4 / 5;
+.band__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
 }
-.gym__photo img {
+.band__wide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, color-mix(in srgb, var(--color-nuit) 78%, transparent) 0%, transparent 38%),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-nuit) 45%, transparent) 0%, transparent 18%);
+  pointer-events: none;
+}
+.band__caption {
+  position: absolute;
+  z-index: 1;
+  left: var(--gutter);
+  bottom: clamp(1.25rem, 3vw, 2.5rem);
+  display: grid;
+  gap: 0.35rem;
+  font-size: var(--fs-small);
+  color: var(--color-creme);
+}
+.band__caption-title {
+  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+  color: var(--color-sable);
+}
+.band__inset {
+  position: absolute;
+  right: var(--gutter);
+  top: calc(clamp(22rem, 46vw, 46rem) - clamp(5rem, 11vw, 10rem));
+  width: clamp(16rem, 34vw, 32rem);
+  margin: 0;
+}
+.band__inset-img {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  box-shadow: 0 1.5rem 3rem -1rem color-mix(in srgb, var(--color-nuit) 80%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--color-sable) 18%, transparent);
+  outline-offset: -1px;
+}
+.band__inset-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.gym__photo figcaption {
+.band__inset-caption {
   padding-top: 0.75rem;
   font-size: var(--fs-small);
   color: color-mix(in srgb, var(--color-creme) 78%, transparent);
 }
-.gym__sanction {
-  margin-top: clamp(3rem, 5vw, 4rem);
-  max-width: 60ch;
+/* The note on the sanction sits in the band's free corner, under the wide
+   photo and beside the inset, so the band ends as one composition. */
+.band__note {
+  width: min(44ch, 100% - clamp(16rem, 34vw, 32rem) - 3 * var(--gutter));
+  min-height: clamp(9rem, 15vw, 14rem);
+  margin: 0 0 0 var(--gutter);
+  padding-top: clamp(1.75rem, 3vw, 2.5rem);
   font-size: var(--fs-small);
+  line-height: 1.6;
   color: color-mix(in srgb, var(--color-creme) 78%, transparent);
+}
+@media (max-width: 767px) {
+  .band__wide {
+    height: 64vw;
+  }
+  /* the caption moves to the top so the inset can overlap the bottom */
+  .band__caption {
+    top: 1rem;
+    bottom: auto;
+  }
+  .band__wide::after {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-nuit) 70%, transparent) 0%, transparent 40%);
+  }
+  .band__inset {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 74%;
+    margin: -16vw var(--gutter) 0 auto;
+  }
+  .band__note {
+    width: auto;
+    min-height: 0;
+    margin: 0 var(--gutter);
+  }
 }
 @media (max-width: 1023px) {
   .gym__scene {
@@ -785,9 +908,6 @@ html.js [data-reveal="image"].is-in img {
   }
   .gym__step {
     opacity: 1;
-  }
-  .gym__photos {
-    grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (max-width: 600px) {
@@ -933,6 +1053,10 @@ html.js [data-reveal="image"].is-in img {
   background: var(--color-nuit);
   color: var(--color-sable);
 }
+.act__tile--poussiere {
+  background: var(--color-poussiere);
+  color: var(--color-nuit);
+}
 .act__tile--lead {
   min-height: 34rem;
 }
@@ -975,9 +1099,13 @@ html.js [data-reveal="image"].is-in img {
 .visit__grid {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: stretch;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
   margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+.visit__side {
+  display: grid;
+  gap: clamp(2rem, 3.5vw, 3rem);
 }
 .visit__where {
   display: grid;
@@ -985,8 +1113,10 @@ html.js [data-reveal="image"].is-in img {
   justify-items: start;
   gap: 0.6rem;
 }
+.visit__where .btn {
+  margin-top: 1.25rem;
+}
 .visit__venue {
-  margin-top: 0.25rem;
   font-size: var(--fs-label);
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -994,63 +1124,239 @@ html.js [data-reveal="image"].is-in img {
   color: var(--color-terre);
 }
 .visit__street {
-  font-size: clamp(2rem, 3.8vw, 4rem);
-  font-weight: 900;
-  /* room for the comma of "51," above the second line */
-  line-height: 0.98;
-  text-transform: uppercase;
-  font-variation-settings: "wdth" 115;
+  font-size: clamp(1.75rem, 2.8vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  font-variation-settings: "wdth" 100;
 }
 .visit__city {
   font-size: var(--fs-lead);
   font-weight: 600;
 }
-.visit__route {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  width: min(100%, 34rem);
-  /* leaves room above the line for the travel time */
-  margin-block: 2.75rem 2rem;
-  font-size: var(--fs-label);
+
+/* The illustrated map (RouteMap.tsx). The drawing is an SVG in map units;
+   names are HTML placed by the same units, so they stay readable. On phones
+   the panel turns portrait and the drawing is cropped around the route
+   (preserveAspectRatio slice): --vbw is the width of map still in view. */
+.vmap {
+  --map-w: 1000;
+  --vbw: 1000;
+  margin: 0;
+}
+.vmap__canvas {
+  position: relative;
+  aspect-ratio: var(--vbw) / var(--vbh);
+  overflow: hidden;
+  background: var(--color-sable-clair);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-nuit) 14%, transparent);
+  container-type: inline-size;
+}
+.vmap__canvas > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.vmap__grid {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-terre) 14%, transparent);
+  stroke-width: 1;
+}
+.vmap__lake {
+  fill: color-mix(in srgb, var(--color-sauge) 72%, var(--color-sable-clair));
+}
+.vmap__river {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-sauge) 72%, var(--color-sable-clair));
+  stroke-width: 20;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.vmap__stream {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-sauge) 80%, var(--color-sable-clair));
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+.vmap__boundary {
+  fill: color-mix(in srgb, var(--color-poussiere) 12%, transparent);
+  stroke: color-mix(in srgb, var(--color-terre) 55%, transparent);
+  stroke-width: 1.5;
+  stroke-dasharray: 8 6;
+}
+.vmap__road {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-nuit) 22%, transparent);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* the route draws from Chicoutimi to the site when the map comes into view */
+.vmap__route {
+  fill: none;
+  stroke: var(--color-rouge);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+}
+html.js .vmap[data-reveal] .vmap__route {
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 2.4s var(--ease-in-out-strong) 0.4s;
+}
+html.js .vmap[data-reveal].is-in .vmap__route {
+  stroke-dashoffset: 0;
+}
+.vmap__start {
+  fill: var(--color-nuit);
+  stroke: var(--color-sable-clair);
+  stroke-width: 3;
+}
+.vmap__site-halo {
+  fill: color-mix(in srgb, var(--color-rouge) 16%, transparent);
+}
+.vmap__clover {
+  fill: none;
+  stroke: var(--color-rouge);
+  stroke-width: 26;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+html.js .vmap[data-reveal] .vmap__site {
+  opacity: 0;
+  transition: opacity 500ms var(--ease-out-strong) 2.5s;
+}
+html.js .vmap[data-reveal].is-in .vmap__site {
+  opacity: 1;
+}
+.vmap__label {
+  position: absolute;
+  left: calc((var(--x) - (var(--map-w) - var(--vbw)) / 2) / var(--vbw) * 100%);
+  top: calc(var(--y) / var(--vbh) * 100%);
+  font-size: 0.75rem;
   font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.vmap__label--water {
+  translate: 0 -50%;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: color-mix(in srgb, var(--color-nuit) 62%, var(--color-sauge));
+}
+.vmap__label--area {
+  translate: -50% 0;
+  color: var(--color-terre);
+}
+.vmap__label--start {
+  translate: 0.9rem -50%;
+  color: var(--color-nuit);
+}
+.vmap__label--site {
+  display: grid;
+  translate: 1.5rem -60%;
+  padding: 0.5rem 0.65rem;
+  background: var(--color-nuit);
+  color: color-mix(in srgb, var(--color-creme) 82%, transparent);
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-weight: 500;
+}
+.vmap__label--site strong {
+  color: var(--color-sable);
+  font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.visit__route-line {
-  position: relative;
-  flex: 1;
-  border-top: 2px dashed var(--color-nuit);
+.vmap__label--trip {
+  translate: 0.9rem -50%;
+  padding: 0.25rem 0.45rem;
+  background: var(--color-sable-clair);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-rouge) 50%, transparent);
+  color: var(--color-rouge-fonce);
+  font-variation-settings: "wdth" 100;
 }
-.visit__route-line::before,
-.visit__route-line::after {
+.vmap__north {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-terre);
+}
+.vmap__north::before {
   content: "";
+  width: 0;
+  height: 0;
+  border-inline: 5px solid transparent;
+  border-bottom: 10px solid var(--color-terre);
+}
+.vmap__scale {
   position: absolute;
-  top: -1px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  translate: 0 -50%;
-  background: var(--color-nuit);
+  left: 1rem;
+  bottom: 0.9rem;
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-terre);
 }
-.visit__route-line::before {
-  left: -2px;
+.vmap__scale::before {
+  content: "";
+  width: calc(var(--len) / var(--vbw) * 100cqi);
+  height: 5px;
+  border: 1.5px solid var(--color-terre);
+  border-top: 0;
 }
-.visit__route-line::after {
-  right: -2px;
-  background: var(--color-rouge);
+.vmap__caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-top: 0.75rem;
+  font-size: var(--fs-small);
 }
-.visit__route-line span {
-  position: absolute;
-  left: 50%;
-  bottom: 0.75rem;
-  translate: -50% 0;
-  padding: 0.2rem 0.5rem;
-  background: var(--color-sable);
-  font-variation-settings: "wdth" 75;
-  font-size: 1.125rem;
-  font-weight: 900;
-  white-space: nowrap;
+.vmap__caption a {
+  display: inline-block;
+  padding-block: 0.75rem;
+  margin-block: -0.75rem;
+  color: color-mix(in srgb, var(--color-nuit) 70%, transparent);
+  font-size: var(--fs-label);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+@media (max-width: 767px) {
+  .vmap {
+    /* portrait crop around the route: 4/5 of the drawing's height */
+    --vbw: calc(var(--vbh) * 0.8);
+  }
+  /* names near the edges fall outside the portrait crop */
+  .vmap__label[data-wide-only] {
+    display: none;
+  }
+  /* under the marker, so it stays inside the narrow crop */
+  .vmap__label--site {
+    translate: -50% 1.9rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .vmap[data-reveal] .vmap__route,
+  html.js .vmap[data-reveal] .vmap__site {
+    transition: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
 }
 .visit__camp {
   display: grid;
@@ -1059,7 +1365,7 @@ html.js [data-reveal="image"].is-in img {
   padding: clamp(1.75rem, 3vw, 2.75rem);
 }
 .visit__camp-title {
-  font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
   font-weight: 900;
   line-height: 0.95;
   text-transform: uppercase;
@@ -1190,7 +1496,7 @@ html.js [data-reveal="image"].is-in img {
   justify-items: start;
 }
 .team__title {
-  font-size: clamp(2.5rem, 4.6vw, 4.75rem);
+  font-size: clamp(2.25rem, 3.8vw, 3.75rem);
   font-weight: 900;
   line-height: 0.85;
   text-transform: uppercase;
@@ -1446,7 +1752,7 @@ html.js [data-reveal="image"].is-in img {
   gap: clamp(2rem, 5vw, 5rem);
 }
 .foot__slogan {
-  font-size: clamp(2.25rem, 5.2vw, 5.5rem);
+  font-size: clamp(2rem, 4.2vw, 4.25rem);
   font-weight: 900;
   line-height: 0.88;
   text-transform: uppercase;
@@ -1649,4 +1955,169 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
     stroke-dashoffset: 0;
     transition: none;
   }
+}
+
+/* ------------------------- Terrain and wind ------------------------- */
+/* The pale sections are ground, not paper: faint contour lines (generated by
+   scripts/build-texture.mjs) under a warm low light, each section showing a
+   different part of the terrain. */
+.bref,
+.prog,
+.act,
+.visit,
+.team,
+.part {
+  background-image:
+    radial-gradient(
+      70% 60% at var(--sun-x, 85%) 0%,
+      color-mix(in srgb, var(--color-creme) 55%, transparent),
+      transparent 72%
+    ),
+    url("/textures/terrain.webp");
+  background-repeat: no-repeat, repeat;
+  background-size:
+    auto,
+    1600px 1000px;
+  background-position:
+    0 0,
+    var(--terrain, 0 0);
+}
+.prog {
+  --terrain: -500px -200px;
+  --sun-x: 15%;
+}
+.act {
+  --terrain: -900px -600px;
+}
+.visit {
+  --terrain: -200px -700px;
+  --sun-x: 20%;
+}
+.team {
+  --terrain: -1200px -100px;
+}
+.part {
+  --terrain: -700px -450px;
+  --sun-x: 25%;
+}
+@media (max-width: 767px) {
+  .bref,
+  .prog,
+  .act,
+  .visit,
+  .team,
+  .part {
+    background-size:
+      auto,
+      1100px 688px;
+  }
+}
+
+/* A tumbleweed (Tumbleweed.tsx) crosses a strip once, rolling on the wind:
+   three layers so travel, hops and spin never fight over one transform. */
+.visit,
+.foot {
+  position: relative;
+}
+.tumble {
+  --size: clamp(3.5rem, 6vw, 5.5rem);
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--size);
+  overflow: hidden;
+  pointer-events: none;
+}
+.tumble--visit {
+  bottom: 0;
+  color: color-mix(in srgb, var(--color-terre) 70%, transparent);
+}
+.tumble--foot {
+  /* rolls along the rule above the legal line, as on the ground */
+  position: relative;
+  margin-top: clamp(1rem, 2vw, 2rem);
+  color: color-mix(in srgb, var(--color-sable) 55%, transparent);
+}
+.tumble__run {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  /* at rest (no script, reduced motion): parked near the right edge */
+  translate: calc(100vw - var(--size) - 12vw) 0;
+}
+.tumble__hop,
+.tumble__ball {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.tumble__ball {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.tumble[data-ready] .tumble__run {
+  translate: calc(100vw + 10px) 0;
+}
+.tumble[data-rolling] .tumble__run {
+  animation: tumble-run 7.5s cubic-bezier(0.3, 0.1, 0.6, 1) forwards;
+}
+.tumble[data-rolling] .tumble__hop {
+  animation: tumble-hop 7.5s linear forwards;
+}
+.tumble[data-rolling] .tumble__ball {
+  animation: tumble-spin 7.5s cubic-bezier(0.3, 0.1, 0.6, 1) forwards;
+}
+@keyframes tumble-run {
+  from {
+    translate: calc(100vw + 10px) 0;
+  }
+  to {
+    translate: calc(-1 * var(--size) - 10px) 0;
+  }
+}
+@keyframes tumble-spin {
+  to {
+    rotate: -1260deg;
+  }
+}
+/* light, uneven hops, as a gust lifts it */
+@keyframes tumble-hop {
+  0%,
+  9%,
+  21%,
+  30%,
+  46%,
+  52%,
+  69%,
+  80%,
+  100% {
+    translate: 0 0;
+  }
+  15% {
+    translate: 0 -38%;
+  }
+  25% {
+    translate: 0 -12%;
+  }
+  38% {
+    translate: 0 -46%;
+  }
+  49% {
+    translate: 0 -9%;
+  }
+  61% {
+    translate: 0 -30%;
+  }
+  75% {
+    translate: 0 -14%;
+  }
+}
+
+.tumble--foot + .foot__legal {
+  margin-top: 0;
 }

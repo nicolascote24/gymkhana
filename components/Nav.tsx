@@ -117,7 +117,7 @@ export default function Nav() {
           <a href="#top" className="nav__brand" aria-label="Festival Gymkhana de Falardeau, retour en haut">
             <picture>
               <source type="image/avif" srcSet="/images/logo-96.avif 1x, /images/logo-192.avif 2x" />
-              <img src="/images/logo-96.webp" width={44} height={44} alt="" />
+              <img src="/images/logo-96.webp" width={36} height={36} alt="" />
             </picture>
             <span>
               Festival Gymkhana
@@ -131,7 +131,7 @@ export default function Nav() {
                 {l.label}
               </a>
             ))}
-            <a href="#visite" className="btn btn--ghost">
+            <a href="#visite" className="btn">
               Planifier ma visite
             </a>
           </nav>
