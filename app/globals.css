@@ -477,7 +477,7 @@ body::after {
 .hero__shade--low {
   background:
     linear-gradient(0deg, rgb(20 22 25 / 0.55) 0%, rgb(20 22 25 / 0.15) 20%, rgb(20 22 25 / 0) 32%),
-    radial-gradient(60% 70% at 0% 30%, rgb(20 22 25 / 0.58) 0%, rgb(20 22 25 / 0.22) 48%, rgb(20 22 25 / 0) 80%);
+    radial-gradient(55% 65% at 0% 44%, rgb(20 22 25 / 0.6) 0%, rgb(20 22 25 / 0.24) 50%, rgb(20 22 25 / 0) 85%);
 }
 .hero__shade--high {
   background: linear-gradient(180deg, rgb(20 22 25 / 0.5) 0%, rgb(20 22 25 / 0) 16%);
@@ -547,19 +547,32 @@ body::after {
 .hero__names {
   pointer-events: none;
 }
-/* The date and action sit in the upper third, clear of the menu, on the
-   dark mass of the trees: the first thing read after the name. */
+/* Date, pitch and action: one block, centred vertically in the free band
+   between the menu and the name, on the dark of the trees, left-aligned on
+   the same axis as the name. */
 .hero__lead {
   position: absolute;
   left: var(--pad);
-  top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + max(3rem, 13cqh));
+  right: var(--pad);
+  top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 1rem);
+  bottom: calc(var(--y-fest) + var(--small-fs) * 0.74 + max(2rem, 5cqh));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  pointer-events: none;
+}
+.hero__lead-inner {
   display: grid;
   justify-items: start;
-  gap: max(1.5rem, 3.4cqh);
+  gap: max(1.25rem, 2.6cqh);
+  pointer-events: auto;
 }
 .hero__when {
-  display: grid;
-  gap: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.1rem;
 }
 .hero__date {
   font-size: clamp(2rem, 3cqw, 3.5rem);
@@ -568,16 +581,33 @@ body::after {
   text-transform: uppercase;
   font-variation-settings: "wdth" 125;
 }
-.hero__meta {
+.hero__days,
+.hero__badge {
   font-size: var(--fs-label);
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+.hero__days {
+  padding-left: 1.1rem;
+  border-left: 1px solid rgb(230 207 163 / 0.45);
   color: var(--color-creme);
 }
-.hero__meta span {
-  margin-inline: 0.5em;
-  color: var(--color-poussiere);
+.hero__badge {
+  padding: 0.5rem 0.7rem 0.45rem;
+  background: var(--color-sable);
+  color: var(--color-nuit);
+}
+.hero__pitch {
+  max-width: 36ch;
+  font-size: clamp(1.0625rem, 1.4cqw, 1.375rem);
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--color-creme);
+}
+.hero__cta {
+  margin-top: 0.5rem;
 }
 
 /* Tablet and square screens: medium width axis so the word keeps its height. */
@@ -599,7 +629,15 @@ body::after {
     --fy: 0.6;
   }
   .hero__lead {
-    top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 1rem);
+    bottom: auto;
+    justify-content: flex-start;
+  }
+  .hero__date {
+    flex-basis: 100%;
+  }
+  .hero__days {
+    padding-left: 0;
+    border-left: 0;
   }
   .hero__date {
     font-size: clamp(2rem, 9cqw, 3rem);
@@ -609,6 +647,12 @@ body::after {
   }
   .hero__shade--low {
     background: linear-gradient(0deg, rgb(20 22 25 / 0.75) 0%, rgb(20 22 25 / 0.35) 24%, rgb(20 22 25 / 0) 42%);
+  }
+}
+
+@media (max-width: 600px) and (max-aspect-ratio: 3/4) {
+  .hero__pitch {
+    display: none;
   }
 }
 

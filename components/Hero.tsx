@@ -64,15 +64,19 @@ export default function Hero() {
 
         <div className="hero__content">
           <div className="hero__lead" data-scroll="lead">
-            <div className="hero__when" data-hero-in>
-              <p className="hero__date">{festival.edition.label}</p>
-              <p className="hero__meta">
-                {festival.days} jours de festival <span aria-hidden>/</span> Entrée gratuite
+            <div className="hero__lead-inner">
+              <div className="hero__when" data-hero-in>
+                <p className="hero__date">{festival.edition.label}</p>
+                <p className="hero__days">{festival.days} jours</p>
+                <p className="hero__badge">Entrée gratuite</p>
+              </div>
+              <p className="hero__pitch" data-hero-in>
+                Compétition équestre, musique country et plaisirs en famille, au cœur du Saguenay.
               </p>
+              <a href="#programmation" className="btn hero__cta" data-hero-in>
+                Voir la programmation <ArrowDownRight size={18} weight="bold" aria-hidden />
+              </a>
             </div>
-            <a href="#programmation" className="btn hero__cta" data-hero-in>
-              Voir la programmation <ArrowDownRight size={18} weight="bold" aria-hidden />
-            </a>
           </div>
 
           <div className="hero__names" data-scroll="name" aria-hidden>
