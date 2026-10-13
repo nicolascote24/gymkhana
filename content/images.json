@@ -1,0 +1,473 @@
+{
+  "hero": {
+    "width": 2752,
+    "height": 1536,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/hero-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/hero-1280.avif",
+          "w": 1280
+        },
+        {
+          "src": "/images/hero-1920.avif",
+          "w": 1920
+        },
+        {
+          "src": "/images/hero-2752.avif",
+          "w": 2752
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/hero-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/hero-1280.webp",
+          "w": 1280
+        },
+        {
+          "src": "/images/hero-1920.webp",
+          "w": 1920
+        },
+        {
+          "src": "/images/hero-2752.webp",
+          "w": 2752
+        }
+      ]
+    },
+    "fallback": "/images/hero.jpg"
+  },
+  "hero-rider": {
+    "width": 745,
+    "height": 784,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/hero-rider-828.avif",
+          "w": 224
+        },
+        {
+          "src": "/images/hero-rider-1280.avif",
+          "w": 347
+        },
+        {
+          "src": "/images/hero-rider-1920.avif",
+          "w": 520
+        },
+        {
+          "src": "/images/hero-rider-2752.avif",
+          "w": 745
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/hero-rider-828.webp",
+          "w": 224
+        },
+        {
+          "src": "/images/hero-rider-1280.webp",
+          "w": 347
+        },
+        {
+          "src": "/images/hero-rider-1920.webp",
+          "w": 520
+        },
+        {
+          "src": "/images/hero-rider-2752.webp",
+          "w": 745
+        }
+      ]
+    },
+    "frame": {
+      "x": 64.93459302325581,
+      "y": 39.77864583333333,
+      "w": 27.07122093023256,
+      "h": 51.041666666666664,
+      "plateWidth": 2752,
+      "plateHeight": 1536
+    },
+    "fallback": "/images/hero-rider.png"
+  },
+  "relais": {
+    "width": 3813,
+    "height": 2291,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/relais-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/relais-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/relais-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/relais-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/relais-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/relais-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "fallback": "/images/relais.jpg"
+  },
+  "sauvetage": {
+    "width": 3956,
+    "height": 2383,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/sauvetage-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/sauvetage-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/sauvetage-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/sauvetage-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/sauvetage-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/sauvetage-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "fallback": "/images/sauvetage.jpg"
+  },
+  "baril-gradins": {
+    "width": 2048,
+    "height": 1365,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/baril-gradins-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/baril-gradins-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/baril-gradins-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/baril-gradins-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/baril-gradins-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/baril-gradins-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "fallback": "/images/baril-gradins.jpg"
+  },
+  "baril-roulottes": {
+    "width": 2048,
+    "height": 1365,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/baril-roulottes-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/baril-roulottes-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/baril-roulottes-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/baril-roulottes-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/baril-roulottes-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/baril-roulottes-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "fallback": "/images/baril-roulottes.jpg"
+  },
+  "baril-foule": {
+    "width": 2048,
+    "height": 1365,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/baril-foule-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/baril-foule-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/baril-foule-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/baril-foule-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/baril-foule-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/baril-foule-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "fallback": "/images/baril-foule.jpg"
+  },
+  "chien": {
+    "width": 2048,
+    "height": 1236,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/chien-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/chien-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/chien-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/chien-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/chien-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/chien-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "fallback": "/images/chien.jpg"
+  },
+  "mascotte": {
+    "width": 2048,
+    "height": 1365,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/mascotte-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/mascotte-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/mascotte-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/mascotte-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/mascotte-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/mascotte-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "fallback": "/images/mascotte.jpg"
+  },
+  "jeune-cavaliere": {
+    "width": 680,
+    "height": 1024,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/jeune-cavaliere-480.avif",
+          "w": 480
+        },
+        {
+          "src": "/images/jeune-cavaliere-680.avif",
+          "w": 680
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/jeune-cavaliere-480.webp",
+          "w": 480
+        },
+        {
+          "src": "/images/jeune-cavaliere-680.webp",
+          "w": 680
+        }
+      ]
+    },
+    "fallback": "/images/jeune-cavaliere.jpg"
+  },
+  "presidente": {
+    "width": 2048,
+    "height": 1365,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/presidente-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/presidente-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/presidente-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/presidente-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/presidente-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/presidente-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "fallback": "/images/presidente.jpg"
+  },
+  "equipe": {
+    "width": 1440,
+    "height": 960,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/equipe-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/equipe-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/equipe-1440.avif",
+          "w": 1440
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/equipe-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/equipe-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/equipe-1440.webp",
+          "w": 1440
+        }
+      ]
+    },
+    "fallback": "/images/equipe.jpg"
+  },
+  "logo": {
+    "width": 968,
+    "height": 992,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-96.avif",
+          "w": 96
+        },
+        {
+          "src": "/images/logo-192.avif",
+          "w": 192
+        },
+        {
+          "src": "/images/logo-384.avif",
+          "w": 384
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-96.webp",
+          "w": 96
+        },
+        {
+          "src": "/images/logo-192.webp",
+          "w": 192
+        },
+        {
+          "src": "/images/logo-384.webp",
+          "w": 384
+        }
+      ]
+    },
+    "fallback": "/images/logo.png"
+  }
+}
