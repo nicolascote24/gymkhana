@@ -12,7 +12,7 @@ export default function QuickBar() {
     const { ScrollTrigger } = getGsap();
     const hero = document.querySelector<HTMLElement>("[data-hero]");
     const prog = document.getElementById("programmation");
-    const foot = document.querySelector("footer");
+    const foot = document.querySelector("footer.foot");
     let pastHero = false;
     let inProg = false;
     let inFoot = false;

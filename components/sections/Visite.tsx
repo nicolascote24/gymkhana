@@ -16,11 +16,11 @@ export default function Visite() {
 
         <div className="visit__grid">
           <div className="visit__where" data-reveal>
-            <p className="visit__venue">{a.venue}</p>
             <p className="visit__street">{a.street}</p>
             <p className="visit__city">
               {a.city} ({a.province}) {a.postalCode}
             </p>
+            <p className="visit__venue">{a.venue}</p>
             <div className="visit__route" aria-label={fr(a.access)}>
               <span>Chicoutimi</span>
               <span className="visit__route-line" aria-hidden>

@@ -270,7 +270,7 @@
   },
   "chien": {
     "width": 2048,
-    "height": 1236,
+    "height": 880,
     "sources": {
       "avif": [
         {
@@ -305,7 +305,7 @@
   },
   "mascotte": {
     "width": 2048,
-    "height": 1365,
+    "height": 1060,
     "sources": {
       "avif": [
         {

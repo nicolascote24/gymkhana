@@ -2,6 +2,7 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Picture from "@/components/Picture";
 import { festival } from "@/content/festival";
 import { fr } from "@/lib/typo";
+import { keepPlaces } from "@/lib/places";
 
 const COMITE = [
   { role: "Présidente", name: "Ann-Frédérick Lavoie" },
@@ -35,8 +36,10 @@ export default function Equipe() {
             <footer>{festival.founder}, fondatrice du festival</footer>
           </blockquote>
           <p className="team__story" data-reveal>
-            {fr(
-              `Le festival est né en ${festival.founded} de la passion de sa fondatrice, rejointe par deux amies. Aujourd'hui, un comité et une soixantaine de bénévoles le font vivre chaque été, avec l'appui de la municipalité et des organismes de Saint-David-de-Falardeau.`,
+            {keepPlaces(
+              fr(
+                `Le festival est né en ${festival.founded} de la passion de sa fondatrice, rejointe par deux amies. Aujourd'hui, un comité et une soixantaine de bénévoles le font vivre chaque été, avec l'appui de la municipalité et des organismes de Saint-David-de-Falardeau.`,
+              ),
             )}
           </p>
           <dl className="team__comite" data-reveal>

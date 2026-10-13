@@ -2,6 +2,7 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { grandGalop, medias, partenaires } from "@/content/partenaires";
 import { festival } from "@/content/festival";
 import { fr } from "@/lib/typo";
+import { keepPlaces } from "@/lib/places";
 
 // Logo files are not available yet: partners are set as typographic marks.
 export default function Partenaires() {
@@ -22,7 +23,9 @@ export default function Partenaires() {
           <p className="part__tier-name">Au grand galop</p>
           <ul className="part__major">
             {grandGalop.map((p) => (
-              <li key={p}>{p}</li>
+              <li key={p}>
+                <span>{keepPlaces(p)}</span>
+              </li>
             ))}
           </ul>
         </div>

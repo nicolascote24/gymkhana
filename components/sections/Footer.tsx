@@ -1,6 +1,8 @@
 import { FacebookLogo } from "@phosphor-icons/react/dist/ssr";
 import { festival, mapsUrl } from "@/content/festival";
 import { fr } from "@/lib/typo";
+import { keepPlaces } from "@/lib/places";
+import CourseMark from "@/components/CourseMark";
 
 export default function Footer() {
   const a = festival.address;
@@ -20,7 +22,7 @@ export default function Footer() {
               <br />
               {a.street}
               <br />
-              {a.city} ({a.province}) {a.postalCode}
+              {keepPlaces(a.city)} ({a.province}) {a.postalCode}
             </p>
             <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="foot__link">
               Itinéraire
@@ -88,6 +90,10 @@ export default function Footer() {
         </div>
       </div>
 
+      <div className="wrap foot__end">
+        <CourseMark label="Arrivée" />
+      </div>
+
       <div className="foot__mark" aria-hidden>
         <span className="foot__mark-small">Festival</span>
         <span className="foot__mark-word">GYMKHANA</span>
@@ -96,7 +102,7 @@ export default function Footer() {
 
       <div className="wrap foot__legal">
         <p>
-          © {new Date().getFullYear()} {festival.name}
+          © {new Date().getFullYear()} {keepPlaces(festival.name)}
         </p>
         <p>Depuis {festival.founded}</p>
       </div>

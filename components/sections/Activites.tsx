@@ -95,8 +95,8 @@ export default function Activites() {
                 </div>
               )}
               <div className="act__body">
-                <p className="act__when">{fr(t.when)}</p>
                 <h3 className="act__name">{t.title}</h3>
+                <p className="act__when">{fr(t.when)}</p>
                 <p className="act__text">{fr(t.text)}</p>
               </div>
             </li>

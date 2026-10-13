@@ -6,10 +6,11 @@ import { getGsap, prefersReducedMotion, whenIdle } from "@/lib/motion";
 // The cloverleaf barrel pattern, drawn by the reader's scroll. On wide
 // screens the scene is pinned while the course draws and the three steps
 // advance; on small screens it simply draws once when it comes into view.
+// Labels sit outside each barrel's loop so the drawn path never covers them.
 const BARRELS = [
-  { x: 290, y: 300 },
-  { x: 110, y: 300 },
-  { x: 200, y: 110 },
+  { x: 290, y: 300, lx: 50, ly: 5 },
+  { x: 110, y: 300, lx: -50, ly: 5 },
+  { x: 200, y: 110, lx: 0, ly: -46 },
 ];
 const PATH =
   "M200 492 L256 310 A34 34 0 1 1 270 327 C 232 352, 172 352, 144 310 A34 34 0 1 0 130 328 C 156 290, 150 190, 166 118 A34 34 0 1 1 214 141 C 212 250, 204 380, 200 492";
@@ -112,7 +113,7 @@ export default function GymkhanaScene({ steps, definition }: { steps: Step[]; de
               <g key={i} data-barrel className="arena__barrel" transform={`translate(${b.x} ${b.y})`}>
                 <circle r="16" className="arena__halo" />
                 <circle r="10" className="arena__drum" />
-                <text y="38" textAnchor="middle" className="arena__num">
+                <text x={b.lx} y={b.ly} textAnchor="middle" className="arena__num">
                   {i + 1}
                 </text>
               </g>

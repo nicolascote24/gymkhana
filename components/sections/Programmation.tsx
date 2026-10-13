@@ -102,8 +102,7 @@ export default function Programmation() {
                     onClick={() => setActive(j.id)}
                     onKeyDown={(e) => onKey(e, i)}
                   >
-                    <span className="prog__tab-day">{j.nom}</span>
-                    <span className="prog__tab-num tabular">{num}</span>
+                    <span className="prog__tab-day">{j.nom}</span> <span className="prog__tab-num tabular">{num}</span>
                   </button>
                 );
               })}
@@ -133,8 +132,8 @@ export default function Programmation() {
                         {e.fin && <span className="prog__end"> à {e.fin}</span>}
                       </p>
                       <div className="prog__what">
-                        {hl && <span className="prog__flag">Moment fort</span>}
                         <h3 className="prog__name">{fr(e.titre)}</h3>
+                        {hl && <span className="prog__flag">Moment fort</span>}
                         {e.detail && <p className="prog__detail">{fr(e.detail)}</p>}
                       </div>
                       <p className="prog__where">{e.lieu}</p>

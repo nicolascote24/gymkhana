@@ -1,6 +1,7 @@
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Picture, { type ImageId } from "@/components/Picture";
 import StatementScrub from "@/components/sections/StatementScrub";
+import CourseMark from "@/components/CourseMark";
 import { fr } from "@/lib/typo";
 
 // The statement fills word by word as it is read; the emphasised words carry
@@ -41,6 +42,7 @@ const PILLARS: { id: string; title: string; text: string; href: string; img: Ima
 export default function EnBref() {
   return (
     <section id="contenu" className="bref" aria-labelledby="bref-title">
+      <CourseMark label="Départ" className="bref__start" />
       <div className="wrap">
         <h2 id="bref-title" className="sr-only">
           Le festival en bref

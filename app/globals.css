@@ -77,6 +77,10 @@ img {
 picture {
   display: contents;
 }
+/* compound place names never break at their hyphens (see lib/places.tsx) */
+.place {
+  white-space: nowrap;
+}
 h1,
 h2,
 h3,
@@ -184,6 +188,14 @@ body::after {
   overflow: hidden;
   transition: transform 160ms var(--ease-out-strong);
 }
+/* very small phones: a narrower width axis keeps the longest label on one line */
+@media (max-width: 359px) {
+  .btn {
+    gap: 0.6rem;
+    padding-inline: 1.125rem;
+    font-variation-settings: "wdth" 90;
+  }
+}
 /* Fill wipes in from the left, in the direction of the run. */
 .btn::before {
   content: "";
@@ -265,6 +277,7 @@ body::after {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-variation-settings: "wdth" 112;
+  white-space: nowrap;
 }
 .nav__brand img {
   width: 2.75rem;
@@ -278,6 +291,7 @@ body::after {
   font-size: 0.8125rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .nav__links a:not(.btn) {
   position: relative;
@@ -314,9 +328,12 @@ body::after {
   display: none;
 }
 
-@media (max-width: 1023px) {
-  .nav__links,
-  .nav__brand span {
+/* the full link row needs about 1060px; below that the menu takes over */
+@media (max-width: 1151px) {
+  .nav__bar {
+    gap: 1rem;
+  }
+  .nav__links {
     display: none;
   }
   .nav__toggle {
@@ -329,6 +346,13 @@ body::after {
     font-size: 0.8125rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+}
+
+/* the name beside the logo needs about 380px with the menu button */
+@media (max-width: 379px) {
+  .nav__brand span {
+    display: none;
   }
 }
 
@@ -478,7 +502,12 @@ body::after {
   inset: 0;
   pointer-events: none;
   mix-blend-mode: screen;
-  background: radial-gradient(55% 50% at 86% 12%, rgb(255 214 156 / 0.42), rgb(255 186 116 / 0.12) 45%, transparent 72%);
+  background: radial-gradient(
+    55% 50% at 86% 12%,
+    rgb(255 214 156 / 0.42),
+    rgb(255 186 116 / 0.12) 45%,
+    transparent 72%
+  );
 }
 @media (prefers-reduced-motion: no-preference) {
   .hero__sun {
@@ -685,4 +714,3 @@ body::after {
 .hero-pending [data-hero-letter] {
   opacity: 0;
 }
-

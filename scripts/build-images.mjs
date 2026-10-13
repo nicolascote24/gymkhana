@@ -38,11 +38,31 @@ const jobs = [
   },
   { id: "relais", src: `${BANK}/CB_20220814_145327-1-scaled.jpg`, widths: [640, 1080, 1600] },
   { id: "sauvetage", src: `${BANK}/502.jpg`, widths: [640, 1080, 1600] },
-  { id: "baril-gradins", src: `${BANK}/486121701_1082639307241061_638791365813437644_n.jpg`, widths: [640, 1080, 1600] },
-  { id: "baril-roulottes", src: `${BANK}/486177124_1082639060574419_1317052855270604286_n.jpg`, widths: [640, 1080, 1600] },
+  {
+    id: "baril-gradins",
+    src: `${BANK}/486121701_1082639307241061_638791365813437644_n.jpg`,
+    widths: [640, 1080, 1600],
+  },
+  {
+    id: "baril-roulottes",
+    src: `${BANK}/486177124_1082639060574419_1317052855270604286_n.jpg`,
+    widths: [640, 1080, 1600],
+  },
   { id: "baril-foule", src: `${BANK}/486576520_1082639293907729_8661474365982776403_n.jpg`, widths: [640, 1080, 1600] },
-  { id: "chien", src: `${BANK}/486199081_1082632333908425_3091345128069034974_n.jpg`, widths: [640, 1080, 1600] },
-  { id: "mascotte", src: `${BANK}/487212465_1082643843907274_8083644331164335370_n.jpg`, widths: [640, 1080, 1600] },
+  {
+    id: "chien",
+    src: `${BANK}/486199081_1082632333908425_3091345128069034974_n.jpg`,
+    widths: [640, 1080, 1600],
+    // The bottom band (signature and badge) would sit under the tile's text.
+    trim: { left: 0, top: 60, width: 2048, height: 880 },
+  },
+  {
+    id: "mascotte",
+    src: `${BANK}/487212465_1082643843907274_8083644331164335370_n.jpg`,
+    widths: [640, 1080, 1600],
+    // Same bottom band as the dog photo.
+    trim: { left: 0, top: 0, width: 2048, height: 1060 },
+  },
   { id: "jeune-cavaliere", src: `${BANK}/432-680x1024.jpg`, widths: [480, 680] },
   { id: "presidente", src: `${BANK}/Presidente.jpg`, widths: [640, 1080, 1600] },
   { id: "equipe", src: `${BANK}/equipe.jpg`, widths: [640, 1080, 1440] },
@@ -58,8 +78,8 @@ for (const job of jobs.filter((j) => !only.length || only.includes(j.id))) {
   let base = sharp(job.src).rotate();
   const meta = await base.metadata();
   const full = { width: meta.width, height: meta.height };
-  if (job.crop) base = base.extract(job.crop);
-  const box = job.crop ?? { left: 0, top: 0, ...full };
+  if (job.crop ?? job.trim) base = base.extract(job.crop ?? job.trim);
+  const box = job.crop ?? job.trim ?? { left: 0, top: 0, ...full };
   const shaped = job.alpha ? base.ensureAlpha() : base.removeAlpha();
   const graded = job.noGrade ? shaped : grade(shaped, job.alpha);
   // Freeze the graded pixels once, then resize from that buffer.
@@ -85,15 +105,25 @@ for (const job of jobs.filter((j) => !only.length || only.includes(j.id))) {
     const q = job.quality ?? 64;
     const avif = `${job.id}-${target}.avif`;
     const webp = `${job.id}-${target}.webp`;
-    await src().resize({ width: w }).avif({ quality: q - 8, effort: 6 }).toFile(path.join(OUT, avif));
-    await src().resize({ width: w }).webp({ quality: q + 6, alphaQuality: 90 }).toFile(path.join(OUT, webp));
+    await src()
+      .resize({ width: w })
+      .avif({ quality: q - 8, effort: 6 })
+      .toFile(path.join(OUT, avif));
+    await src()
+      .resize({ width: w })
+      .webp({ quality: q + 6, alphaQuality: 90 })
+      .toFile(path.join(OUT, webp));
     // The descriptor is the file's real pixel width (cut-outs are narrower than their plate).
     (entry.sources.avif ??= []).push({ src: `/images/${avif}`, w });
     (entry.sources.webp ??= []).push({ src: `/images/${webp}`, w });
   }
   if (!job.alpha) {
     const jpg = `${job.id}.jpg`;
-    await src().resize({ width: Math.min(1600, box.width) }).flatten().jpeg({ quality: 78, mozjpeg: true }).toFile(path.join(OUT, jpg));
+    await src()
+      .resize({ width: Math.min(1600, box.width) })
+      .flatten()
+      .jpeg({ quality: 78, mozjpeg: true })
+      .toFile(path.join(OUT, jpg));
     entry.fallback = `/images/${jpg}`;
   } else {
     const png = `${job.id}.png`;
@@ -106,10 +136,11 @@ for (const job of jobs.filter((j) => !only.length || only.includes(j.id))) {
 }
 
 // Open Graph card: hero plate, 1200x630.
-if (!only.length) await grade(sharp("photo_clients/hero_idee.jpg"))
-  .resize({ width: 1200, height: 630, fit: "cover", position: "right" })
-  .jpeg({ quality: 82, mozjpeg: true })
-  .toFile(path.join(OUT, "og-festival-gymkhana.jpg"));
+if (!only.length)
+  await grade(sharp("photo_clients/hero_idee.jpg"))
+    .resize({ width: 1200, height: 630, fit: "cover", position: "right" })
+    .jpeg({ quality: 82, mozjpeg: true })
+    .toFile(path.join(OUT, "og-festival-gymkhana.jpg"));
 
 await mkdir(path.dirname(MANIFEST), { recursive: true });
 await writeFile(MANIFEST, JSON.stringify(manifest, null, 2) + "\n");

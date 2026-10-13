@@ -2,6 +2,7 @@ import Picture from "@/components/Picture";
 import GymkhanaScene from "@/components/sections/GymkhanaScene";
 import { epreuves, definition, sanction, type Epreuve } from "@/content/epreuves";
 import { fr } from "@/lib/typo";
+import { keepPlaces } from "@/lib/places";
 
 const STEPS = [
   { title: "Le départ", text: "Le cheval franchit la ligne au galop : le chronomètre démarre." },
@@ -85,7 +86,7 @@ export default function Gymkhana() {
 
       <div className="wrap">
         <p className="gym__sanction" data-reveal>
-          {fr(sanction)}
+          {keepPlaces(fr(sanction))}
         </p>
       </div>
     </section>
