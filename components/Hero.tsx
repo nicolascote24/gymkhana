@@ -7,7 +7,7 @@ import { festival } from "@/content/festival";
 const WORD = "GYMKHANA".split("");
 
 // Living hero. Four depth planes share one frame: the background (rider
-// removed), the rider cut-out, the name, and the dust. Each plane has an
+// removed), the name, the rider cut-out, and the dust. Each plane has an
 // outer wrapper driven by scroll and an inner one driven by the pointer,
 // the idle drift and the entrance, so no two animations fight over a property.
 export default function Hero() {
@@ -36,16 +36,6 @@ export default function Hero() {
         <div className="hero__sun" aria-hidden />
         <div className="hero__shade hero__shade--low" aria-hidden />
 
-        <div className="hero__layer" data-scroll="rider" aria-hidden>
-          <div className="hero__depth" data-depth="rider">
-            <div className="hero__frame">
-              <div className="hero__rider" style={riderBox}>
-                <Picture id="hero-rider" alt="" priority sizes="(max-aspect-ratio: 3/4) 57svh, max(33vw, 58svh)" />
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="hero__word" aria-hidden data-scroll="word">
           <div className="hero__word-inner" data-depth="word">
             {WORD.map((c, i) => (
@@ -53,6 +43,16 @@ export default function Hero() {
                 {c}
               </span>
             ))}
+          </div>
+        </div>
+
+        <div className="hero__layer" data-scroll="rider" aria-hidden>
+          <div className="hero__depth" data-depth="rider">
+            <div className="hero__frame">
+              <div className="hero__rider" style={riderBox}>
+                <Picture id="hero-rider" alt="" priority sizes="(max-aspect-ratio: 3/4) 57svh, max(33vw, 58svh)" />
+              </div>
+            </div>
           </div>
         </div>
 

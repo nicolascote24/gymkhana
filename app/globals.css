@@ -387,13 +387,12 @@ body::after {
 
 /* ----------------------------- hero ----------------------------- */
 /* A living photograph. Back to front: background plate (rider removed),
-   sun glow, low shade, the rider cut-out, the name, high shade, dust, veil,
+   sun glow, low shade, the name, the rider cut-out, high shade, dust, veil,
    content. Plates share one frame so the rider sits on its own pixels; each
    plane drifts at its own depth with the pointer and on its own when idle.
-   Hierarchy: one text column on a single left axis, bottom-anchored: date
-   line, action, then the name (FESTIVAL / GYMKHANA / DE SAINT-DAVID-DE-
-   FALARDEAU). The word stays in front of the scene so it reads at a glance;
-   the image keeps the upper two thirds. */
+   Hierarchy: date and action up in the dark of the trees, one giant word on
+   the ground line with the hooves crossing it, two matched small lines
+   completing the full name. */
 .hero-pin {
   position: relative;
   height: 200svh;
@@ -478,7 +477,7 @@ body::after {
 .hero__shade--low {
   background:
     linear-gradient(0deg, rgb(20 22 25 / 0.55) 0%, rgb(20 22 25 / 0.15) 20%, rgb(20 22 25 / 0) 32%),
-    radial-gradient(48% 60% at 0% 68%, rgb(20 22 25 / 0.62) 0%, rgb(20 22 25 / 0.28) 50%, rgb(20 22 25 / 0) 100%);
+    radial-gradient(70% 75% at 0% 8%, rgb(20 22 25 / 0.55) 0%, rgb(20 22 25 / 0.2) 45%, rgb(20 22 25 / 0) 75%);
 }
 .hero__shade--high {
   background: linear-gradient(180deg, rgb(20 22 25 / 0.5) 0%, rgb(20 22 25 / 0) 16%);
@@ -516,8 +515,6 @@ body::after {
   font-size: var(--word-fs);
   font-weight: 900;
   color: var(--color-sable);
-  /* Separation from the pale barrel and the dust, without a visible halo. */
-  text-shadow: 0 0.02em 0.3em rgb(20 22 25 / 0.28);
 }
 .hero__word-inner {
   display: flex;
@@ -553,19 +550,17 @@ body::after {
 .hero__lead {
   position: absolute;
   left: var(--pad);
-  bottom: calc(var(--y-fest) + var(--small-fs) * 0.74 + max(2.25rem, 6cqh));
+  top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + max(1.75rem, 6.5cqh));
   display: grid;
   justify-items: start;
-  gap: max(1.25rem, 3cqh);
+  gap: max(1.5rem, 3.6cqh);
 }
 .hero__when {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem 1.25rem;
+  display: grid;
+  gap: 0.8rem;
 }
 .hero__date {
-  font-size: clamp(1.5rem, 2.1cqw, 2.5rem);
+  font-size: clamp(2rem, 3.6cqw, 4rem);
   font-weight: 900;
   line-height: 0.8;
   text-transform: uppercase;
@@ -603,11 +598,6 @@ body::after {
   }
   .hero__lead {
     top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 1rem);
-    bottom: auto;
-  }
-  .hero__when {
-    display: grid;
-    gap: 0.8rem;
   }
   .hero__date {
     font-size: clamp(2rem, 9cqw, 3rem);
