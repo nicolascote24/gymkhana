@@ -57,7 +57,7 @@ export default function Nav() {
             <span>
               Festival Gymkhana
               <br />
-              de Saint-David-de-Falardeau
+              de Falardeau
             </span>
           </a>
           <nav aria-label="Navigation principale" className="nav__links">

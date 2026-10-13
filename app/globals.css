@@ -73,6 +73,10 @@ img {
   max-width: 100%;
   height: auto;
 }
+/* <picture> only chooses the source; layout belongs to the parent and the img. */
+picture {
+  display: contents;
+}
 h1,
 h2,
 h3,
@@ -361,10 +365,11 @@ body::after {
 }
 .menu__links a {
   display: block;
-  font-size: clamp(2.5rem, 11vw, 4rem);
+  /* Longest label (PROGRAMMATION) fits the measure at wdth 75. */
+  font-size: min(4.5rem, calc((100vw - 2 * var(--gutter)) / 7.9));
   font-weight: 900;
   line-height: 1;
-  font-variation-settings: "wdth" 125;
+  font-variation-settings: "wdth" 75;
   text-transform: uppercase;
   padding-block: 0.4rem;
   opacity: 0;

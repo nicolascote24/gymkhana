@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
 import { festival } from "@/content/festival";
 import SmoothScroll from "@/components/SmoothScroll";
+import RevealRoot from "@/components/RevealRoot";
 import "./globals.css";
+import "./sections.css";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -69,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){var d=document.documentElement;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('hero-pending');setTimeout(function(){d.classList.remove('hero-pending')},2500)})()",
+              "(function(){var d=document.documentElement;d.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('hero-pending');setTimeout(function(){d.classList.remove('hero-pending')},2500)})()",
           }}
         />
       </head>
@@ -79,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <SmoothScroll />
         {children}
+        <RevealRoot />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>

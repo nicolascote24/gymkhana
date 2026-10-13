@@ -60,7 +60,7 @@ export const programme = {
         { heure: "11 h", fin: "16 h", titre: "Jeux gonflables, Jumpaï et amuseurs publics", lieu: "Zone familiale", genre: "famille" },
         { heure: "13 h", fin: "16 h", titre: "Danse en ligne", detail: "Écoles Pascale Dufour et Nathalie Paquet", lieu: "Chapiteau", genre: "danse" },
         { heure: "17 h", titre: "Spectacle canin", detail: "Agilité Sag-Lac", lieu: "Manège", genre: "famille" },
-        { heure: "19 h", titre: "Grand Prix barils et sauvetage", detail: "Le moment fort du festival", lieu: "Manège", genre: "compétition", soir: true },
+        { heure: "19 h", titre: "Grand Prix barils et sauvetage", lieu: "Manège", genre: "compétition", soir: true },
         { heure: "21 h 30", titre: "Rock Story", detail: "Spectacle", lieu: "Chapiteau", genre: "spectacle", soir: true },
         { heure: "23 h", titre: "DJ Jello Musique", lieu: "Chapiteau", genre: "spectacle", soir: true },
       ],
