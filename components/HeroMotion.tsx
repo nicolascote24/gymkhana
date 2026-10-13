@@ -11,7 +11,7 @@ import { getGsap, prefersReducedMotion, ease } from "@/lib/motion";
 //    slowly on their own when nobody moves, so the still image breathes;
 // 3. scroll: the hero stays pinned while the next section slides over it,
 //    the word sinks behind the rider and the veil darkens.
-const DEPTH = { bg: 9, word: 16, rider: 26, dust: 38 }; // px at full deflection
+const DEPTH = { bg: 9, rider: 22, word: 30, dust: 40 }; // px at full deflection
 
 export default function HeroMotion() {
   useEffect(() => {
