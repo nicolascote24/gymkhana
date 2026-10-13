@@ -25,6 +25,9 @@ const BANK = "photo_clients/banque_photos";
 const jobs = [
   // Hero plate and its cut-out (rider, horse and barrel), same canvas so the layers align.
   { id: "hero", src: "photo_clients/hero_idee.jpg", widths: [828, 1280, 1920, 2752], quality: 62 },
+  // Same plate with the rider removed (inpainted): the background layer of the
+  // living hero, so rider and background can move on separate depth planes.
+  { id: "hero-clean", src: "assets/cutouts/hero-clean.jpg", widths: [828, 1280, 1920, 2752], quality: 62 },
   {
     id: "hero-rider",
     src: "assets/cutouts/hero-rider.png",

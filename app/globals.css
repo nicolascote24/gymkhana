@@ -386,14 +386,15 @@ body::after {
 }
 
 /* ----------------------------- hero ----------------------------- */
-/* The hero stays put while the next section slides over it.
-   Layers, back to front: plate, low shade, the word, the rider cut-out,
-   high shade, dust, veil, content. The two plates share one frame so the
-   rider sits exactly on its own pixels.
-   Hierarchy: one giant (GYMKHANA) set low, on the ground line, so only the
-   horse's legs cross it; two identical small lines frame it (FESTIVAL /
-   DE SAINT-DAVID-DE-FALARDEAU); date and action sit apart, on the left. */
+/* A living photograph. Back to front: background plate (rider removed),
+   sun glow, low shade, the name, the rider cut-out, high shade, dust, veil,
+   content. Plates share one frame so the rider sits on its own pixels; each
+   plane drifts at its own depth with the pointer and on its own when idle.
+   Hierarchy: date and action up in the dark of the trees, one giant word on
+   the ground line with the hooves crossing it, two matched small lines
+   completing the full name. */
 .hero-pin {
+  position: relative;
   height: 200svh;
 }
 .hero {
@@ -403,13 +404,12 @@ body::after {
   --word-fs: calc((100cqw - 2 * var(--pad)) / var(--wf));
   --small-fs: clamp(0.8125rem, 1.4cqw, 1.5rem);
   --g: max(0.7rem, 1.5cqh);
-  --y-base: max(1.25rem, 3.4cqh);
-  --y-place: var(--y-base);
+  --y-place: max(1.25rem, 3.4cqh);
   --y-word: calc(var(--y-place) + var(--small-fs) * 0.74 + var(--g));
   --y-fest: calc(var(--y-word) + var(--word-fs) * 0.74 + var(--g));
-  --y-top: calc(var(--y-fest) + var(--small-fs) * 0.74);
-  --fx: 0.6;
-  --fy: 0.62;
+  --zoom: 1.2;
+  --fx: 0.62;
+  --fy: 0.546;
   position: sticky;
   top: 0;
   height: 100svh;
@@ -423,12 +423,18 @@ body::after {
   position: absolute;
   inset: 0;
   container-type: size;
+}
+.hero__depth {
+  position: absolute;
+  inset: 0;
+  /* Shared base scale: margin for the drift, identical on every plate. */
+  scale: 1.035;
+  transform-origin: 62% 60%;
   will-change: transform;
-  transform-origin: 70% 65%;
 }
 .hero__frame {
   --ratio: 1.79167;
-  --W: max(100cqw, 100cqh * var(--ratio));
+  --W: calc(max(100cqw, 100cqh * var(--ratio)) * var(--zoom));
   --H: calc(var(--W) / var(--ratio));
   position: absolute;
   width: var(--W);
@@ -443,6 +449,26 @@ body::after {
 .hero__rider {
   position: absolute;
 }
+.hero__sun {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: radial-gradient(55% 50% at 86% 12%, rgb(255 214 156 / 0.42), rgb(255 186 116 / 0.12) 45%, transparent 72%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero__sun {
+    animation: hero-sun 7s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+}
+@keyframes hero-sun {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .hero__shade {
   position: absolute;
   inset: 0;
@@ -451,10 +477,10 @@ body::after {
 .hero__shade--low {
   background:
     linear-gradient(0deg, rgb(20 22 25 / 0.55) 0%, rgb(20 22 25 / 0.15) 20%, rgb(20 22 25 / 0) 32%),
-    linear-gradient(90deg, rgb(20 22 25 / 0.5) 0%, rgb(20 22 25 / 0.2) 26%, rgb(20 22 25 / 0) 42%);
+    radial-gradient(70% 75% at 0% 8%, rgb(20 22 25 / 0.55) 0%, rgb(20 22 25 / 0.2) 45%, rgb(20 22 25 / 0) 75%);
 }
 .hero__shade--high {
-  background: linear-gradient(180deg, rgb(20 22 25 / 0.5) 0%, rgb(20 22 25 / 0) 18%);
+  background: linear-gradient(180deg, rgb(20 22 25 / 0.5) 0%, rgb(20 22 25 / 0) 16%);
 }
 .hero__veil {
   position: absolute;
@@ -469,6 +495,7 @@ body::after {
   width: 100%;
   height: 100%;
   pointer-events: none;
+  will-change: transform;
 }
 
 /* Lockup. Line boxes are cap-tight (0.74 em) so the stack is exact. */
@@ -485,15 +512,17 @@ body::after {
 .hero__word {
   right: var(--pad);
   bottom: var(--y-word);
-  display: flex;
   font-size: var(--word-fs);
   font-weight: 900;
   color: var(--color-sable);
 }
+.hero__word-inner {
+  display: flex;
+  will-change: transform;
+}
 .hero__word span {
   display: block;
   font-variation-settings: "wdth" var(--wdth);
-  will-change: transform;
 }
 .hero__place,
 .hero__festival {
@@ -510,32 +539,28 @@ body::after {
   bottom: var(--y-fest);
 }
 
-.hero__content {
+.hero__content,
+.hero__names {
   position: absolute;
   inset: 0;
+}
+.hero__names {
+  pointer-events: none;
 }
 .hero__lead {
   position: absolute;
   left: var(--pad);
-  right: var(--pad);
-  top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 1rem);
-  bottom: calc(var(--y-top) + max(2.5rem, 7cqh));
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  gap: max(1.5rem, 3.4cqh);
-  pointer-events: none;
-}
-.hero__lead > * {
-  pointer-events: auto;
+  top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + max(1.75rem, 6.5cqh));
+  display: grid;
+  justify-items: start;
+  gap: max(1.5rem, 3.6cqh);
 }
 .hero__when {
   display: grid;
-  gap: 0.7rem;
+  gap: 0.8rem;
 }
 .hero__date {
-  font-size: clamp(1.75rem, 2.7cqw, 3rem);
+  font-size: clamp(2rem, 3.6cqw, 4rem);
   font-weight: 900;
   line-height: 0.8;
   text-transform: uppercase;
@@ -561,21 +586,24 @@ body::after {
     --fx: 0.7;
   }
 }
-/* Portrait: date and action sit up in the sky, the name stays on the ground
-   line so only the hooves cross it, the horse keeps the middle of the screen. */
+/* Portrait: tighter on the rider, narrower letters, the name on the ground
+   line so only the hooves cross it. */
 @media (max-aspect-ratio: 3/4) {
   .hero {
     --wdth: 75;
     --wf: 5.119;
+    --zoom: 1.15;
     --fx: 0.75;
-    --fy: 0.55;
+    --fy: 0.6;
   }
   .hero__lead {
-    justify-content: flex-start;
-    gap: 1.5rem;
+    top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 1rem);
+  }
+  .hero__date {
+    font-size: clamp(2rem, 9cqw, 3rem);
   }
   .hero__shade--high {
-    background: linear-gradient(180deg, rgb(20 22 25 / 0.6) 0%, rgb(20 22 25 / 0) 28%);
+    background: linear-gradient(180deg, rgb(20 22 25 / 0.6) 0%, rgb(20 22 25 / 0) 30%);
   }
   .hero__shade--low {
     background: linear-gradient(0deg, rgb(20 22 25 / 0.75) 0%, rgb(20 22 25 / 0.35) 24%, rgb(20 22 25 / 0) 42%);
@@ -586,8 +614,5 @@ body::after {
 .hero-pending [data-hero-in],
 .hero-pending [data-hero-letter] {
   opacity: 0;
-}
-.hero-pin {
-  position: relative;
 }
 

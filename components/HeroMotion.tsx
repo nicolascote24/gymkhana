@@ -3,69 +3,128 @@
 import { useEffect } from "react";
 import { getGsap, prefersReducedMotion, ease } from "@/lib/motion";
 
-// Hero choreography:
-// 1. on load, the plate settles, the letters run in from condensed to wide
-//    (the start of a run), then the name and the pitch come in;
-// 2. on scroll, the hero stays pinned while the next section slides over it:
-//    the plates drift, the word rises behind the rider, the veil darkens;
-// 3. ambient dust drifts in the light while the hero is visible.
+// Hero choreography (first-visit moment, so it may take its time):
+// 1. entrance: a dolly-in where each depth plane settles at its own pace
+//    (the rider travels further than the background), the letters run in
+//    from condensed to wide, then the name lines, date and action arrive;
+// 2. living photo: planes follow the pointer at their own depth, and drift
+//    slowly on their own when nobody moves, so the still image breathes;
+// 3. scroll: the hero stays pinned while the next section slides over it,
+//    the word sinks behind the rider and the veil darkens.
+const DEPTH = { bg: 9, word: 16, rider: 26, dust: 38 }; // px at full deflection
+
 export default function HeroMotion() {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>("[data-hero]");
     if (!root) return;
     const html = document.documentElement;
-    const reduce = prefersReducedMotion();
-    if (reduce) {
+    if (prefersReducedMotion()) {
       html.classList.remove("hero-pending");
       return;
     }
 
-    const { gsap } = getGsap();
-    const stages = root.querySelectorAll("[data-hero-stage]");
-    const letters = root.querySelectorAll<HTMLElement>("[data-hero-letter]");
-    const word = root.querySelector("[data-hero-word]");
+    const { gsap, ScrollTrigger } = getGsap();
+    const q = (s: string) => root.querySelector<HTMLElement>(s);
+    const qa = (s: string) => root.querySelectorAll<HTMLElement>(s);
+    const planes = {
+      bg: q('[data-depth="bg"]'),
+      word: q('[data-depth="word"]'),
+      rider: q('[data-depth="rider"]'),
+      dust: q('[data-depth="dust"]'),
+    };
+    const letters = qa("[data-hero-letter]");
     const ins = document.querySelectorAll("[data-hero-in]");
-    const fades = root.querySelectorAll("[data-hero-fade]");
-    const veil = root.querySelector("[data-hero-veil]");
     const target = parseFloat(getComputedStyle(root).getPropertyValue("--wdth")) || 125;
 
     const ctx = gsap.context(() => {
-      // Entrance
+      // 1. Entrance
       gsap.set(ins, { opacity: 0 });
       html.classList.remove("hero-pending");
       const tl = gsap.timeline({ defaults: { ease: ease.out } });
-      tl.fromTo(stages, { scale: 1.12 }, { scale: 1, duration: 2.2 }, 0)
+      tl.fromTo(planes.bg, { scale: 1.16 }, { scale: 1, duration: 2.6 }, 0)
+        .fromTo(planes.rider, { scale: 1.3, yPercent: 4 }, { scale: 1, yPercent: 0, duration: 2.4 }, 0)
+        .fromTo(planes.dust, { opacity: 0 }, { opacity: 1, duration: 1.6, ease: "power1.out" }, 0.6)
         .fromTo(
           letters,
           { "--wdth": 62, xPercent: -40, opacity: 0 },
           { "--wdth": target, xPercent: 0, opacity: 1, duration: 1.15, stagger: 0.055 },
-          0.15,
+          0.3,
         )
-        .to(ins, { opacity: 1, duration: 0.8, stagger: 0.08, ease: "power2.out" }, 0.75)
-        .fromTo(fades, { y: 24 }, { y: 0, duration: 1, stagger: 0.1 }, 0.75)
-        .add(() => {
-          letters.forEach((l) => l.style.removeProperty("--wdth"));
-        });
+        .fromTo(ins, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.07 }, 0.95)
+        .add(() => letters.forEach((l) => l.style.removeProperty("--wdth")));
 
-      // Scroll: pinned hero, next section slides over it.
+      // 3. Scroll: pinned hero, the next section slides over it.
       const scroll = {
         trigger: root.parentElement,
         start: "top top",
         end: () => `+=${root.offsetHeight}`,
         scrub: 0.6,
       };
-      gsap.to(stages, { yPercent: 7, scale: 1.05, ease: "none", scrollTrigger: scroll });
-      gsap.to(word, { yPercent: -95, ease: "none", scrollTrigger: scroll });
-      gsap.to(fades, { yPercent: -35, opacity: 0, ease: "none", scrollTrigger: { ...scroll, end: () => `+=${root.offsetHeight * 0.55}` } });
-      gsap.to(veil, { opacity: 0.65, ease: "none", scrollTrigger: scroll });
+      gsap.to(qa('[data-scroll="bg"], [data-scroll="rider"]'), { yPercent: 6, ease: "none", scrollTrigger: scroll });
+      gsap.to(q('[data-scroll="word"]'), { yPercent: -110, ease: "none", scrollTrigger: scroll });
+      gsap.to(qa('[data-scroll="lead"], [data-scroll="name"]'), {
+        yPercent: -30,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: { ...scroll, end: () => `+=${root.offsetHeight * 0.5}` },
+      });
+      gsap.to(q("[data-hero-veil]"), { opacity: 0.7, ease: "none", scrollTrigger: scroll });
     }, root);
 
-    // Ambient dust
-    const stopDust = startDust(root);
+    // 2. Living photo: pointer + idle drift, smoothed with quickTo.
+    const movers = (Object.keys(DEPTH) as (keyof typeof DEPTH)[])
+      .filter((k) => planes[k])
+      .map((k) => ({
+        depth: DEPTH[k],
+        x: gsap.quickTo(planes[k]!, "x", { duration: 1.4, ease: "power3.out" }),
+        y: gsap.quickTo(planes[k]!, "y", { duration: 1.4, ease: "power3.out" }),
+      }));
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const pointer = { x: 0, y: 0, active: 0 };
+    let lastMove = -1e9;
+    const onMove = (e: PointerEvent) => {
+      const r = root.getBoundingClientRect();
+      pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+      pointer.y = ((e.clientY - r.top) / r.height) * 2 - 1;
+      lastMove = performance.now();
+    };
+    if (finePointer) root.addEventListener("pointermove", onMove);
+
+    let visible = true;
+    const tick = (time: number) => {
+      if (!visible) return;
+      // Pointer weight eases out after 2.5 s without movement, handing back to the drift.
+      const since = performance.now() - lastMove;
+      const want = finePointer && since < 2500 ? 1 : 0;
+      pointer.active += (want - pointer.active) * 0.04;
+      const ix = Math.sin((time / 13) * Math.PI * 2) * 0.45 + Math.sin((time / 5.3) * Math.PI * 2) * 0.08;
+      const iy = Math.sin((time / 9.7) * Math.PI * 2) * 0.3;
+      const nx = pointer.x * pointer.active + ix * (1 - pointer.active * 0.6);
+      const ny = pointer.y * pointer.active + iy * (1 - pointer.active * 0.6);
+      for (const m of movers) {
+        m.x(-nx * m.depth);
+        m.y(-ny * m.depth * 0.6);
+      }
+    };
+    gsap.ticker.add(tick);
+
+    const dust = startDust(root);
+    const st = ScrollTrigger.create({
+      trigger: root.parentElement,
+      start: "top top",
+      end: () => `+=${root.offsetHeight}`,
+      onToggle: (self) => {
+        visible = self.isActive || self.progress === 0;
+        dust.toggle(visible);
+      },
+    });
 
     return () => {
       ctx.revert();
-      stopDust();
+      gsap.ticker.remove(tick);
+      root.removeEventListener("pointermove", onMove);
+      st.kill();
+      dust.stop();
     };
   }, []);
 
@@ -75,7 +134,8 @@ export default function HeroMotion() {
 function startDust(root: HTMLElement) {
   const canvas = root.querySelector<HTMLCanvasElement>("[data-hero-dust]");
   const c = canvas?.getContext("2d");
-  if (!canvas || !c) return () => {};
+  const noop = { stop: () => {}, toggle: (_on: boolean) => {} };
+  if (!canvas || !c) return noop;
   const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   let w = 0;
   let h = 0;
@@ -104,6 +164,7 @@ function startDust(root: HTMLElement) {
   resize();
   let raf = 0;
   let running = false;
+  let wanted = true;
   const draw = () => {
     c.clearRect(0, 0, w, h);
     for (const p of ps) {
@@ -121,7 +182,7 @@ function startDust(root: HTMLElement) {
     raf = requestAnimationFrame(draw);
   };
   const play = () => {
-    if (!running) {
+    if (!running && wanted && !document.hidden) {
       running = true;
       raf = requestAnimationFrame(draw);
     }
@@ -130,28 +191,21 @@ function startDust(root: HTMLElement) {
     running = false;
     cancelAnimationFrame(raf);
   };
-  // Run only while the hero is actually visible (it stays pinned under the next section).
-  const { ScrollTrigger } = getGsap();
-  let visible = true;
-  const st = ScrollTrigger.create({
-    trigger: root.parentElement,
-    start: "top top",
-    end: () => `+=${root.offsetHeight}`,
-    onToggle: (self) => {
-      visible = self.isActive || self.progress === 0;
-      if (visible && !document.hidden) play();
-      else pause();
-    },
-  });
-  if (window.scrollY < root.offsetHeight) play();
-  const onVis = () => (document.hidden || !visible ? pause() : play());
+  const onVis = () => (document.hidden ? pause() : play());
   document.addEventListener("visibilitychange", onVis);
   const ro = new ResizeObserver(resize);
   ro.observe(canvas);
-  return () => {
-    pause();
-    st.kill();
-    ro.disconnect();
-    document.removeEventListener("visibilitychange", onVis);
+  play();
+  return {
+    toggle: (on: boolean) => {
+      wanted = on;
+      if (on) play();
+      else pause();
+    },
+    stop: () => {
+      pause();
+      ro.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+    },
   };
 }

@@ -469,5 +469,48 @@
       ]
     },
     "fallback": "/images/logo.png"
+  },
+  "hero-clean": {
+    "width": 2752,
+    "height": 1536,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/hero-clean-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/hero-clean-1280.avif",
+          "w": 1280
+        },
+        {
+          "src": "/images/hero-clean-1920.avif",
+          "w": 1920
+        },
+        {
+          "src": "/images/hero-clean-2752.avif",
+          "w": 2752
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/hero-clean-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/hero-clean-1280.webp",
+          "w": 1280
+        },
+        {
+          "src": "/images/hero-clean-1920.webp",
+          "w": 1920
+        },
+        {
+          "src": "/images/hero-clean-2752.webp",
+          "w": 2752
+        }
+      ]
+    },
+    "fallback": "/images/hero-clean.jpg"
   }
 }
