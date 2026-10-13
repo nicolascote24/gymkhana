@@ -79,17 +79,17 @@ function startDust(root: HTMLElement) {
   const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   let w = 0;
   let h = 0;
-  const count = window.innerWidth < 768 ? 36 : 70;
+  const count = window.innerWidth < 768 ? 18 : 34;
   type P = { x: number; y: number; r: number; vx: number; vy: number; a: number; t: number };
   let ps: P[] = [];
   const seed = () => {
     ps = Array.from({ length: count }, () => ({
       x: Math.random() * w,
-      y: h * (0.35 + Math.random() * 0.65),
-      r: 0.4 + Math.random() * 1.6,
-      vx: -(0.08 + Math.random() * 0.35),
-      vy: -(0.02 + Math.random() * 0.12),
-      a: 0.15 + Math.random() * 0.45,
+      y: h * (0.55 + Math.random() * 0.45),
+      r: 0.5 + Math.random() * 1.1,
+      vx: -(0.06 + Math.random() * 0.22),
+      vy: -(0.02 + Math.random() * 0.08),
+      a: 0.08 + Math.random() * 0.22,
       t: Math.random() * Math.PI * 2,
     }));
   };
@@ -111,7 +111,7 @@ function startDust(root: HTMLElement) {
       p.x += p.vx + Math.sin(p.t) * 0.08;
       p.y += p.vy;
       if (p.x < -4) p.x = w + 4;
-      if (p.y < h * 0.3) p.y = h + 4;
+      if (p.y < h * 0.5) p.y = h + 4;
       c.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(p.t * 1.7));
       c.fillStyle = "#f3dfb6";
       c.beginPath();

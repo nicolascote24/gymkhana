@@ -57,23 +57,21 @@ export default function Hero() {
         <div className="hero__content">
           <div className="hero__lead">
             <div className="hero__when" data-hero-in data-hero-fade>
-              <strong>{festival.edition.label}</strong>
-              <span>{festival.days} jours</span>
-              <span className="badge">Entrée gratuite</span>
+              <p className="hero__date">{festival.edition.label}</p>
+              <p className="hero__meta">
+                {festival.days} jours de festival <span aria-hidden>/</span> Entrée gratuite
+              </p>
             </div>
-            <div className="hero__pitch" data-hero-in data-hero-fade>
-              <p>Compétition équestre, musique country et plaisirs en famille, au cœur du Saguenay.</p>
-              <a href="#programmation" className="btn">
-                Voir la programmation <ArrowDownRight size={18} weight="bold" aria-hidden />
-              </a>
-            </div>
+            <a href="#programmation" className="btn hero__cta" data-hero-in data-hero-fade>
+              Voir la programmation <ArrowDownRight size={18} weight="bold" aria-hidden />
+            </a>
           </div>
 
           <p className="hero__festival" aria-hidden data-hero-in>
-            FESTIVAL
+            Festival
           </p>
           <p className="hero__place" aria-hidden data-hero-in>
-            DE SAINT-DAVID-DE-FALARDEAU
+            de Saint-David-de-Falardeau
           </p>
         </div>
       </section>

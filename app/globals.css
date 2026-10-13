@@ -101,7 +101,7 @@ body::after {
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.07;
+  opacity: 0.05;
   mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.4 -.2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
@@ -389,7 +389,10 @@ body::after {
 /* The hero stays put while the next section slides over it.
    Layers, back to front: plate, low shade, the word, the rider cut-out,
    high shade, dust, veil, content. The two plates share one frame so the
-   rider sits exactly on its own pixels. */
+   rider sits exactly on its own pixels.
+   Hierarchy: one giant (GYMKHANA) set low, on the ground line, so only the
+   horse's legs cross it; two identical small lines frame it (FESTIVAL /
+   DE SAINT-DAVID-DE-FALARDEAU); date and action sit apart, on the left. */
 .hero-pin {
   height: 200svh;
 }
@@ -397,15 +400,14 @@ body::after {
   --pad: clamp(1rem, 2.4vw, 2.75rem);
   --wdth: 125;
   --wf: 8.068; /* GYMKHANA width in em at this wdth, weight 900 (measured) */
-  --lf: 21.084; /* DE SAINT-DAVID-DE-FALARDEAU width in em, weight 800 */
   --word-fs: calc((100cqw - 2 * var(--pad)) / var(--wf));
-  --loc-fs: calc((100cqw - 2 * var(--pad)) / var(--lf));
-  --fest-fs: clamp(1rem, 2.15cqw, 2.25rem);
-  --g: max(0.55rem, 1.5cqh);
-  --y-loc: max(1.25rem, 3.4cqh);
-  --y-word: calc(var(--y-loc) + var(--loc-fs) * 0.74 + var(--g));
-  --y-fest: calc(var(--y-word) + var(--word-fs) * 0.74 + var(--g) * 1.2);
-  --y-top: calc(var(--y-fest) + var(--fest-fs) * 0.74);
+  --small-fs: clamp(0.8125rem, 1.4cqw, 1.5rem);
+  --g: max(0.7rem, 1.5cqh);
+  --y-base: max(1.25rem, 3.4cqh);
+  --y-place: var(--y-base);
+  --y-word: calc(var(--y-place) + var(--small-fs) * 0.74 + var(--g));
+  --y-fest: calc(var(--y-word) + var(--word-fs) * 0.74 + var(--g));
+  --y-top: calc(var(--y-fest) + var(--small-fs) * 0.74);
   --fx: 0.6;
   --fy: 0.62;
   position: sticky;
@@ -448,11 +450,11 @@ body::after {
 }
 .hero__shade--low {
   background:
-    linear-gradient(0deg, rgb(20 22 25 / 0.5) 0%, rgb(20 22 25 / 0.12) 22%, rgb(20 22 25 / 0) 34%),
-    linear-gradient(90deg, rgb(20 22 25 / 0.6) 0%, rgb(20 22 25 / 0.25) 30%, rgb(20 22 25 / 0) 50%);
+    linear-gradient(0deg, rgb(20 22 25 / 0.55) 0%, rgb(20 22 25 / 0.15) 20%, rgb(20 22 25 / 0) 32%),
+    linear-gradient(90deg, rgb(20 22 25 / 0.5) 0%, rgb(20 22 25 / 0.2) 26%, rgb(20 22 25 / 0) 42%);
 }
 .hero__shade--high {
-  background: linear-gradient(180deg, rgb(20 22 25 / 0.55) 0%, rgb(20 22 25 / 0) 20%);
+  background: linear-gradient(180deg, rgb(20 22 25 / 0.5) 0%, rgb(20 22 25 / 0) 18%);
 }
 .hero__veil {
   position: absolute;
@@ -469,8 +471,7 @@ body::after {
   pointer-events: none;
 }
 
-/* The lockup: FESTIVAL / GYMKHANA / DE SAINT-DAVID-DE-FALARDEAU, both long
-   lines set to the exact same measure. Line boxes are cap-tight (0.74). */
+/* Lockup. Line boxes are cap-tight (0.74 em) so the stack is exact. */
 .hero__word,
 .hero__place,
 .hero__festival {
@@ -494,18 +495,19 @@ body::after {
   font-variation-settings: "wdth" var(--wdth);
   will-change: transform;
 }
+.hero__place,
+.hero__festival {
+  font-size: var(--small-fs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+}
 .hero__place {
-  bottom: var(--y-loc);
-  font-size: var(--loc-fs);
-  font-weight: 800;
-  font-variation-settings: "wdth" var(--wdth);
+  bottom: var(--y-place);
 }
 .hero__festival {
   bottom: var(--y-fest);
-  font-size: var(--fest-fs);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  font-variation-settings: "wdth" 125;
 }
 
 .hero__content {
@@ -517,48 +519,38 @@ body::after {
   left: var(--pad);
   right: var(--pad);
   top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 1rem);
-  bottom: calc(var(--y-top) + max(1.75rem, 5cqh));
+  bottom: calc(var(--y-top) + max(2.5rem, 7cqh));
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  gap: max(1.5rem, 3.5cqh);
+  gap: max(1.5rem, 3.4cqh);
+  pointer-events: none;
+}
+.hero__lead > * {
+  pointer-events: auto;
 }
 .hero__when {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 1rem;
+  display: grid;
+  gap: 0.7rem;
 }
-.hero__when strong {
-  font-size: clamp(1.75rem, 3.1cqw, 3.25rem);
+.hero__date {
+  font-size: clamp(1.75rem, 2.7cqw, 3rem);
   font-weight: 900;
-  line-height: 0.9;
+  line-height: 0.8;
   text-transform: uppercase;
   font-variation-settings: "wdth" 125;
 }
-.hero__when span {
+.hero__meta {
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-}
-.hero__when .badge {
-  padding: 0.4rem 0.65rem;
-  background: var(--color-sable);
-  color: var(--color-nuit);
-}
-.hero__pitch {
-  width: min(31rem, 40cqw);
-  display: grid;
-  gap: 1.75rem;
-  justify-items: start;
-}
-.hero__pitch p {
-  font-size: clamp(1.0625rem, 1.45cqw, 1.375rem);
-  line-height: 1.45;
-  font-weight: 500;
   color: var(--color-creme);
+}
+.hero__meta span {
+  margin-inline: 0.5em;
+  color: var(--color-poussiere);
 }
 
 /* Tablet and square screens: medium width axis so the word keeps its height. */
@@ -566,40 +558,27 @@ body::after {
   .hero {
     --wdth: 100;
     --wf: 6.638;
-    --lf: 17.002;
     --fx: 0.7;
   }
-  .hero__pitch {
-    width: min(31rem, 70cqw);
-  }
 }
-/* Phone portrait: narrower letters; the date sits up in the sky, the action
-   above the name, and the horse keeps the middle of the screen. */
+/* Portrait: date and action sit up in the sky, the name stays on the ground
+   line so only the hooves cross it, the horse keeps the middle of the screen. */
 @media (max-aspect-ratio: 3/4) {
   .hero {
     --wdth: 75;
     --wf: 5.119;
-    --lf: 13.253;
     --fx: 0.75;
     --fy: 0.55;
   }
   .hero__lead {
-    justify-content: space-between;
-  }
-  .hero__pitch {
-    width: min(100%, 30rem);
+    justify-content: flex-start;
+    gap: 1.5rem;
   }
   .hero__shade--high {
-    background: linear-gradient(180deg, rgb(20 22 25 / 0.6) 0%, rgb(20 22 25 / 0) 30%);
+    background: linear-gradient(180deg, rgb(20 22 25 / 0.6) 0%, rgb(20 22 25 / 0) 28%);
   }
   .hero__shade--low {
-    background: linear-gradient(0deg, rgb(20 22 25 / 0.7) 0%, rgb(20 22 25 / 0.3) 25%, rgb(20 22 25 / 0) 42%);
-  }
-}
-
-@media (max-width: 600px) and (max-aspect-ratio: 3/4) {
-  .hero__pitch p {
-    display: none;
+    background: linear-gradient(0deg, rgb(20 22 25 / 0.75) 0%, rgb(20 22 25 / 0.35) 24%, rgb(20 22 25 / 0) 42%);
   }
 }
 
