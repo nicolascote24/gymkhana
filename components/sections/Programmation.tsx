@@ -62,16 +62,23 @@ export default function Programmation() {
         const night = section.querySelector("[data-night]");
         gsap.set(night, { opacity: 0 });
         section.classList.remove("is-night");
+        // A switch, not a scrub: the evening marker must reach the upper
+        // third of the screen, then day turns to night in one short move, so
+        // a reader who stops scrolling is never left between the two.
         if (marker) {
-          gsap.to(night, {
-            opacity: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: marker,
-              start: "top 85%",
-              end: "top 40%",
-              scrub: 0.5,
-              onUpdate: (self) => section.classList.toggle("is-night", self.progress > 0.5),
+          const turn = (on: boolean) => {
+            section.classList.toggle("is-night", on);
+            gsap.to(night, { opacity: on ? 1 : 0, duration: 0.7, ease: "power2.inOut", overwrite: true });
+          };
+          ScrollTrigger.create({
+            trigger: marker,
+            start: "top 35%",
+            onEnter: () => turn(true),
+            onLeaveBack: () => turn(false),
+            onRefresh: (self) => {
+              const on = self.progress > 0 || self.scroll() > self.start;
+              section.classList.toggle("is-night", on);
+              gsap.set(night, { opacity: on ? 1 : 0 });
             },
           });
         }

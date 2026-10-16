@@ -212,7 +212,7 @@ An illustrated map drawn from OpenStreetMap data (`scripts/build-map.mjs`, raw r
 
 ### Programme (signature)
 
-Vertical day tabs (full keyboard tablist) beside show-bill rows: condensed time, title, detail, place. On phones the tabs become four calendar-leaf segments stuck under the menu bar. A square "Aperçu" tag with the edition and its dates sits with the tabs at every size while the programme shown is a past edition. Each day has its own address (#jour-samedi); switching day from deep in a list brings the new list into view. The Grand Prix row is the only red one and carries a "Moment fort" flag after its title. An "En soirée" divider marks the evening and triggers the night.
+Vertical day tabs (full keyboard tablist) beside show-bill rows: condensed time, title, detail, place. On phones the tabs become four calendar-leaf segments stuck under the menu bar. A square "Aperçu" tag with the edition and its dates sits with the tabs at every size while the programme shown is a past edition. Each day has its own address (#jour-samedi); switching day from deep in a list brings the new list into view. The Grand Prix row is the only red one and carries a "Moment fort" flag after its title. An "En soirée" divider marks the evening: when it reaches the upper third of the screen, day switches to night in one 0.7 s move (and back when scrolling up), never a scrubbed in-between.
 
 ### Course diagrams (signature)
 

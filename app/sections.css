@@ -91,7 +91,7 @@ html.js [data-reveal="image"].is-in img {
   color: var(--color-rouge);
 }
 .bref__free {
-  max-width: 44ch;
+  max-width: 60ch;
   margin-top: clamp(1.75rem, 3vw, 2.5rem);
   font-size: var(--fs-lead);
   line-height: 1.4;
