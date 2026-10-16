@@ -79,9 +79,7 @@ export default function EnBref() {
         </StatementScrub>
 
         <p className="bref__free" data-reveal>
-          {fr(
-            "Chaque mois d'août, pendant quatre jours, la Place des Festivals devient une arène : le jour, une compétition officielle de gymkhana, des courses à cheval chronométrées autour de barils et de piquets ; le soir, des spectacles country et de la danse sous le chapiteau ; et tout au long de la fin de semaine, une zone familiale, des déjeuners et du camping sur place.",
-          )}{" "}
+          {fr("Quatre jours en août : du gymkhana le jour, du country le soir, et de quoi occuper toute la famille.")}{" "}
           <strong>{fr("L'entrée est gratuite.")}</strong>
         </p>
       </div>
