@@ -171,7 +171,7 @@ Two grounds and one accent. Sand is the day, night is the evening and the arena;
 
 ## Layout
 
-12-column logic on a 1440 px measure with a fluid gutter (16 to 48 px). Sections are separated by large vertical rhythm (6 to 11 rem). Compositions are asymmetric: sticky side columns (programme days, team photo), a three-panel photo triptych, a 12-column mosaic for activities. Every multi-column layout collapses to one column under 768 or 1024 px, declared per section. The hero is pinned and the first section slides over it like a curtain.
+12-column logic on a 1440 px measure with a fluid gutter (16 to 48 px). Sections are separated by large vertical rhythm (6 to 11 rem). Compositions are asymmetric: sticky side columns (programme days, team photo), a full-bleed film with three chapters, a 12-column mosaic for activities. Every multi-column layout collapses to one column under 768 or 1024 px, declared per section. The hero is pinned and the first section slides over it like a curtain.
 
 ## Elevation & Depth
 
@@ -198,9 +198,9 @@ Square everywhere: buttons, cards, tiles, photographs, the camping card, the "Ap
 
 A floating plaque, 12 px from the edges and 56 px tall, square like everything else: transparent over the hero, then a dark night-2 surface with a hairline and a soft lift once the hero is covered, so it reads on sand and on night alike and nothing jumps when it appears. The action is the red primary button. Hides on the way down, returns on the way up. The link of the section on screen turns full sand over a short red rule. Below 1152 px the links fold into a full-screen night menu with condensed display links; it is a modal sheet (focus moves in and stays inside, the page behind is inert, Escape closes it and focus returns to the menu button). The festival name stays beside the logo down to 380 px. Phones also get a floating shortcut after the hero: "Voir la programmation", or "Itinéraire vers le site" in the visit section; it hides over the programme and the footer.
 
-### Triptych (section 2)
+### Film (section 2)
 
-Under the statement, three tall photographs edge to edge like a rodeo poster: Compétition, Country, Famille. Each panel is a link: the word (sized by container query from the longest word, so all three match), a red arrow, one line of concrete proof, night rising from the ground under the text. Pointing at a panel draws a red rule across its top and pushes the photo in slightly. Below a laptop the panels become a strip swiped with the thumb, the next one peeking in. No photograph appears twice on the page.
+The 2026 festival film as a full-bleed frame under the statement. At rest a silent 13 s cut of its best shots loops behind the three ways into the page (Compétition, Country, Famille), each a link with a red arrow and one line of proof; it loads only near the screen, plays only on screen, and stays on its poster under reduced motion. "Voir le film" swaps it, in the same frame, for the full film with sound and controls; "Fermer le film" brings the loop back. On phones the picture is a 4:5 frame with the button at its foot, and the three chapters follow as a list. WebM (VP9) where supported, H.264 MP4 otherwise.
 
 ### Widescreen band (end of Le gymkhana)
 

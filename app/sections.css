@@ -127,147 +127,260 @@ html.js [data-reveal="image"].is-in img {
   font-weight: 800;
 }
 
-/* The triptych: three tall photographs edge to edge, like a rodeo poster.
-   Each panel is a way into its part of the page. */
-.tryp {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3px;
-  height: clamp(30rem, 74svh, 50rem);
+/* The film (Film.tsx): the 2026 film as a full-bleed frame. At rest a
+   silent loop plays behind the three ways into the page; "Voir le film"
+   swaps it for the full film with sound, in the same frame. */
+.film {
   margin-top: clamp(3.5rem, 7vw, 6rem);
 }
-.tryp__panel {
-  min-width: 0;
-}
-.tryp__link {
-  --pad: clamp(1.25rem, 2.4vw, 2.25rem);
-  container-type: inline-size;
+.film__frame {
   position: relative;
-  display: block;
-  height: 100%;
+  height: clamp(32rem, 82svh, 54rem);
   overflow: hidden;
   isolation: isolate;
+  background: var(--color-nuit);
   color: var(--color-creme);
 }
-.tryp__media {
+.film__loop,
+.film__full {
   position: absolute;
   inset: 0;
-  z-index: -2;
-  background: var(--color-terre);
-}
-.tryp__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  scale: var(--zoom, 1);
-  transition: transform 900ms var(--ease-out-strong);
 }
-/* night rises from the ground so the words always sit on dark */
-.tryp__link::after {
+.film__loop {
+  z-index: -2;
+}
+/* night at the top for the title, and rising from the ground for the chapters */
+.film__frame::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(
-    0deg,
-    color-mix(in srgb, var(--color-nuit) 88%, transparent) 0%,
-    color-mix(in srgb, var(--color-nuit) 55%, transparent) 30%,
-    transparent 58%
-  );
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--color-nuit) 70%, transparent) 0%, transparent 28%),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--color-nuit) 92%, transparent) 0%,
+      color-mix(in srgb, var(--color-nuit) 55%, transparent) 26%,
+      transparent 50%
+    );
+  transition: opacity 300ms ease;
 }
-/* a red rule runs across the top of the panel being pointed at */
-.tryp__link::before {
+.film__head {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding: clamp(1.25rem, 2.6vw, 2.5rem) var(--gutter);
+}
+.film__title {
+  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+  color: var(--color-sable);
+}
+.film__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-height: 3rem;
+  padding: 0.35rem 1.25rem 0.35rem 0.35rem;
+  background: color-mix(in srgb, var(--color-nuit) 55%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-sable) 35%, transparent);
+  color: var(--color-creme);
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 240ms ease;
+}
+.film__play {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--color-rouge);
+  color: var(--color-creme);
+  transition: transform 240ms var(--ease-out-strong);
+}
+.film__time {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: color-mix(in srgb, var(--color-creme) 75%, transparent);
+}
+.film__btn--close {
+  padding-left: 1rem;
+}
+@media (hover: hover) and (pointer: fine) {
+  .film__btn:hover {
+    background: color-mix(in srgb, var(--color-nuit) 80%, transparent);
+  }
+  .film__btn:hover .film__play {
+    transform: scale(1.08);
+  }
+}
+.film__btn:active {
+  transform: scale(0.97);
+}
+.film__chapters {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.film__chapters li + li {
+  box-shadow: inset 1px 0 0 color-mix(in srgb, var(--color-sable) 22%, transparent);
+}
+.film__chapter {
+  position: relative;
+  display: grid;
+  gap: 0.6rem;
+  height: 100%;
+  padding: clamp(1.25rem, 2.4vw, 2.25rem) var(--gutter);
+  container-type: inline-size;
+}
+/* a red rule runs across the top of the chapter being pointed at */
+.film__chapter::before {
   content: "";
   position: absolute;
   inset: 0 0 auto 0;
-  height: 4px;
+  height: 3px;
   background: var(--color-rouge);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 380ms var(--ease-out-strong);
 }
-.tryp__body {
-  position: absolute;
-  inset: auto 0 0 0;
-  display: grid;
-  gap: 0.75rem;
-  padding: var(--pad);
-}
-.tryp__title {
+.film__chapter-title {
   display: inline-flex;
   align-items: center;
   gap: 0.3em;
-  /* every panel uses the size that fits its longest word: COMPÉTITION plus
-     the arrow is 10.3em wide at wdth 125 */
-  font-size: min(3.25rem, (100cqi - 2 * var(--pad)) / 10.4);
+  font-size: min(3rem, 100cqi / 10.4);
   font-weight: 900;
   line-height: 0.9;
   text-transform: uppercase;
   font-variation-settings: "wdth" 125;
   color: var(--color-sable);
-  /* wraps rather than clip when a reader widens letter spacing */
   overflow-wrap: anywhere;
 }
-.tryp__arrow {
+.film__arrow {
   flex: none;
   width: 0.55em;
   height: 0.55em;
   color: var(--color-rouge);
   transition: transform 280ms var(--ease-out-strong);
 }
-.tryp__text {
-  max-width: 34ch;
+.film__chapter-text {
+  max-width: 36ch;
   font-size: 0.9375rem;
   line-height: 1.5;
 }
-.tryp__link:focus-visible {
-  outline-offset: -4px;
-}
 @media (hover: hover) and (pointer: fine) {
-  .tryp__link:hover .tryp__media img {
-    transform: scale(1.05);
-  }
-  .tryp__link:hover::before,
-  .tryp__link:focus-visible::before {
+  .film__chapter:hover::before,
+  .film__chapter:focus-visible::before {
     transform: scaleX(1);
   }
-  .tryp__link:hover .tryp__arrow {
+  .film__chapter:hover .film__arrow {
     transform: translateX(0.3rem);
   }
 }
+.film__chapter:focus-visible {
+  outline-offset: -4px;
+}
+/* the full film takes the whole frame: the chapters and shades step aside */
+.film[data-playing] .film__chapters,
+.film[data-playing] .film__frame::after {
+  opacity: 0;
+  visibility: hidden;
+}
+.film[data-playing] .film__full {
+  object-fit: contain;
+  background: var(--color-nuit);
+}
+.film[data-playing] .film__loop {
+  visibility: hidden;
+}
+.film[data-playing] .film__head {
+  inset: 0 0 auto auto;
+}
+.film[data-playing] .film__title {
+  display: none;
+}
 @media (prefers-reduced-motion: reduce) {
-  .tryp__media img,
-  .tryp__arrow,
-  .tryp__link::before {
+  .film__chapter::before,
+  .film__arrow,
+  .film__play {
     transition: none;
   }
 }
-/* Below a laptop, the panels become a strip swiped with the thumb, the next
-   one peeking in so the gesture is obvious. */
-@media (max-width: 1023px) {
-  .tryp {
-    grid-template-columns: none;
-    grid-auto-flow: column;
-    grid-auto-columns: 58%;
-    gap: 0.5rem;
-    height: clamp(26rem, 68svh, 40rem);
-    padding-inline: var(--gutter);
-    scroll-padding-inline: var(--gutter);
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+/* Phones: the film is a shorter frame on its own, the chapters follow as a
+   list on night below it. */
+@media (max-width: 767px) {
+  .film__frame {
+    height: auto;
+    aspect-ratio: auto;
+    overflow: visible;
   }
-  .tryp::-webkit-scrollbar {
+  .film__frame > .film__loop,
+  .film__frame > .film__full {
+    position: relative;
+    display: block;
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+  .film[data-playing] .film__loop {
     display: none;
   }
-  .tryp__panel {
-    scroll-snap-align: start;
+  .film[data-playing] .film__full {
+    aspect-ratio: 16 / 9;
   }
-}
-@media (max-width: 767px) {
-  .tryp {
-    grid-auto-columns: 84%;
+  .film__frame::after {
+    bottom: auto;
+    aspect-ratio: 4 / 5;
+    height: auto;
+  }
+  .film__chapters {
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .film__chapters li + li {
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-sable) 22%, transparent);
+  }
+  .film[data-playing] .film__chapters {
+    opacity: 1;
+    visibility: visible;
+  }
+  .film__chapter-title {
+    font-size: min(2rem, 100cqi / 10.4);
+  }
+  .film__btn {
+    font-size: 0.75rem;
+  }
+  .film__long {
+    display: none;
+  }
+  /* the button sits at the foot of the picture, under the thumb */
+  .film__head {
+    inset: auto 0 auto 0;
+    top: calc(min(100vw, 100%) * 1.25 - 5.5rem);
+  }
+  .film[data-playing] .film__head {
+    top: 0;
+  }
+  .film__title {
+    display: none;
   }
 }
 
