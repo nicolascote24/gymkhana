@@ -78,10 +78,17 @@ export default function EnBref() {
           </p>
         </StatementScrub>
 
-        <p className="bref__free" data-reveal>
-          {fr("Quatre jours en août : du gymkhana le jour, du country le soir, et de quoi occuper toute la famille.")}{" "}
-          <strong>{fr("L'entrée est gratuite.")}</strong>
-        </p>
+        <div className="bref__free" data-reveal>
+          <p>
+            {fr(
+              "Le gymkhana, ce sont des courses de chevaux contre la montre, autour de barils et de piquets. Pendant quatre jours en août, une centaine de cavaliers s'affrontent dans l'arène, et tout autour : spectacles country, danse en ligne, activités pour les enfants et camping.",
+            )}{" "}
+            <strong>{fr("L'entrée est gratuite.")}</strong>
+          </p>
+          <a href="#gymkhana" className="bref__more">
+            En savoir plus sur le gymkhana <ArrowRight size={18} weight="bold" aria-hidden />
+          </a>
+        </div>
       </div>
 
       <ul className="tryp">

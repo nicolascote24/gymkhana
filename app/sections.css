@@ -97,6 +97,31 @@ html.js [data-reveal="image"].is-in img {
   line-height: 1.4;
   color: color-mix(in srgb, var(--color-nuit) 82%, transparent);
 }
+.bref__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-block: 0.6rem;
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-nuit);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rouge);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.4em;
+}
+.bref__more svg {
+  color: var(--color-rouge);
+  transition: transform 240ms var(--ease-out-strong);
+}
+@media (hover: hover) and (pointer: fine) {
+  .bref__more:hover svg {
+    transform: translateX(0.25rem);
+  }
+}
 .bref__free strong {
   color: var(--color-nuit);
   font-weight: 800;
