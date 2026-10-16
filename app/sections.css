@@ -699,8 +699,8 @@ html.js [data-reveal="image"].is-in img {
 .gym {
   position: relative;
   z-index: 10;
-  /* the widescreen band closes the section; its note reserves the inset's overflow */
-  padding-bottom: clamp(3rem, 6vw, 5rem);
+  /* the competition band closes the section; this leaves room for its inset */
+  padding-bottom: clamp(6rem, 11vw, 10rem);
 }
 .gym__scene {
   min-height: 100svh;
@@ -925,17 +925,21 @@ html.js [data-reveal="image"].is-in img {
   color: color-mix(in srgb, var(--color-creme) 80%, transparent);
 }
 
-/* Widescreen band: the relay race edge to edge, the rescue race set over
-   its corner like a second camera, each plane on its own depth. */
+/* "Une compétition officielle" (PhotoBand.tsx): the relay race fills the
+   frame; the facts and the way to the schedule sit over it, on the page's
+   own column; the rescue race overlaps the bottom edge as a second camera. */
 .band {
   position: relative;
   margin-top: clamp(4rem, 8vw, 7rem);
+  isolation: isolate;
 }
 .band__wide {
-  position: relative;
-  margin: 0;
-  height: clamp(22rem, 46vw, 46rem);
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: -1;
+  height: clamp(30rem, 78svh, 48rem);
   overflow: hidden;
+  margin: 0;
 }
 .band__frame {
   position: absolute;
@@ -945,41 +949,73 @@ html.js [data-reveal="image"].is-in img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 40%;
+  object-position: 60% 40%;
 }
+/* night from the left for the words, and from the ground into the section */
 .band__wide::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(0deg, color-mix(in srgb, var(--color-nuit) 78%, transparent) 0%, transparent 38%),
-    linear-gradient(180deg, color-mix(in srgb, var(--color-nuit) 45%, transparent) 0%, transparent 18%);
-  pointer-events: none;
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-nuit) 88%, transparent) 0%,
+      color-mix(in srgb, var(--color-nuit) 55%, transparent) 38%,
+      transparent 62%
+    ),
+    linear-gradient(0deg, var(--color-nuit) 0%, transparent 30%);
 }
-.band__caption {
-  position: absolute;
-  z-index: 1;
-  left: var(--gutter);
-  bottom: clamp(1.25rem, 3vw, 2.5rem);
+.band__grid {
   display: grid;
-  gap: 0.35rem;
-  font-size: var(--fs-small);
-  color: var(--color-creme);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+  min-height: clamp(30rem, 78svh, 48rem);
+  padding-block: clamp(3rem, 7vw, 6rem) 0;
 }
-.band__caption-title {
-  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+.band__copy {
+  align-self: center;
+  display: grid;
+  justify-items: start;
+  gap: clamp(1.5rem, 2.6vw, 2.25rem);
+}
+.band__title {
+  font-size: clamp(1.75rem, 3vw, 3rem);
   font-weight: 900;
-  line-height: 1;
+  line-height: 0.95;
   text-transform: uppercase;
   font-variation-settings: "wdth" 125;
   color: var(--color-sable);
 }
+.band__facts {
+  display: grid;
+  gap: 1rem;
+  max-width: 34rem;
+}
+.band__facts div {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, auto) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: baseline;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-sable) 22%, transparent);
+}
+.band__facts dt {
+  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+  font-weight: 900;
+  line-height: 1;
+  font-variation-settings: "wdth" 100;
+  color: var(--color-sable);
+}
+.band__facts dd {
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--color-creme);
+}
 .band__inset {
-  position: absolute;
-  right: var(--gutter);
-  top: calc(clamp(22rem, 46vw, 46rem) - clamp(5rem, 11vw, 10rem));
-  width: clamp(16rem, 34vw, 32rem);
-  margin: 0;
+  margin: 0 0 calc(clamp(3rem, 6vw, 5rem) * -1);
+  justify-self: end;
+  width: min(100%, 30rem);
 }
 .band__inset-img {
   aspect-ratio: 3 / 2;
@@ -993,47 +1029,35 @@ html.js [data-reveal="image"].is-in img {
   height: 100%;
   object-fit: cover;
 }
-.band__inset-caption {
-  padding-top: 0.75rem;
+.band__inset figcaption {
+  padding-top: 0.85rem;
   font-size: var(--fs-small);
-  color: color-mix(in srgb, var(--color-creme) 78%, transparent);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-creme) 82%, transparent);
 }
-/* The note on the sanction sits in the band's free corner, under the wide
-   photo and beside the inset, so the band ends as one composition. */
-.band__note {
-  width: min(44ch, 100% - clamp(16rem, 34vw, 32rem) - 3 * var(--gutter));
-  min-height: clamp(9rem, 15vw, 14rem);
-  margin: 0 0 0 var(--gutter);
-  padding-top: clamp(1.75rem, 3vw, 2.5rem);
-  font-size: var(--fs-small);
-  line-height: 1.6;
-  color: color-mix(in srgb, var(--color-creme) 78%, transparent);
+.band__inset figcaption strong {
+  color: var(--color-sable);
 }
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .band__wide {
-    height: 64vw;
-  }
-  /* the caption moves to the top so the inset can overlap the bottom */
-  .band__caption {
-    top: 1rem;
-    bottom: auto;
+    position: relative;
+    height: 62vw;
   }
   .band__wide::after {
-    background: linear-gradient(180deg, color-mix(in srgb, var(--color-nuit) 70%, transparent) 0%, transparent 40%);
+    background: linear-gradient(0deg, var(--color-nuit) 0%, transparent 45%);
+  }
+  .band__grid {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    padding-top: 2rem;
   }
   .band__inset {
-    position: relative;
-    top: auto;
-    right: auto;
-    width: 74%;
-    margin: -16vw var(--gutter) 0 auto;
-  }
-  .band__note {
-    width: auto;
-    min-height: 0;
-    margin: 0 var(--gutter);
+    justify-self: stretch;
+    width: 100%;
+    margin-bottom: 0;
   }
 }
+
 @media (max-width: 1023px) {
   .gym__scene {
     min-height: 0;
@@ -2258,4 +2282,15 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
 
 .tumble--foot + .foot__legal {
   margin-top: 0;
+}
+@media (max-width: 479px) {
+  .band__facts div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+}
+/* the label wraps rather than push past a small phone's edge */
+.band__cta {
+  max-width: 100%;
+  white-space: normal;
 }

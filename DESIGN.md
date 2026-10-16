@@ -202,9 +202,9 @@ A floating plaque, 12 px from the edges and 56 px tall, square like everything e
 
 The 2026 festival film as a full-bleed frame under the statement. At rest a silent 13 s cut of its best shots loops behind the three ways into the page (Compétition, Country, Famille), each a link with a red arrow and one line of proof; it loads only near the screen, plays only on screen, and stays on its poster under reduced motion. "Voir le film" swaps it, in the same frame, for the full film with sound and controls; "Fermer le film" brings the loop back. On phones the picture is a 4:5 frame with the button at its foot, and the three chapters follow as a list. WebM (VP9) where supported, H.264 MP4 otherwise.
 
-### Widescreen band (end of Le gymkhana)
+### Competition band (end of Le gymkhana)
 
-The relay race edge to edge, the rescue race set over its corner like a second camera with its own lift; the two planes travel at different speeds with the scroll. Captions sit on the photograph; the sanction note fills the free corner under it.
+"Une compétition officielle": the relay race fills the frame, darkened from the left; on the page's own column sit the facts that make it a real competition (about 100 riders, sanctioned by the CBSLC, Cheval Québec rules) and the red action to the competition schedule (#jour-samedi). The rescue race overlaps the bottom edge as a second camera, captioned with what the event is. The two planes move at different speeds; on phones they stack.
 
 ### Map (Planifier ma visite)
 

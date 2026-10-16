@@ -1,9 +1,8 @@
 import GymkhanaScene from "@/components/sections/GymkhanaScene";
 import CourseRelay from "@/components/sections/CourseRelay";
 import PhotoBand from "@/components/sections/PhotoBand";
-import { epreuves, definition, sanction, type Epreuve } from "@/content/epreuves";
+import { epreuves, definition, type Epreuve } from "@/content/epreuves";
 import { fr } from "@/lib/typo";
-import { keepPlaces } from "@/lib/places";
 
 const STEPS = [
   { title: "Le départ", text: "Le cheval franchit la ligne au galop : le chronomètre démarre." },
@@ -77,7 +76,7 @@ export default function Gymkhana() {
 
       <CourseRelay />
 
-      <PhotoBand>{keepPlaces(fr(sanction))}</PhotoBand>
+      <PhotoBand />
     </section>
   );
 }
