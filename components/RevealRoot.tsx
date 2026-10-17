@@ -14,7 +14,14 @@ export default function RevealRoot() {
     const groups = new Map<Element, HTMLElement[]>();
     document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
       const clipped = el.dataset.reveal === "title" || el.dataset.reveal === "image";
-      const target = clipped && el.parentElement ? el.parentElement : el;
+      // A parent laid out with display: contents has no box and never
+      // intersects: watch the first ancestor that has one.
+      let target: HTMLElement = el;
+      if (clipped) {
+        let p = el.parentElement;
+        while (p && getComputedStyle(p).display === "contents") p = p.parentElement;
+        if (p) target = p;
+      }
       const list = groups.get(target) ?? [];
       list.push(el);
       groups.set(target, list);
@@ -27,7 +34,9 @@ export default function RevealRoot() {
           io.unobserve(e.target);
         }
       },
-      { rootMargin: "0px 0px -6% 0px", threshold: 0 },
+      // Phones: a fast flick must never land on blank space, so elements
+      // start revealing a little before they reach the screen.
+      { rootMargin: window.matchMedia("(max-width: 767px)").matches ? "0px 0px 12% 0px" : "0px 0px -6% 0px", threshold: 0 },
     );
     groups.forEach((_, target) => io.observe(target));
     return () => io.disconnect();

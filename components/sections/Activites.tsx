@@ -1,3 +1,5 @@
+import { Church, Coffee, Horse, MusicNotes } from "@phosphor-icons/react/dist/ssr";
+import type { Icon } from "@phosphor-icons/react";
 import Picture, { type ImageId } from "@/components/Picture";
 import { fr } from "@/lib/typo";
 
@@ -9,6 +11,8 @@ type Tile = {
   img?: ImageId;
   alt?: string;
   tone?: "terre" | "nuit" | "sauge" | "poussiere";
+  // Phones: the pictogram that stands in for a photograph on the card.
+  icon?: Icon;
   area: string;
 };
 
@@ -35,6 +39,7 @@ const TILES: Tile[] = [
   },
   {
     id: "danse",
+    icon: MusicNotes,
     title: "Danse en ligne",
     text: "Avec les écoles Pascale Dufour et Nathalie Paquet, sous le chapiteau.",
     when: "Du jeudi au dimanche",
@@ -43,6 +48,7 @@ const TILES: Tile[] = [
   },
   {
     id: "dejeuner",
+    icon: Coffee,
     title: "Déjeuner communautaire",
     text: "Pour bien commencer la journée, au chalet des loisirs.",
     when: "Samedi et dimanche, 8 h à 11 h",
@@ -51,6 +57,7 @@ const TILES: Tile[] = [
   },
   {
     id: "messe",
+    icon: Church,
     title: "Messe country",
     text: "Une tradition du dimanche matin, sous le chapiteau.",
     when: "Dimanche, 9 h 30",
@@ -59,6 +66,7 @@ const TILES: Tile[] = [
   },
   {
     id: "releve",
+    icon: Horse,
     title: "La relève",
     text: "Les jeunes cavaliers ont leurs propres classes : initiation, baril jeunes et slalom jeunes.",
     when: "Pendant la compétition",
@@ -78,6 +86,9 @@ export default function Activites() {
           <p className="act__intro" data-reveal>
             {fr("Entre deux épreuves, le site vit au rythme des familles. Exemples tirés de l'édition 2024.")}
           </p>
+          <p className="act__hint" aria-hidden>
+            {TILES.length} moments · faites glisser
+          </p>
         </div>
 
         <ul className="act__grid">
@@ -90,7 +101,12 @@ export default function Activites() {
             >
               {t.img && (
                 <div className="act__media">
-                  <Picture id={t.img} alt={t.alt ?? ""} sizes="(max-width: 767px) 92vw, 45vw" />
+                  <Picture id={t.img} alt={t.alt ?? ""} sizes="(max-width: 767px) 75vw, 45vw" />
+                </div>
+              )}
+              {t.icon && (
+                <div className="act__icon" aria-hidden>
+                  <t.icon size={64} weight="light" />
                 </div>
               )}
               <div className="act__body">

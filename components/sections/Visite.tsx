@@ -17,6 +17,7 @@ import { fr } from "@/lib/typo";
 import { keepPlaces } from "@/lib/places";
 import RouteMap from "@/components/sections/RouteMap";
 import Tumbleweed from "@/components/Tumbleweed";
+import MobileFold from "@/components/MobileFold";
 
 const RULE_ICONS = { alcool: Wine, chiens: Dog, securite: Horse } as const;
 const AMENITY_ICONS = {
@@ -77,17 +78,19 @@ export default function Visite() {
 
         <div className="visit__rules" data-reveal>
           <h3 className="visit__rules-title">Sur le site</h3>
-          <ul>
-            {festival.amenities.map((a) => {
-              const Icon = AMENITY_ICONS[a.id];
-              return (
-                <li key={a.id}>
-                  <Icon size={28} weight="light" aria-hidden />
-                  <span>{fr(a.text)}</span>
-                </li>
-              );
-            })}
-          </ul>
+          <MobileFold label={`Voir les ${festival.amenities.length} installations`}>
+            <ul>
+              {festival.amenities.map((a) => {
+                const Icon = AMENITY_ICONS[a.id];
+                return (
+                  <li key={a.id}>
+                    <Icon size={28} weight="light" aria-hidden />
+                    <span>{fr(a.text)}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </MobileFold>
         </div>
 
         <div className="visit__rules" data-reveal>

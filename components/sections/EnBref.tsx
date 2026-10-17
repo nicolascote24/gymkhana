@@ -58,15 +58,28 @@ export default function EnBref() {
         </StatementScrub>
 
         <div className="bref__free" data-reveal>
-          <p>
+          <p className="bref__copy">
             {fr(
               "Le gymkhana, ce sont des courses de chevaux contre la montre, autour de barils et de piquets. Pendant quatre jours en août, une centaine de cavaliers s'affrontent dans l'arène, et tout autour : spectacles country, danse en ligne, activités pour les enfants et camping.",
             )}{" "}
             <strong>{fr("L'entrée est gratuite.")}</strong>
           </p>
-          <a href="#gymkhana" className="bref__more">
-            En savoir plus sur le gymkhana <ArrowRight size={18} weight="bold" aria-hidden />
-          </a>
+          {/* Phones: the hero just above already gives the month, the four
+              days and the free entry, so the short version keeps only what
+              the hero does not say. */}
+          <p className="bref__copy bref__copy--short">
+            {fr(
+              "Le gymkhana, ce sont des courses de chevaux contre la montre, autour de barils et de piquets. Une centaine de cavaliers s'affrontent dans l'arène ; tout autour, spectacles country, danse en ligne, activités pour les enfants et camping.",
+            )}
+          </p>
+          <div className="bref__links">
+            <a href="#gymkhana" className="bref__more">
+              En savoir plus sur le gymkhana <ArrowRight size={18} weight="bold" aria-hidden />
+            </a>
+            <a href="#visite" className="bref__more">
+              Accès et camping <ArrowRight size={18} weight="bold" aria-hidden />
+            </a>
+          </div>
         </div>
       </div>
 

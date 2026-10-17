@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "app/sections.css"
+        ],
+        "createdAt": "2026-10-17T02:03:12.335Z",
+        "reason": "Claude triage: L261 is .film__chapter::before, a 3px red rule across the TOP of a film chapter link that wipes in on hover/focus (pre-existing design, not a side border)"
+      }
+    ]
+  }
+}
