@@ -5,16 +5,30 @@ import { List, X, ArrowRight } from "@phosphor-icons/react";
 import { festival } from "@/content/festival";
 import { getGsap } from "@/lib/motion";
 
-const links = [
+export type Page = "accueil" | "epreuves";
+
+// The same links on every page: the sections of the home page. Away from the
+// home page they lead back to it. The events page belongs to the gymkhana
+// section, which leads to it: there, that link is marked as the current one.
+const LINKS: { href: string; label: string; parentOf?: Page }[] = [
   { href: "#programmation", label: "Programmation" },
-  { href: "#gymkhana", label: "Le gymkhana" },
+  { href: "#gymkhana", label: "Le gymkhana", parentOf: "epreuves" },
   { href: "#activites", label: "Activités" },
   { href: "#equipe", label: "L'équipe" },
 ];
 
-export default function Nav() {
+// The action of the plaque: plan the visit on the home page, register on the events page.
+const ACTION: Record<Page, { href: string; label: string }> = {
+  accueil: { href: "#visite", label: "Planifier ma visite" },
+  epreuves: { href: "#inscription", label: "S'inscrire" },
+};
+
+export default function Nav({ page = "accueil" }: { page?: Page }) {
+  const home = page === "accueil";
+  const links = LINKS.map((l) => ({ ...l, href: !home && l.href.startsWith("#") ? `/${l.href}` : l.href }));
+  const action = ACTION[page];
   const [open, setOpen] = useState(false);
-  const [solid, setSolid] = useState(false);
+  const [solid, setSolid] = useState(!home);
   const [hidden, setHidden] = useState(false);
   const [current, setCurrent] = useState("");
   const last = useRef(0);
@@ -29,8 +43,9 @@ export default function Nav() {
   // ScrollTrigger refresh (which briefly measures the page from the top).
   useEffect(() => {
     const { ScrollTrigger } = getGsap();
+    // Only the home hero is a photograph the plaque can sit on, clear.
     const hero = document.querySelector<HTMLElement>("[data-hero]");
-    const isSolid = () => window.scrollY >= (hero ? hero.offsetHeight - 1 : window.innerHeight);
+    const isSolid = () => !home || window.scrollY >= (hero ? hero.offsetHeight - 1 : window.innerHeight);
     let refreshing = false;
     const onRefreshInit = () => {
       refreshing = true;
@@ -56,16 +71,19 @@ export default function Nav() {
     ScrollTrigger.addEventListener("refreshInit", onRefreshInit);
     ScrollTrigger.addEventListener("refresh", onRefresh);
     // The link of the section on screen is marked, so the reader knows where they are.
-    const sections = links.map((l) =>
-      ScrollTrigger.create({
-        trigger: l.href,
-        start: "top 50%",
-        end: "bottom 50%",
-        // Measured after the pinned scenes further down the page add their length.
-        refreshPriority: -1,
-        onToggle: (self) => setCurrent((c) => (self.isActive ? l.href : c === l.href ? "" : c)),
-      }),
-    );
+    // Only the home page has sections to follow.
+    const sections = links
+      .filter((l) => l.href.startsWith("#"))
+      .map((l) =>
+        ScrollTrigger.create({
+          trigger: l.href,
+          start: "top 50%",
+          end: "bottom 50%",
+          // Measured after the pinned scenes further down the page add their length.
+          refreshPriority: -1,
+          onToggle: (self) => setCurrent((c) => (self.isActive ? l.href : c === l.href ? "" : c)),
+        }),
+      );
     return () => {
       st.kill();
       sections.forEach((t) => t.kill());
@@ -114,7 +132,11 @@ export default function Nav() {
     <>
       <header className="nav" data-solid={solid} data-hidden={hidden && !open} data-hero-in>
         <div className="wrap nav__bar">
-          <a href="#top" className="nav__brand" aria-label="Festival Gymkhana de Falardeau, retour en haut">
+          <a
+            href={home ? "#top" : "/"}
+            className="nav__brand"
+            aria-label={home ? "Festival Gymkhana de Falardeau, retour en haut" : "Festival Gymkhana de Falardeau, accueil"}
+          >
             <picture>
               <source type="image/avif" srcSet="/images/logo-96.avif 1x, /images/logo-192.avif 2x" />
               <img src="/images/logo-96.webp" width={36} height={36} alt="" />
@@ -127,12 +149,16 @@ export default function Nav() {
           </a>
           <nav aria-label="Navigation principale" className="nav__links">
             {links.map((l) => (
-              <a key={l.href} href={l.href} data-current={current === l.href || undefined}>
+              <a
+                key={l.href}
+                href={l.href}
+                data-current={current === l.href || l.parentOf === page || undefined}
+              >
                 {l.label}
               </a>
             ))}
-            <a href="#visite" className="btn">
-              Planifier ma visite
+            <a href={action.href} className="btn">
+              {action.label}
             </a>
           </nav>
           <button
@@ -170,7 +196,7 @@ export default function Nav() {
           </button>
         </div>
         <nav className="menu__links" aria-label="Menu mobile">
-          {[...links, { href: "#visite", label: "Planifier ma visite" }].map((l, i) => (
+          {[...links, action].map((l, i) => (
             <a
               key={l.href}
               href={l.href}
@@ -189,6 +215,12 @@ export default function Nav() {
           <span>
             {festival.address.street}, {festival.address.city}
           </span>
+          {/* Competitors mostly arrive on a phone: their page is two taps away. */}
+          {home && (
+            <a href="/epreuves/" className="label menu__more">
+              Épreuves et inscription <ArrowRight size={16} weight="bold" aria-hidden />
+            </a>
+          )}
           <a
             href={festival.contact.facebook}
             className="label"

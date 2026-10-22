@@ -1,22 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CalendarBlank, NavigationArrow } from "@phosphor-icons/react";
+import { CalendarBlank, EnvelopeSimple, NavigationArrow } from "@phosphor-icons/react";
 import { getGsap } from "@/lib/motion";
 import { mapsUrl } from "@/content/festival";
+import type { Page } from "@/components/Nav";
 
 // Phones only (see .quickbar): one shortcut for the thumb, shown once the hero
 // is covered and hidden while the programme, any of the page's own action
 // buttons or the footer is visible, so it never sits on top of one. It
 // leads to the programme, except in the visit section where the route is
-// what the visitor needs next.
-export default function QuickBar() {
+// what the visitor needs next. On the events page it leads to registration,
+// and hides over the registration section itself.
+export default function QuickBar({ page = "accueil" }: { page?: Page }) {
+  const home = page === "accueil";
   const [show, setShow] = useState(false);
   const [route, setRoute] = useState(false);
   useEffect(() => {
     const { ScrollTrigger } = getGsap();
     const hero = document.querySelector<HTMLElement>("[data-hero]");
-    const prog = document.getElementById("programmation");
+    // The section the shortcut itself leads to.
+    const prog = document.getElementById(home ? "programmation" : "inscription");
     const visit = document.getElementById("visite");
     const foot = document.querySelector("footer.foot");
     // The sections' own action buttons (the route, the competition schedule,
@@ -66,10 +70,14 @@ export default function QuickBar() {
         }),
     ];
     return () => triggers.forEach((t) => t && t.kill());
-  }, []);
+  }, [home]);
   return (
     <div className="quickbar" data-show={show} aria-hidden={!show}>
-      {route ? (
+      {!home ? (
+        <a href="#inscription" className="btn" tabIndex={show ? 0 : -1}>
+          <EnvelopeSimple size={18} weight="bold" aria-hidden /> S&apos;inscrire aux épreuves
+        </a>
+      ) : route ? (
         <a href={mapsUrl} className="btn" target="_blank" rel="noopener noreferrer" tabIndex={show ? 0 : -1}>
           <NavigationArrow size={18} weight="bold" aria-hidden /> Itinéraire vers le site
         </a>

@@ -7,8 +7,8 @@ import { getGsap, prefersReducedMotion, whenIdle } from "@/lib/motion";
 
 // "Une compétition officielle": the proof that closes the gymkhana section.
 // The relay race fills the frame; over it, on the page's own column, the
-// facts that make it a real competition and the way to the competition
-// schedule. The rescue race sits on the corner as a second camera, captioned
+// facts that make it a real competition and the way to the rule book and
+// registration, on the events page. The rescue race sits on the corner as a second camera, captioned
 // with what the event actually is. The two planes move at different speeds.
 const FACTS: { value: string; label: string }[] = [
   { value: "≈ 100", label: "cavaliers par édition" },
@@ -64,8 +64,8 @@ export default function PhotoBand() {
               </div>
             ))}
           </dl>
-          <a href="#jour-samedi" className="btn band__cta" data-reveal>
-            Horaire des compétitions <ArrowRight size={18} weight="bold" aria-hidden />
+          <a href="/epreuves/#reglement" className="btn btn--ghost band__cta" data-reveal>
+            Règlement et inscription <ArrowRight size={18} weight="bold" aria-hidden />
           </a>
         </div>
 

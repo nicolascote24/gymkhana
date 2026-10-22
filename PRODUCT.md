@@ -43,7 +43,7 @@ A four-day western festival built around a real equestrian sport: gymkhana (time
 ## Brand Commitments
 
 - Name shown in full: Festival Gymkhana de Saint-David-de-Falardeau (official short form in archives: Festival Gymkhana de Falardeau).
-- Logo kept as is for now: gold sheriff star with barrel racer (`photo_clients/banque_photos/logo-festival-10-Final.png`). It still carries the old URL; a clean version is a later task.
+- Logo: gold sheriff star with barrel racer, final version carrying www.festivalfalardeau.ca (`photo_clients/banque_photos/logo-festival-final-ca.png`, built by `npm run images -- logo`).
 - Official slogans: « Au triple galop vers Falardeau! », « C'est un rendez-vous! », « En selle vers Falardeau! ».
 - Partner tiers are named after gaits: Au grand galop, Au galop, Au trot, Au pas.
 - Client direction: strong country and western identity, warm sand colours, festival atmosphere, as premium and high-end as possible.

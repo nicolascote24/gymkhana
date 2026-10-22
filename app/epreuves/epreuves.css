@@ -1,0 +1,1078 @@
+/* ------------------------------------------------------------------
+   Les épreuves. The same grammar as the home page (wide black display,
+   condensed figures, square corners, 1px rules) told as a day of
+   competition: sand for the events by day, night from the tour games to
+   the rule book, pale sand again to register.
+------------------------------------------------------------------- */
+
+.ep {
+  --ink: var(--color-nuit);
+  --ink-soft: color-mix(in srgb, var(--color-terre) 55%, var(--color-nuit));
+  --rule: color-mix(in srgb, var(--color-nuit) 18%, transparent);
+  --rule-strong: color-mix(in srgb, var(--color-nuit) 34%, transparent);
+  --stick: calc(var(--nav-h) + 1.25rem);
+}
+
+/* The ground: the home page's terrain. The day part (hero, judging, centre
+   games) is one stretch of it, so no seam shows between them; the evening and
+   the registration show other parts. */
+.ep,
+.ep-soir,
+.ep-part {
+  background-color: var(--color-sable);
+  background-image:
+    radial-gradient(
+      70% 60% at var(--sun-x, 85%) 0%,
+      color-mix(in srgb, var(--color-creme) 55%, transparent),
+      transparent 72%
+    ),
+    url("/textures/terrain.webp");
+  background-repeat: no-repeat, repeat;
+  background-size:
+    auto,
+    1600px 1000px;
+  background-position:
+    0 0,
+    var(--terrain, 0 0);
+}
+.ep {
+  --sun-x: 70%;
+}
+.ep-soir {
+  --terrain: -600px -800px;
+}
+.ep-part {
+  --terrain: -1300px -150px;
+  --sun-x: 20%;
+  background-color: var(--color-sable-clair);
+}
+@media (max-width: 767px) {
+  .ep,
+  .ep-soir,
+  .ep-part {
+    background-size:
+      auto,
+      1100px 688px;
+  }
+}
+
+/* Anchored targets clear the menu bar (and the chapter bar on phones). */
+.ep [id] {
+  scroll-margin-top: var(--stick);
+}
+
+/* Shared heading step, one below the home banners. --fp is the width of the
+   longest word in em at wdth 125, so a heading never overflows a phone. */
+.ep-judge__title,
+.ep-reg__title,
+.ep-sign__title,
+.ep-fam__title {
+  font-size: min(clamp(2.25rem, 4.4vw, 4.25rem), (100vw - 2 * var(--gutter)) / var(--fp, 8));
+  font-weight: 900;
+  line-height: 0.86;
+  text-transform: uppercase;
+  text-wrap: balance;
+  font-variation-settings: "wdth" 125;
+}
+
+/* ------------------------------ hero ------------------------------ */
+.ep-hero {
+  padding-block: calc(var(--nav-h) + clamp(3rem, 7vw, 6rem)) clamp(4rem, 8vw, 7rem);
+}
+.ep-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: center;
+}
+.ep-hero__text {
+  container-type: inline-size;
+}
+/* Fitted to its column: ÉPREUVES measures 7.62 em at wdth 125. */
+.ep-hero__title {
+  font-size: min(6.5rem, 100cqi / 7.7);
+  font-weight: 900;
+  line-height: 0.8;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+}
+.ep-hero__lead {
+  max-width: 34ch;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+}
+.ep-hero__ways {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.ep-hero__ways ul {
+  border-top: 1px solid var(--rule-strong);
+}
+.ep-hero__ways a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.25rem;
+  border-bottom: 1px solid var(--rule-strong);
+  font-size: 0.9375rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 110;
+}
+.ep-hero__ways svg {
+  color: var(--color-rouge);
+  transition: transform 240ms var(--ease-out-strong);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ep-hero__ways a:hover svg {
+    transform: translateY(0.2rem);
+  }
+}
+
+/* The course sheet: the ten courses as posted at the arena gate. The tour
+   games sit on a night band, the evening the page turns to further down. */
+.ep-plate {
+  border: 1px solid var(--rule-strong);
+  background: color-mix(in srgb, var(--color-sable-clair) 55%, transparent);
+}
+.ep-plate__row {
+  padding: clamp(1rem, 1.8vw, 1.5rem) clamp(1rem, 2vw, 1.75rem) clamp(0.75rem, 1.4vw, 1.25rem);
+}
+.ep-plate__row--tour {
+  background: var(--color-nuit);
+  color: var(--color-sable);
+}
+.ep-plate__name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.ep-plate__row--tour .ep-plate__name {
+  color: var(--color-poussiere);
+}
+.ep-plate__list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 0.5rem;
+}
+.ep-plate__item {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 0.6rem;
+  height: 100%;
+  padding: 0.75rem 0.35rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  font-variation-settings: "wdth" 100;
+}
+.ep-plate__item .course {
+  width: min(100%, 5.25rem);
+  height: auto;
+  aspect-ratio: 1;
+  margin: 0;
+}
+.ep-plate__row--tour :focus-visible {
+  outline-color: var(--color-sable);
+}
+
+/* Pointing at a course runs it (CourseRun.tsx): the line turns red while
+   the rider dot travels it. */
+[data-run][data-running] .course__path {
+  stroke: var(--color-rouge);
+  transition: none;
+}
+[data-run][data-running] .course__rider {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .ep-plate__item:hover span {
+    text-decoration: underline;
+    text-decoration-color: var(--color-rouge);
+    text-underline-offset: 0.3em;
+  }
+}
+
+/* The courses draw themselves once, one after the other. */
+html.js [data-run] [data-reveal="course"] .course__path,
+html.js [data-reveal="course"][data-run] .course__path {
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.1s var(--ease-in-out-strong) calc(0.15s + var(--d, 0) * 90ms);
+}
+html.js [data-run] [data-reveal="course"].is-in .course__path,
+html.js [data-reveal="course"][data-run].is-in .course__path {
+  stroke-dashoffset: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-run] [data-reveal="course"] .course__path,
+  html.js [data-reveal="course"][data-run] .course__path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
+
+/* --------------------- chapter bar (phones) --------------------- */
+.ep-chap {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .ep {
+    --stick: calc(var(--nav-h) + 3.75rem);
+  }
+  .ep-chap {
+    position: sticky;
+    top: calc(var(--nav-h) - 1px);
+    z-index: 40;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-inline: calc(var(--gutter) - 0.25rem);
+    background: color-mix(in oklab, var(--color-nuit) 92%, transparent);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    backdrop-filter: blur(16px) saturate(1.2);
+    border-bottom: 1px solid color-mix(in oklab, var(--color-sable) 14%, transparent);
+    color: var(--color-sable);
+    transition: top 280ms var(--ease-out-strong);
+  }
+  .nav[data-hidden="true"] ~ main .ep-chap {
+    top: 0;
+  }
+  .ep-chap a {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 2.875rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-variation-settings: "wdth" 100;
+    color: color-mix(in oklab, var(--color-sable) 70%, transparent);
+    transition: color 200ms ease;
+  }
+  .ep-chap a::after {
+    content: "";
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.4rem;
+    height: 2px;
+    background: var(--color-rouge);
+    transform: scaleX(0);
+    transition: transform 260ms var(--ease-out-strong);
+  }
+  .ep-chap a[aria-current] {
+    color: var(--color-sable);
+  }
+  .ep-chap a[aria-current]::after {
+    transform: scaleX(1);
+  }
+  .ep-chap :focus-visible {
+    outline-color: var(--color-sable);
+    outline-offset: -3px;
+  }
+}
+/* small phones: the four chapters keep their names on one line */
+@media (max-width: 419px) {
+  .ep-chap a {
+    font-size: 0.6875rem;
+    letter-spacing: 0.03em;
+    font-variation-settings: "wdth" 85;
+  }
+}
+
+/* --------------------------- the judging --------------------------- */
+.ep-judge {
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+.ep-judge__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--rule-strong);
+}
+.ep-judge__title {
+  --fp: 6.2;
+  font-size: min(clamp(1.75rem, 3vw, 3rem), (100vw - 2 * var(--gutter)) / var(--fp));
+}
+.ep-judge__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+.ep-judge__list dt {
+  font-size: clamp(1.375rem, 2vw, 1.875rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+}
+.ep-judge__list dd {
+  margin-top: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* Article references: small, underlined in red, after the text they source. */
+.ep-judge__list dd a,
+.ep-rules dd a,
+.ep-fiche__meta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rouge);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+  white-space: nowrap;
+}
+
+/* ---------------------------- families ---------------------------- */
+.ep-fam {
+  position: relative;
+  color: var(--ink);
+}
+.ep-fam__opener {
+  position: relative;
+  isolation: isolate;
+}
+.ep-fam__photo {
+  height: clamp(22rem, 64svh, 42rem);
+  overflow: hidden;
+}
+.ep-fam__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* the photographers' marks sit in the bottom corners: crop above them */
+  object-position: 50% 28%;
+}
+.ep-fam--tour .ep-fam__photo img {
+  object-position: 55% 40%;
+}
+.ep-fam__opener::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(0deg, color-mix(in srgb, var(--color-nuit) 82%, transparent) 0%, transparent 55%);
+  pointer-events: none;
+}
+.ep-fam__head {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  padding-bottom: clamp(1.5rem, 3.5vw, 3rem);
+  color: var(--color-sable);
+}
+.ep-fam__title {
+  --fp: 6;
+  font-size: min(clamp(2.5rem, 6vw, 6rem), (100vw - 2 * var(--gutter)) / var(--fp));
+}
+
+.ep-fam__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 9vw, 8rem);
+}
+.ep-fam__side {
+  position: sticky;
+  top: var(--stick);
+  align-self: start;
+}
+.ep-fam__intro {
+  max-width: 30ch;
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  line-height: 1.4;
+}
+.ep-fam__index ol {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--rule);
+}
+.ep-fam__index a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.875rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-variation-settings: "wdth" 110;
+  color: var(--ink-soft);
+  transition: color 200ms ease;
+}
+/* the event on screen: a red barrel before its name */
+.ep-fam__index a::before {
+  content: "";
+  flex: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-rouge);
+  transform: scale(0);
+  transition: transform 300ms var(--ease-out-strong);
+}
+.ep-fam__index a[data-current] {
+  color: var(--ink);
+}
+.ep-fam__index a[data-current]::before {
+  transform: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .ep-fam__index a:hover {
+    color: var(--ink);
+  }
+}
+
+/* ----------------------------- sheets ----------------------------- */
+.ep-fiche {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-block: clamp(2.25rem, 4vw, 3.25rem);
+  border-top: 1px solid var(--rule);
+}
+.ep-fiche:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.ep-fiche__course {
+  align-self: start;
+  aspect-ratio: 1;
+  padding: clamp(0.75rem, 1.5vw, 1.25rem);
+  border: 1px solid var(--rule);
+}
+.ep-fiche__course .course {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.ep-fiche__course .course__path,
+.ep-fiche__course .course__ghost {
+  stroke-width: 1.4;
+}
+.ep-fiche__course .course__ring {
+  stroke-width: 1.2;
+}
+.ep-fiche__course .course__rider {
+  r: 2.6px;
+}
+.ep-fiche__title {
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  font-weight: 900;
+  line-height: 0.92;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+}
+.ep-fiche__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.25rem;
+  margin-top: 0.85rem;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.ep-fiche__desc {
+  max-width: 50ch;
+  margin-top: 1.25rem;
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+  line-height: 1.5;
+}
+.ep-fiche__points,
+.ep-fiche__dq ul {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 62ch;
+}
+.ep-fiche__points {
+  margin-top: 1.1rem;
+  color: var(--ink-soft);
+}
+.ep-fiche__points li,
+.ep-fiche__dq li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+.ep-fiche__points li::before,
+.ep-fiche__dq li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 0.7rem;
+  height: 2px;
+  background: var(--color-rouge);
+}
+.ep-fiche__dq {
+  max-width: 62ch;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.ep-fiche__dq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 110;
+}
+.ep-fiche__dq summary::-webkit-details-marker {
+  display: none;
+}
+/* a drawn plus that turns into a cross when the list is open */
+.ep-fiche__dq summary::after {
+  content: "";
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  background:
+    linear-gradient(var(--color-rouge), var(--color-rouge)) center / 100% 2px no-repeat,
+    linear-gradient(var(--color-rouge), var(--color-rouge)) center / 2px 100% no-repeat;
+  transition: transform 240ms var(--ease-out-strong);
+}
+.ep-fiche__dq[open] summary::after {
+  transform: rotate(45deg);
+}
+.ep-fiche__dq ul {
+  padding-bottom: 1.1rem;
+}
+.ep-fiche__note {
+  max-width: 56ch;
+  margin-top: 1.25rem;
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+
+/* ------------------------------ evening ------------------------------ */
+/* Night by default (no script, reduced motion); .is-day while the reader
+   is still above it, then one 0.7 s move to night (EpreuvesMotion.tsx). */
+.ep-soir {
+  position: relative;
+  isolation: isolate;
+  --ink: var(--color-sable);
+  --ink-soft: color-mix(in srgb, var(--color-creme) 80%, var(--color-nuit));
+  --rule: color-mix(in srgb, var(--color-sable) 16%, transparent);
+  --rule-strong: color-mix(in srgb, var(--color-sable) 30%, transparent);
+  color: var(--ink);
+  transition: color 400ms ease;
+}
+.ep-soir.is-day {
+  --ink: var(--color-nuit);
+  --ink-soft: color-mix(in srgb, var(--color-terre) 55%, var(--color-nuit));
+  --rule: color-mix(in srgb, var(--color-nuit) 18%, transparent);
+  --rule-strong: color-mix(in srgb, var(--color-nuit) 34%, transparent);
+}
+.ep-soir__night {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-nuit);
+  pointer-events: none;
+  will-change: opacity;
+}
+.ep-soir:not(.is-day) :focus-visible {
+  outline-color: var(--color-sable);
+}
+.ep-soir .ep-fiche__title,
+.ep-soir .ep-fam__intro {
+  transition: color 400ms ease;
+}
+
+/* ---------------------------- Grand Prix ---------------------------- */
+.ep-gp {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: clamp(34rem, 92svh, 56rem);
+  color: var(--color-sable);
+}
+.ep-gp__photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+.ep-gp__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 45% 45%;
+}
+.ep-gp__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-nuit) 90%, transparent) 0%,
+      color-mix(in srgb, var(--color-nuit) 55%, transparent) 40%,
+      transparent 68%
+    ),
+    linear-gradient(
+      180deg,
+      var(--color-nuit) 0%,
+      transparent 22%,
+      transparent 62%,
+      var(--color-nuit) 100%
+    );
+}
+.ep-gp__grid {
+  padding-block: clamp(6rem, 12vw, 10rem) clamp(4rem, 8vw, 7rem);
+}
+.ep-gp__copy {
+  display: grid;
+  justify-items: start;
+  max-width: 40rem;
+}
+.ep-gp__title {
+  --fp: 5.6;
+  font-size: min(clamp(3rem, 7vw, 6.5rem), (100vw - 2 * var(--gutter)) / var(--fp));
+  font-weight: 900;
+  line-height: 0.82;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+}
+.ep-gp__when {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  font-size: clamp(1.25rem, 2.1vw, 1.875rem);
+  font-weight: 800;
+  line-height: 1.15;
+  font-variation-settings: "wdth" 110;
+}
+.ep-gp__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-creme);
+}
+.ep-gp__tag span {
+  padding: 0.3rem 0.5rem 0.25rem;
+  box-shadow: inset 0 0 0 1px currentColor;
+  font-size: var(--fs-label);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ep-gp__text {
+  max-width: 40ch;
+  margin-top: 1.5rem;
+  color: var(--color-creme);
+}
+.ep-gp__cta {
+  --ghost-ink: var(--color-sable);
+  --btn-hover-fg: var(--color-nuit);
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+}
+.ep-gp :focus-visible {
+  outline-color: var(--color-sable);
+}
+
+/* ----------------------------- rule book ----------------------------- */
+.ep-reg {
+  padding-block: clamp(4rem, 8vw, 7rem) var(--section-y);
+}
+.ep-reg__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+}
+.ep-reg__title {
+  --fp: 9.3;
+}
+.ep-reg__intro {
+  max-width: 44ch;
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  font-size: clamp(1.125rem, 1.5vw, 1.3125rem);
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+/* The document, set as type: section IV engraved beside its references. */
+.ep-doc {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  border: 1px solid var(--rule-strong);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+.ep-doc__section {
+  display: grid;
+  place-items: center;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border-right: 1px solid var(--rule-strong);
+  font-size: clamp(4.5rem, 9vw, 8rem);
+  font-weight: 900;
+  line-height: 0.8;
+  font-variation-settings: "wdth" 75;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+}
+.ep-doc__body {
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+}
+.ep-doc__title {
+  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+  font-weight: 900;
+  line-height: 1.1;
+  font-variation-settings: "wdth" 110;
+}
+.ep-doc__by {
+  margin-top: 0.35rem;
+  font-weight: 600;
+}
+.ep-doc__where {
+  margin-top: 1rem;
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+.ep-doc__file {
+  margin-top: 0.35rem;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.ep-doc__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: clamp(1.5rem, 2.5vw, 2rem);
+}
+.ep-soir:not(.is-day) .ep-doc .btn {
+  --btn-fill: var(--color-sable);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ep-soir:not(.is-day) .ep-doc .btn:hover {
+    color: var(--color-nuit);
+  }
+}
+.ep-doc__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--color-rouge);
+  text-underline-offset: 0.3em;
+}
+.ep-reg__side {
+  padding-top: clamp(0.5rem, 1vw, 1rem);
+}
+.ep-reg__sub {
+  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+}
+.ep-rules {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--rule-strong);
+}
+.ep-rules > div {
+  padding-block: 1.15rem;
+  border-bottom: 1px solid var(--rule);
+}
+.ep-rules dt {
+  font-size: 1.125rem;
+  font-weight: 800;
+  font-variation-settings: "wdth" 110;
+}
+.ep-rules dd {
+  margin-top: 0.35rem;
+  color: var(--ink-soft);
+}
+.ep-reg__sanction {
+  margin-top: 1.5rem;
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+
+/* ---------------------------- registration ---------------------------- */
+.ep-part {
+  padding-block: var(--section-y);
+  color: var(--color-nuit);
+}
+.ep-sign__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+.ep-step__link,
+.ep-sign__action p a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 700;
+  color: var(--color-nuit);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rouge);
+  text-underline-offset: 0.3em;
+}
+.ep-sign__title {
+  --fp: 9.4;
+}
+.ep-sign__lead {
+  max-width: 34ch;
+  font-size: var(--fs-lead);
+  line-height: 1.35;
+}
+.ep-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-top: clamp(2rem, 4vw, 3.25rem);
+}
+.ep-step {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule-strong);
+}
+.ep-step__num {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 0.8;
+  font-variation-settings: "wdth" 75;
+  color: var(--color-terre);
+}
+.ep-step__title {
+  margin-top: 1.1rem;
+  font-size: clamp(1.125rem, 1.5vw, 1.3125rem);
+  font-weight: 900;
+  line-height: 1.1;
+  font-variation-settings: "wdth" 110;
+}
+.ep-step__text {
+  margin-top: 0.6rem;
+  max-width: 36ch;
+  color: var(--ink-soft);
+}
+.ep-step__link {
+  margin-top: 0.85rem;
+  font-size: var(--fs-small);
+}
+/* The one action of the page, on a night card like the camping card. */
+.ep-sign__action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem clamp(1.5rem, 4vw, 3rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--color-nuit);
+  color: var(--color-creme);
+}
+.ep-sign__action .btn {
+  --btn-fill: var(--color-sable);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ep-sign__action .btn:hover {
+    color: var(--color-nuit);
+  }
+}
+.ep-sign__action p {
+  font-size: var(--fs-small);
+  line-height: 1.7;
+}
+.ep-sign__action p a {
+  color: var(--color-sable);
+}
+.ep-sign__action :focus-visible {
+  outline-color: var(--color-sable);
+}
+
+/* ===================== tablets and phones ===================== */
+@media (max-width: 1023px) {
+  .ep-hero__grid,
+  .ep-judge__grid,
+  .ep-fam__grid,
+  .ep-reg__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ep-hero__lead {
+    max-width: 44ch;
+  }
+  /* the chapter bar right under the hero leads to the same places */
+  .ep-hero__ways {
+    display: none;
+  }
+  .ep-fam__side {
+    position: static;
+  }
+  /* the chapter bar takes over from the family index */
+  .ep-fam__index {
+    display: none;
+  }
+  .ep-fam__intro {
+    max-width: 44ch;
+  }
+  .ep-fam__photo {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
+@media (max-width: 767px) {
+  .ep-hero {
+    padding-top: calc(var(--nav-h) + 2.5rem);
+  }
+  .ep-judge__list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+  .ep-judge__list > div {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+  }
+  .ep-fiche {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 1rem 1.1rem;
+    padding-block: 1.5rem;
+  }
+  .ep-fiche__course {
+    padding: 0.4rem;
+  }
+  .ep-fiche__course .course__path,
+  .ep-fiche__course .course__ghost {
+    stroke-width: 2.4;
+  }
+  .ep-fiche__course .course__rider {
+    r: 3.6px;
+  }
+  .ep-fiche__title {
+    font-size: 1.375rem;
+    font-variation-settings: "wdth" 110;
+  }
+  /* below the drawing and the title, the text takes the full width */
+  .ep-fiche__desc,
+  .ep-fiche__fold,
+  .ep-fiche__note {
+    grid-column: 1 / -1;
+  }
+  /* the rules fold behind one button; the fold's own gap spaces them */
+  .ep-fiche__fold .fold__body > * {
+    margin-top: 0;
+  }
+  html.js .ep-fiche__fold .fold__toggle {
+    justify-self: start;
+    color: var(--ink);
+  }
+  .ep-fiche__body {
+    display: contents;
+  }
+  .ep-fiche__title,
+  .ep-fiche__meta {
+    grid-column: 2;
+  }
+  .ep-fiche__course {
+    grid-row: 1 / span 2;
+  }
+  .ep-fiche__title {
+    align-self: end;
+  }
+  .ep-fiche__meta {
+    align-self: start;
+    margin-top: 0.5rem;
+  }
+  .ep-fiche__desc {
+    margin-top: 0.4rem;
+  }
+  .ep-gp {
+    min-height: 0;
+    align-items: stretch;
+  }
+  .ep-gp__photo {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .ep-gp__photo::after {
+    background: linear-gradient(180deg, var(--color-nuit) 0%, transparent 25%, transparent 60%, var(--color-nuit) 100%);
+  }
+  .ep-gp__grid {
+    margin-top: -3rem;
+    padding-block: 0 4rem;
+    position: relative;
+  }
+  .ep-doc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* the engraved section number is a desktop flourish */
+  .ep-doc__section {
+    display: none;
+  }
+  .ep-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+  .ep-step {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    column-gap: 1rem;
+  }
+  .ep-step__num {
+    grid-row: 1 / span 3;
+    font-size: 3rem;
+  }
+  .ep-step__title {
+    margin-top: 0;
+  }
+  .ep-sign__action .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+/* Phones: the course sheet becomes two columns of courses beside their names. */
+@media (max-width: 639px) {
+  .ep-plate__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.75rem;
+  }
+  .ep-plate__item {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    justify-items: start;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    text-align: left;
+  }
+  .ep-plate__item .course {
+    width: 2.5rem;
+  }
+}

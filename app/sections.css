@@ -743,6 +743,17 @@ html.js [data-reveal="image"].is-in img {
   line-height: 1.4;
   color: var(--color-creme);
 }
+/* The section's one red action: the way to the events page, right under
+   the definition. On night the hover fill is sand, so the label stays read. */
+.gym__more {
+  --btn-fill: var(--color-sable);
+  margin-top: clamp(1.5rem, 2.5vw, 2rem);
+}
+@media (hover: hover) and (pointer: fine) {
+  .gym__more:hover {
+    color: var(--color-nuit);
+  }
+}
 .gym__steps {
   display: grid;
   margin-top: clamp(2rem, 4vw, 3.5rem);
@@ -840,41 +851,7 @@ html.js [data-reveal="image"].is-in img {
   fill: var(--color-sable);
 }
 
-.gym__events {
-  padding-top: clamp(4rem, 8vw, 7rem);
-}
-.gym__events-title {
-  font-size: clamp(1.625rem, 2.6vw, 2.5rem);
-  font-weight: 900;
-  line-height: 0.9;
-  text-transform: uppercase;
-  font-variation-settings: "wdth" 125;
-}
-.gym__families {
-  display: grid;
-  gap: clamp(2.5rem, 5vw, 4rem);
-  margin-top: clamp(2rem, 4vw, 3rem);
-}
-.gym__family-name {
-  padding-bottom: 1rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-sable) 18%, transparent);
-  font-size: var(--fs-label);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-poussiere);
-}
-.gym__cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-}
-.gym__card {
-  display: grid;
-  grid-template-rows: auto auto 1fr;
-  align-content: start;
-  gap: 0.6rem;
-  padding: 1.75rem 1.5rem 1.5rem 0;
-}
+/* Event course diagrams (Course.tsx), used on the events page. */
 .course {
   width: 5.5rem;
   height: 5.5rem;
@@ -883,7 +860,7 @@ html.js [data-reveal="image"].is-in img {
 }
 .course__path {
   fill: none;
-  stroke: var(--color-sable);
+  stroke: currentColor;
   stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -893,25 +870,17 @@ html.js [data-reveal="image"].is-in img {
 /* the line stays faintly visible under a redraw */
 .course__ghost {
   fill: none;
-  stroke: color-mix(in srgb, var(--color-sable) 22%, transparent);
+  stroke: color-mix(in srgb, currentColor 22%, transparent);
   stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-/* The relay (CourseRelay.tsx): the running card's line turns red as the
-   rider dot travels it; the others rest in sand. */
+/* the rider dot shows only while a course runs (CourseRun.tsx) */
 .course__rider {
   fill: var(--color-rouge);
   opacity: 0;
   transition: opacity 200ms ease;
 }
-.gym__card[data-running] .course__rider {
-  opacity: 1;
-}
-.gym__card[data-running] .course__path {
-  stroke: var(--color-rouge);
-}
-
 .course__mark {
   fill: var(--color-rouge);
 }
@@ -920,20 +889,9 @@ html.js [data-reveal="image"].is-in img {
   stroke: var(--color-rouge);
   stroke-width: 2;
 }
-.gym__card-title {
-  font-size: clamp(1.125rem, 1.4vw, 1.375rem);
-  font-weight: 800;
-  line-height: 1.1;
-  font-variation-settings: "wdth" 110;
-}
-.gym__card-text {
-  max-width: 32ch;
-  font-size: var(--fs-small);
-  color: color-mix(in srgb, var(--color-creme) 80%, transparent);
-}
 
 /* "Une compétition officielle" (PhotoBand.tsx): the relay race fills the
-   frame; the facts and the way to the schedule sit over it, on the page's
+   frame; the facts and the way to the rule book sit over it, on the page's
    own column; the rescue race overlaps the bottom edge as a second camera. */
 .band {
   position: relative;
@@ -1086,27 +1044,6 @@ html.js [data-reveal="image"].is-in img {
   }
   .gym__arena {
     width: min(100%, 18rem);
-  }
-  /* Phones: one compact row per event, the course drawn beside its name. */
-  .gym__cards {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .gym__card {
-    grid-template-columns: 3.5rem minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    column-gap: 1rem;
-    row-gap: 0.3rem;
-    padding: 1.1rem 0;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-sable) 12%, transparent);
-  }
-  .gym__card .course {
-    grid-row: 1 / span 2;
-    width: 3.5rem;
-    height: 3.5rem;
-    margin-bottom: 0;
-  }
-  .gym__card-text {
-    max-width: none;
   }
 }
 
@@ -2364,8 +2301,11 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
     gap: 0.35rem;
   }
 }
-/* the label wraps rather than push past a small phone's edge */
+/* the label wraps rather than push past a small phone's edge; outlined, so
+   the gymkhana section keeps one red action (its way to the events page) */
 .band__cta {
+  --ghost-ink: var(--color-sable);
+  --btn-hover-fg: var(--color-nuit);
   max-width: 100%;
   white-space: normal;
 }
@@ -2471,13 +2411,6 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
   }
   .gym__step {
     padding-block: 0.9rem;
-  }
-  .gym__events {
-    margin-top: 1rem;
-  }
-  .gym__families {
-    gap: 2rem;
-    margin-top: 1.5rem;
   }
   /* the rescue race: a second camera beside its caption, not a second full photo */
   .band__grid {
@@ -2796,8 +2729,7 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
     margin-top: 0.75rem;
   }
 
-  /* -- swipeable rows (the events, the family moments) -- */
-  .gym__families,
+  /* -- swipeable rows (the family moments) -- */
   .act__grid {
     display: grid;
     grid-template-columns: none;
@@ -2813,13 +2745,11 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
     scroll-padding-inline: var(--gutter);
     scrollbar-width: none;
   }
-  .gym__families::-webkit-scrollbar,
   .act__grid::-webkit-scrollbar {
     display: none;
   }
   /* the cue under each row title */
-  .act__hint,
-  .gym__events-title::after {
+  .act__hint {
     display: block;
     margin-top: 0.6rem;
     font-size: var(--fs-label);
@@ -2895,6 +2825,7 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
     grid-template-areas:
       "title title"
       "def def"
+      "more more"
       "arena steps";
     gap: 0 1.25rem;
     align-items: start;
@@ -2907,6 +2838,11 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
   }
   .gym__def {
     grid-area: def;
+  }
+  .gym__more {
+    grid-area: more;
+    justify-self: start;
+    margin-top: 1.25rem;
   }
   .gym__steps {
     grid-area: steps;
@@ -2943,61 +2879,6 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
   }
   .arena__path {
     stroke-width: 7;
-  }
-
-  /* the nine events: one swipeable row, each card naming its family */
-  .gym__events {
-    padding-top: 1.5rem;
-  }
-  .gym__events-title::after {
-    content: "9 épreuves · faites glisser";
-    color: var(--color-creme);
-  }
-  .gym__families {
-    grid-auto-columns: 64%;
-    margin-top: 1.25rem;
-  }
-  .gym__family,
-  .gym__cards {
-    display: contents;
-  }
-  .gym__family-name {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-  .gym__card {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto auto auto 1fr;
-    row-gap: 0.4rem;
-    padding: 1.1rem 1.1rem 1.25rem;
-    border: 1px solid color-mix(in srgb, var(--color-sable) 16%, transparent);
-    background: color-mix(in srgb, var(--color-sable) 5%, transparent);
-    scroll-snap-align: start;
-  }
-  .gym__card::before {
-    content: "Jeu de centre";
-    margin-bottom: 0.35rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-poussiere);
-  }
-  .gym__family + .gym__family .gym__card::before {
-    content: "Jeu de tour";
-  }
-  .gym__card .course {
-    grid-row: auto;
-    margin-bottom: 0.4rem;
-  }
-  /* a card that enters sideways is already there: no rise on top of the swipe */
-  html.js .gym__card[data-reveal] {
-    opacity: 1;
-    transform: none;
   }
 
   /* the competition proof: the figure beside its meaning, the action on

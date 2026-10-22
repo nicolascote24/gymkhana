@@ -13,7 +13,9 @@ type Chapter = { id: string; title: string; text: string; href: string };
 // and never plays by itself under reduced motion (the poster stays).
 // WebM (VP9) where the browser plays it, H.264 MP4 everywhere else.
 const ext = () => (document.createElement("video").canPlayType('video/webm; codecs="vp9"') ? "webm" : "mp4");
-const loopSrc = () => `/video/festival-boucle-${window.matchMedia("(max-width: 767px)").matches ? 720 : 1280}.${ext()}`;
+// Encoded from the client's 4K master: 1080p for wide screens, 720p for
+// phones (their 4:5 crop of the frame still fills a high-density screen).
+const loopSrc = () => `/video/festival-boucle-${window.matchMedia("(max-width: 767px)").matches ? 1280 : 1920}.${ext()}`;
 const fullSrc = () => `/video/festival-2026.${ext()}`;
 const POSTER = "/video/festival-poster.jpg";
 

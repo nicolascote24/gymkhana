@@ -444,8 +444,8 @@
     "fallback": "/images/equipe.jpg"
   },
   "logo": {
-    "width": 968,
-    "height": 992,
+    "width": 1024,
+    "height": 1024,
     "sources": {
       "avif": [
         {

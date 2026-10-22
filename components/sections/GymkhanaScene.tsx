@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ArrowRight } from "@phosphor-icons/react";
 import { getGsap, prefersReducedMotion, whenIdle } from "@/lib/motion";
 
 // The cloverleaf barrel pattern, drawn by the reader's scroll. On wide
@@ -91,6 +92,10 @@ export default function GymkhanaScene({ steps, definition }: { steps: Step[]; de
           <p className="gym__def" data-reveal>
             {definition}
           </p>
+          {/* The way to the events page, in view as soon as the section is. */}
+          <a href="/epreuves/" className="btn gym__more" data-reveal>
+            Épreuves et inscription <ArrowRight size={18} weight="bold" aria-hidden />
+          </a>
           <ol className="gym__steps">
             {steps.map((s, i) => (
               <li key={s.title} className="gym__step" data-active={i === step} data-done={i < step}>

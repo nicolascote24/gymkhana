@@ -491,6 +491,17 @@ body::after {
   font-size: var(--fs-small);
   color: color-mix(in oklab, var(--color-sable) 75%, transparent);
 }
+.menu__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  margin-top: 0.75rem;
+  color: var(--color-sable);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rouge);
+  text-underline-offset: 0.35em;
+}
 
 /* ----------------------------- hero ----------------------------- */
 /* A living photograph. Back to front: background plate (rider removed),

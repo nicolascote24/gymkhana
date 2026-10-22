@@ -4,8 +4,22 @@ import { fr } from "@/lib/typo";
 import { keepPlaces } from "@/lib/places";
 import CourseMark from "@/components/CourseMark";
 import Tumbleweed from "@/components/Tumbleweed";
+import type { Page } from "@/components/Nav";
 
-export default function Footer() {
+// Anchors of the home page, and the events page; away from the home page the
+// anchors lead back to it.
+const LINKS: { href: string; label: string; page?: Page }[] = [
+  { href: "#programmation", label: "Programmation" },
+  { href: "#gymkhana", label: "Le gymkhana" },
+  { href: "/epreuves/", label: "Épreuves et inscription", page: "epreuves" },
+  { href: "#activites", label: "Activités" },
+  { href: "#visite", label: "Planifier ma visite" },
+  { href: "#equipe", label: "L'équipe" },
+  { href: "#partenaires", label: "Partenaires" },
+];
+
+export default function Footer({ page = "accueil" }: { page?: Page }) {
+  const home = page === "accueil";
   const a = festival.address;
   const c = festival.contact;
   return (
@@ -60,38 +74,18 @@ export default function Footer() {
             </p>
           </div>
           <nav aria-label="Pied de page">
-            <p className="foot__label">Sur cette page</p>
+            <p className="foot__label">Parcourir</p>
             <ul>
-              <li>
-                <a href="#programmation" className="foot__link">
-                  Programmation
-                </a>
-              </li>
-              <li>
-                <a href="#gymkhana" className="foot__link">
-                  Le gymkhana
-                </a>
-              </li>
-              <li>
-                <a href="#activites" className="foot__link">
-                  Activités
-                </a>
-              </li>
-              <li>
-                <a href="#visite" className="foot__link">
-                  Planifier ma visite
-                </a>
-              </li>
-              <li>
-                <a href="#equipe" className="foot__link">
-                  L&apos;équipe
-                </a>
-              </li>
-              <li>
-                <a href="#partenaires" className="foot__link">
-                  Partenaires
-                </a>
-              </li>
+              {LINKS.map((l) => {
+                const href = !home && l.href.startsWith("#") ? `/${l.href}` : l.href;
+                return (
+                  <li key={l.href}>
+                    <a href={href} className="foot__link" aria-current={l.page === page ? "page" : undefined}>
+                      {l.label}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
         </div>

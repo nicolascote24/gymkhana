@@ -85,7 +85,16 @@ const jobs = [
   { id: "jeune-cavaliere", src: `${BANK}/432-680x1024.jpg`, widths: [480, 680] },
   { id: "presidente", src: `${BANK}/Presidente.jpg`, widths: [640, 1080, 1600] },
   { id: "equipe", src: `${BANK}/equipe.jpg`, widths: [640, 1080, 1440] },
-  { id: "logo", src: `${BANK}/logo-festival-10-Final.png`, widths: [96, 192, 384], alpha: true, noGrade: true },
+  // The badge gets a white disc behind it, so the inside of the circle reads
+  // white on night as on sand (the black ring covers the disc's edge).
+  {
+    id: "logo",
+    src: `${BANK}/logo-festival-final-ca.png`,
+    widths: [96, 192, 384],
+    alpha: true,
+    noGrade: true,
+    disc: { radius: 0.45, color: "#ffffff" },
+  },
 ];
 
 // Optional filter: `node scripts/build-images.mjs hero-rider relais` rebuilds only those ids.
@@ -97,6 +106,11 @@ for (const job of jobs.filter((j) => !only.length || only.includes(j.id))) {
   let base = sharp(job.src).rotate();
   const meta = await base.metadata();
   const full = { width: meta.width, height: meta.height };
+  if (job.disc) {
+    const { width: w, height: h } = full;
+    const disc = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><circle cx="${w / 2}" cy="${h / 2}" r="${Math.min(w, h) * job.disc.radius}" fill="${job.disc.color}"/></svg>`;
+    base = sharp(Buffer.from(disc)).composite([{ input: await base.png().toBuffer() }]);
+  }
   if (job.crop ?? job.trim) base = base.extract(job.crop ?? job.trim);
   const box = job.crop ?? job.trim ?? { left: 0, top: 0, ...full };
   const shaped = job.alpha ? base.ensureAlpha() : base.removeAlpha();
