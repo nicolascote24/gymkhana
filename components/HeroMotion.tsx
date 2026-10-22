@@ -6,9 +6,14 @@ import { getGsap, prefersReducedMotion, ease } from "@/lib/motion";
 // Hero choreography (first-visit moment, so it may take its time):
 // 1. entrance: a dolly-in where each depth plane settles at its own pace
 //    (the rider travels further than the background), the letters run in
-//    from condensed to wide, then the name lines, date and action arrive;
+//    and widen. Only the letters start hidden: the date, the free entry, the
+//    action and the menu are in place from the first paint and never move
+//    (a tween there would also leave an inline transform on the menu bar
+//    that stops it hiding on scroll). Transforms only, so the entrance never
+//    asks the browser for a new layout;
 // 2. living photo: planes follow the pointer at their own depth, and drift
-//    slowly on their own when nobody moves, so the still image breathes;
+//    slowly on their own when nobody moves, so the still image breathes
+//    (fine pointers only: on phones the photo holds still and the dust moves);
 // 3. scroll: the hero stays pinned while the next section slides over it,
 //    the word sinks behind the rider and the veil darkens.
 const DEPTH = { bg: 9, word: 16, rider: 26, dust: 38 }; // px at full deflection
@@ -33,12 +38,12 @@ export default function HeroMotion() {
       dust: q('[data-depth="dust"]'),
     };
     const letters = qa("[data-hero-letter]");
-    const ins = document.querySelectorAll("[data-hero-in]");
-    const target = parseFloat(getComputedStyle(root).getPropertyValue("--wdth")) || 125;
 
     const ctx = gsap.context(() => {
-      // 1. Entrance
-      gsap.set(ins, { opacity: 0 });
+      // 1. Entrance. The letters widen with scaleX from their left edge (the
+      // direction of the run) rather than through the width axis, which would
+      // re-lay out the word on every frame.
+      gsap.set(letters, { transformOrigin: "0% 100%" });
       html.classList.remove("hero-pending");
       const tl = gsap.timeline({ defaults: { ease: ease.out } });
       tl.fromTo(planes.bg, { scale: 1.16 }, { scale: 1, duration: 2.6 }, 0)
@@ -46,12 +51,10 @@ export default function HeroMotion() {
         .fromTo(planes.dust, { opacity: 0 }, { opacity: 1, duration: 1.6, ease: "power1.out" }, 0.6)
         .fromTo(
           letters,
-          { "--wdth": 62, xPercent: -40, opacity: 0 },
-          { "--wdth": target, xPercent: 0, opacity: 1, duration: 1.15, stagger: 0.055 },
+          { scaleX: 0.8, xPercent: -40, opacity: 0 },
+          { scaleX: 1, xPercent: 0, opacity: 1, duration: 1.15, stagger: 0.055 },
           0.3,
-        )
-        .fromTo(ins, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.07 }, 0.95)
-        .add(() => letters.forEach((l) => l.style.removeProperty("--wdth")));
+        );
 
       // 3. Scroll: pinned hero, the next section slides over it.
       const scroll = {
@@ -72,6 +75,24 @@ export default function HeroMotion() {
       gsap.to(q("[data-hero-veil]"), { opacity: 0.7, ease: "none", scrollTrigger: scroll });
     }, root);
 
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const dust = startDust(root);
+    if (!finePointer) {
+      // Phones: no pointer to follow, and a photo that drifts on its own costs
+      // a frame of work forever for little effect. Only the dust lives.
+      const st = ScrollTrigger.create({
+        trigger: root.parentElement,
+        start: "top top",
+        end: () => `+=${root.offsetHeight}`,
+        onToggle: (self) => dust.toggle(self.isActive || self.progress === 0),
+      });
+      return () => {
+        ctx.revert();
+        st.kill();
+        dust.stop();
+      };
+    }
+
     // 2. Living photo: pointer + idle drift, smoothed with quickTo.
     const movers = (Object.keys(DEPTH) as (keyof typeof DEPTH)[])
       .filter((k) => planes[k])
@@ -80,7 +101,6 @@ export default function HeroMotion() {
         x: gsap.quickTo(planes[k]!, "x", { duration: 1.4, ease: "power3.out" }),
         y: gsap.quickTo(planes[k]!, "y", { duration: 1.4, ease: "power3.out" }),
       }));
-    const finePointer = window.matchMedia("(pointer: fine)").matches;
     const pointer = { x: 0, y: 0, active: 0 };
     let lastMove = -1e9;
     const onMove = (e: PointerEvent) => {
@@ -89,14 +109,14 @@ export default function HeroMotion() {
       pointer.y = ((e.clientY - r.top) / r.height) * 2 - 1;
       lastMove = performance.now();
     };
-    if (finePointer) root.addEventListener("pointermove", onMove);
+    root.addEventListener("pointermove", onMove);
 
     let visible = true;
     const tick = (time: number) => {
       if (!visible) return;
       // Pointer weight eases out after 2.5 s without movement, handing back to the drift.
       const since = performance.now() - lastMove;
-      const want = finePointer && since < 2500 ? 1 : 0;
+      const want = since < 2500 ? 1 : 0;
       pointer.active += (want - pointer.active) * 0.04;
       const ix = Math.sin((time / 13) * Math.PI * 2) * 0.45 + Math.sin((time / 5.3) * Math.PI * 2) * 0.08;
       const iy = Math.sin((time / 9.7) * Math.PI * 2) * 0.3;
@@ -109,7 +129,6 @@ export default function HeroMotion() {
     };
     gsap.ticker.add(tick);
 
-    const dust = startDust(root);
     const st = ScrollTrigger.create({
       trigger: root.parentElement,
       start: "top top",

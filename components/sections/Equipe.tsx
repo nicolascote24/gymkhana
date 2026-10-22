@@ -1,5 +1,6 @@
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Picture from "@/components/Picture";
+import MobileFold from "@/components/MobileFold";
 import { festival } from "@/content/festival";
 import { fr } from "@/lib/typo";
 import { keepPlaces } from "@/lib/places";
@@ -35,21 +36,23 @@ export default function Equipe() {
             </p>
             <footer>{festival.founder}, fondatrice du festival</footer>
           </blockquote>
-          <p className="team__story" data-reveal>
-            {keepPlaces(
-              fr(
-                `Le festival est né en ${festival.founded} de la passion de sa fondatrice, rejointe par deux amies. Aujourd'hui, un comité et une soixantaine de bénévoles le font vivre chaque été, avec l'appui de la municipalité et des organismes de Saint-David-de-Falardeau.`,
-              ),
-            )}
-          </p>
-          <dl className="team__comite" data-reveal>
-            {COMITE.map((m) => (
-              <div key={m.role}>
-                <dt>{m.role}</dt>
-                <dd>{m.name}</dd>
-              </div>
-            ))}
-          </dl>
+          <MobileFold label="Notre histoire et le comité" className="team__fold">
+            <p className="team__story" data-reveal>
+              {keepPlaces(
+                fr(
+                  `Le festival est né en ${festival.founded} de la passion de sa fondatrice, rejointe par deux amies. Aujourd'hui, un comité et une soixantaine de bénévoles le font vivre chaque été, avec l'appui de la municipalité et des organismes de Saint-David-de-Falardeau.`,
+                ),
+              )}
+            </p>
+            <dl className="team__comite" data-reveal>
+              {COMITE.map((m) => (
+                <div key={m.role}>
+                  <dt>{m.role}</dt>
+                  <dd>{m.name}</dd>
+                </div>
+              ))}
+            </dl>
+          </MobileFold>
           <a className="btn btn--ghost team__cta" href={`mailto:${festival.contact.email}?subject=B%C3%A9n%C3%A9volat`}>
             Devenir bénévole <ArrowRight size={18} weight="bold" aria-hidden />
           </a>

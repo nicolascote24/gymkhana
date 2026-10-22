@@ -97,12 +97,17 @@ html.js [data-reveal="image"].is-in img {
   line-height: 1.4;
   color: color-mix(in srgb, var(--color-nuit) 82%, transparent);
 }
+.bref__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2rem;
+  margin-top: 1rem;
+}
 .bref__more {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1rem;
-  padding-block: 0.6rem;
+  min-height: 2.75rem;
   font-size: var(--fs-label);
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -510,7 +515,7 @@ html.js [data-reveal="image"].is-in img {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding-block: 0.35rem;
+  padding-block: 0.7rem;
   font-weight: 700;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -745,7 +750,7 @@ html.js [data-reveal="image"].is-in img {
 }
 .gym__step {
   display: grid;
-  grid-template-columns: minmax(8rem, 1fr) minmax(0, 2.2fr);
+  grid-template-columns: minmax(9.5rem, 1fr) minmax(0, 2.2fr);
   gap: 1.5rem;
   align-items: baseline;
   padding-block: 1.1rem;
@@ -762,6 +767,8 @@ html.js [data-reveal="image"].is-in img {
   font-weight: 900;
   text-transform: uppercase;
   font-variation-settings: "wdth" 125;
+  /* "Le départ" is one name: it never breaks between its two words */
+  white-space: nowrap;
 }
 .gym__step[data-active="true"] .gym__step-title {
   color: var(--color-rouge);
@@ -1077,16 +1084,29 @@ html.js [data-reveal="image"].is-in img {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.4rem;
   }
+  .gym__arena {
+    width: min(100%, 18rem);
+  }
+  /* Phones: one compact row per event, the course drawn beside its name. */
   .gym__cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
   }
   .gym__card {
-    padding-right: 0;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 1rem;
+    row-gap: 0.3rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-sable) 12%, transparent);
   }
-  .course {
-    width: 4rem;
-    height: 4rem;
+  .gym__card .course {
+    grid-row: 1 / span 2;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: 0;
+  }
+  .gym__card-text {
+    max-width: none;
   }
 }
 
@@ -1235,16 +1255,31 @@ html.js [data-reveal="image"].is-in img {
     min-height: 26rem;
   }
 }
+/* Phones: the two photographs stay tiles; the four activities without a
+   picture become compact rows on their colour, so the section is not a long
+   run of empty fields. */
 @media (max-width: 600px) {
   .act__grid {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: "a" "b" "c" "f" "d" "e";
+    grid-auto-rows: auto;
+    gap: 0.5rem;
   }
   .act__tile {
-    min-height: 13rem;
+    min-height: 0;
   }
   .act__tile--photo {
-    min-height: 22rem;
+    min-height: 18rem;
+  }
+  .act__tile--lead {
+    min-height: 20rem;
+  }
+  .act__tile:not(.act__tile--photo) .act__body {
+    gap: 0.35rem;
+    padding: 1.1rem 1.25rem 1.25rem;
+  }
+  .act__tile:not(.act__tile--photo) .act__name {
+    font-size: 1.375rem;
   }
 }
 
@@ -1855,6 +1890,41 @@ html.js .vmap[data-reveal].is-in .vmap__site {
   .part__track {
     font-size: 0.9375rem;
   }
+  /* Folded to its first lines until asked (PartnerWall.tsx); without script
+     the whole list stays open. */
+  html.js .part__marquee[data-open="false"] .part__track {
+    max-height: 7.5rem;
+    overflow: hidden;
+    mask-image: linear-gradient(180deg, #000 55%, transparent);
+  }
+}
+.part__more {
+  display: none;
+}
+@media (max-width: 767px) {
+  html.js .part__more {
+    display: block;
+    margin-top: 1rem;
+  }
+}
+.part__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
+  text-decoration-color: var(--color-rouge);
+}
+.part__toggle svg {
+  transition: rotate 240ms var(--ease-out-strong);
+}
+.part__toggle[aria-expanded="true"] svg {
+  rotate: 180deg;
 }
 .part__cta {
   display: flex;
@@ -2023,6 +2093,11 @@ html.js .vmap[data-reveal].is-in .vmap__site {
 @media (max-width: 600px) {
   .foot__cols {
     grid-template-columns: minmax(0, 1fr);
+  }
+  /* six short section links: two columns, each still a thumb-height row */
+  .foot nav ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
   }
   .foot__mark-word {
     font-size: calc((100vw - 2 * var(--gutter)) / 5.119);
@@ -2293,4 +2368,1004 @@ html.js .course-mark[data-reveal].is-in .course-mark__path {
 .band__cta {
   max-width: 100%;
   white-space: normal;
+}
+
+/* ===================== Phones and tablets ===================== */
+/* Small screens are not the desktop stacked. One tighter rhythm (sections,
+   gutters, lead text), and per section the layout the width can actually
+   hold: tablets (640 to 1023px) get two columns where the desktop has
+   them; phones get compact rows where the desktop has tiles. Desktop
+   (1024px and up) is untouched. */
+@media (max-width: 1023px) {
+  :root {
+    --section-y: clamp(4.5rem, 10vw, 6rem);
+  }
+  .gym__scene {
+    padding-block: var(--section-y);
+  }
+  .gym {
+    padding-bottom: var(--section-y);
+  }
+  .band {
+    margin-top: var(--section-y);
+  }
+}
+@media (max-width: 767px) {
+  :root {
+    --gutter: 1.25rem;
+    --section-y: 4rem;
+    --fs-lead: 1.125rem;
+  }
+  .prog {
+    padding-top: 3.5rem;
+  }
+}
+
+/* -- Film: the three ways in become a tight list under the picture -- */
+@media (max-width: 767px) {
+  .film {
+    margin-top: 2.5rem;
+  }
+  .film__chapter {
+    gap: 0.3rem;
+    padding-block: 1rem 1.1rem;
+  }
+  .film__chapter-title {
+    font-size: 1.5rem;
+  }
+  .film__chapter-text {
+    font-size: 0.875rem;
+    color: color-mix(in srgb, var(--color-creme) 85%, transparent);
+  }
+}
+
+/* -- Programme -- */
+@media (max-width: 767px) {
+  .prog__grid {
+    margin-top: 1.75rem;
+  }
+  .prog__row {
+    padding-block: 1rem;
+    gap: 0.4rem 1rem;
+  }
+  .prog__time {
+    font-size: 1.625rem;
+  }
+  .prog__name {
+    font-size: 1.1875rem;
+  }
+  .prog__row--hl .prog__name {
+    font-size: 1.625rem;
+  }
+  .prog__evening {
+    padding-block: 2rem 0.75rem;
+  }
+}
+/* tablets: the show-bill row of the desktop (time, event, place) fits */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .prog__row {
+    grid-template-columns: minmax(6.5rem, 1.5fr) minmax(0, 6fr) auto;
+    grid-template-areas: "time what where";
+    gap: 1.5rem;
+    padding-block: 1.35rem;
+  }
+  .prog__end {
+    display: block;
+    margin: 0.4rem 0 0;
+  }
+  .prog__tab,
+  .prog__tab:last-child {
+    padding-block: 0.9rem 0.8rem;
+    font-size: 1.125rem;
+    font-variation-settings: "wdth" 100;
+  }
+}
+
+/* -- Le gymkhana -- */
+@media (max-width: 767px) {
+  .gym__def {
+    margin-top: 1.25rem;
+  }
+  .gym__steps {
+    margin-top: 1.75rem;
+  }
+  .gym__step {
+    padding-block: 0.9rem;
+  }
+  .gym__events {
+    margin-top: 1rem;
+  }
+  .gym__families {
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  /* the rescue race: a second camera beside its caption, not a second full photo */
+  .band__grid {
+    padding-top: 1.5rem;
+    gap: 2rem;
+  }
+  .band__copy {
+    gap: 1.25rem;
+  }
+  .band__inset {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+  .band__inset figcaption {
+    padding-top: 0;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .band__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 2.5rem;
+  }
+  .band__copy {
+    align-self: start;
+  }
+  .band__inset {
+    margin-bottom: 0;
+  }
+}
+
+/* -- En famille -- */
+@media (max-width: 767px) {
+  .act__grid {
+    margin-top: 1.75rem;
+  }
+}
+
+/* -- Planifier ma visite -- */
+@media (max-width: 1023px) {
+  .visit__grid {
+    margin-top: 2rem;
+  }
+  .visit__rules {
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+  .visit__rules + .visit__rules {
+    margin-top: 1.75rem;
+  }
+  .visit__rules ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem 1.5rem;
+  }
+}
+/* tablets: the address and the camping card side by side under the map */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .visit__side {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .visit__contacts {
+    flex-direction: row;
+  }
+}
+@media (max-width: 639px) {
+  .visit__side {
+    gap: 1.75rem;
+  }
+  .visit__street {
+    font-size: 1.75rem;
+  }
+  .visit__where .btn {
+    margin-top: 0.75rem;
+  }
+  .visit__camp {
+    gap: 0.75rem;
+    padding: 1.5rem;
+  }
+  .visit__camp-price .tabular {
+    font-size: 3rem;
+  }
+  /* what is on site: short lines, two columns, the icon over its words */
+  .visit__rules li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+  .visit__rules li svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  /* the rules are sentences: one column */
+  .visit__rules + .visit__rules ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .visit__rules + .visit__rules li {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+  .visit__contacts {
+    gap: 0;
+    margin-top: 2rem;
+    padding-top: 0.75rem;
+  }
+}
+
+/* -- L'équipe: photo and words side by side from tablet width -- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .team__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 2.5rem;
+  }
+  .team__photo {
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+    aspect-ratio: 4 / 5;
+  }
+}
+@media (max-width: 767px) {
+  .team__grid {
+    gap: 2rem;
+  }
+  .team__text {
+    gap: 1.25rem;
+  }
+  .team__quote p {
+    font-size: 1.25rem;
+  }
+}
+
+/* -- Partenaires: on phones the major partners are a set list, not boxes -- */
+@media (max-width: 600px) {
+  .part__tier {
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+  .part__tier--media {
+    margin-top: 1.75rem;
+  }
+  .part__major,
+  .part__major li:first-child {
+    border: 0;
+  }
+  .part__major li {
+    min-height: 0;
+    padding: 0.85rem 0;
+    border-right: 0;
+    font-size: 1.0625rem;
+  }
+  .part__major li:first-child {
+    border-top: 1px solid color-mix(in srgb, var(--color-nuit) 15%, transparent);
+  }
+  .part__media {
+    font-size: 1.0625rem;
+    gap: 0.35rem 1.75rem;
+  }
+  .part__marquee {
+    margin-top: 2.5rem;
+  }
+  .part__cta {
+    margin-top: 2.5rem;
+  }
+}
+
+/* -- Footer -- */
+@media (max-width: 767px) {
+  .foot__cols {
+    margin-top: 2.5rem;
+  }
+  .foot__mark {
+    margin-top: 3rem;
+  }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .foot nav ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+}
+
+/* Phones: the other partners as two clean columns of names (no diamond
+   left dangling at the end of every line). */
+@media (max-width: 767px) {
+  .part__track {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem 1rem;
+    white-space: normal;
+    font-size: 0.8125rem;
+    line-height: 1.3;
+  }
+  .part__track li {
+    display: block;
+  }
+  .part__track li::after {
+    display: none;
+  }
+  html.js .part__marquee[data-open="false"] .part__track {
+    max-height: 6.25rem;
+  }
+}
+/* very small phones: the arrow follows the last word of a wrapped link */
+@media (max-width: 359px) {
+  .bref__more {
+    display: inline-block;
+    padding-block: 0.7rem;
+  }
+  .bref__more svg {
+    display: inline;
+    margin-left: 0.4rem;
+    vertical-align: -0.2em;
+  }
+}
+/* phones held sideways: the screen is too short for a second floating bar */
+@media (max-width: 767px) and (max-height: 540px) {
+  .quickbar {
+    display: none;
+  }
+}
+/* tablets: major-partner tiles sized to their names */
+@media (min-width: 601px) and (max-width: 1023px) {
+  .part__major li {
+    min-height: 5rem;
+  }
+}
+
+/* ===================== Phones: the compact pass ===================== */
+/* Built for an iPhone SE (375 x 667) first, checked down to 320 x 568.
+   Each section takes the shape a thumb reads best: lists that run
+   sideways become swipeable rows of equal cards (the next one peeking),
+   secondary detail folds behind one button, and nothing repeats what the
+   screen just said. Desktop and tablets are untouched. */
+
+/* Folds (MobileFold.tsx): open everywhere but on phones with the script. */
+.fold__toggle {
+  display: none;
+}
+.bref__copy--short,
+.act__icon,
+.act__hint {
+  display: none;
+}
+/* the team's fold keeps the column's own rhythm on every screen */
+.team__fold {
+  width: 100%;
+}
+.team__fold .fold__body {
+  display: grid;
+  gap: clamp(1.5rem, 2.6vw, 2.25rem);
+}
+
+@media (max-width: 767px) {
+  :root {
+    /* nothing under 14px on a phone */
+    --fs-label: 0.875rem;
+  }
+
+  /* -- reveal: shorter and lighter, so a flick never waits on it -- */
+  html.js [data-reveal] {
+    transform: translateY(0.75rem);
+    transition-duration: 0.45s, 0.55s;
+  }
+  html.js [data-reveal="image"] {
+    transition-duration: 0.7s;
+  }
+
+  /* -- section headings: a step bigger, still fitted to the measure -- */
+  .gym__title,
+  .act__title,
+  .visit__title,
+  .part__title {
+    font-size: min(2.75rem, (100vw - 2 * var(--gutter)) / var(--fp));
+  }
+  .team__title {
+    font-size: min(2.75rem, (100vw - 2 * var(--gutter)) / 6.6);
+  }
+  /* "LE" alone over "GYMKHANA" reads as a stray word: the title holds one
+     line, fitted to the measure (9.95 em wide set solid) */
+  .gym__title {
+    font-size: calc((100vw - 2 * var(--gutter)) / 9.95);
+    white-space: nowrap;
+  }
+
+  /* -- folds -- */
+  html.js .fold__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    font-size: var(--fs-label);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
+    text-decoration-color: var(--color-rouge);
+  }
+  html.js .fold__toggle svg {
+    transition: rotate 240ms var(--ease-out-strong);
+  }
+  html.js .fold__toggle[aria-expanded="true"] svg {
+    rotate: 180deg;
+  }
+  html.js .fold[data-open="false"] .fold__body {
+    display: none;
+  }
+  .fold__body {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .fold[data-open="true"] .fold__body {
+    margin-top: 0.75rem;
+  }
+
+  /* -- swipeable rows (the events, the family moments) -- */
+  .gym__families,
+  .act__grid {
+    display: grid;
+    grid-template-columns: none;
+    grid-template-areas: none;
+    grid-auto-flow: column;
+    grid-auto-rows: auto;
+    gap: 0.625rem;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .gym__families::-webkit-scrollbar,
+  .act__grid::-webkit-scrollbar {
+    display: none;
+  }
+  /* the cue under each row title */
+  .act__hint,
+  .gym__events-title::after {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: var(--fs-label);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-variation-settings: "wdth" 100;
+    opacity: 0.7;
+  }
+
+  /* -- En bref: no course mark over the statement, and the version of the
+     paragraph that does not repeat the hero -- */
+  .bref__start {
+    display: none;
+  }
+  .bref__copy {
+    display: none;
+  }
+  .bref__copy--short {
+    display: block;
+  }
+
+  /* -- Programme: a shorter pinned bar; each event on two lines, the time
+     in its own column and the place under the name -- */
+  .prog__side {
+    gap: 0.4rem;
+    padding-block: 0.5rem;
+  }
+  .prog__tab,
+  .prog__tab:last-child {
+    gap: 0.15rem;
+    padding-block: 0.45rem 0.4rem;
+  }
+  .prog__tab-num {
+    font-size: 0.9375rem;
+  }
+  .prog__row {
+    grid-template-columns: 4.25rem minmax(0, 1fr);
+    grid-template-areas:
+      "time what"
+      "time where";
+    gap: 0.3rem 0.85rem;
+    padding-block: 0.8rem;
+  }
+  .prog__time {
+    font-size: 1.375rem;
+  }
+  .prog__end {
+    display: block;
+    margin: 0.3rem 0 0;
+  }
+  .prog__where {
+    justify-self: start;
+    white-space: normal;
+    letter-spacing: 0.08em;
+  }
+  .prog__detail {
+    display: none;
+  }
+  .prog__flag {
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+  }
+
+  /* -- Le gymkhana: the steps beside the arena they describe; the arena
+     stays in view while they are read -- */
+  .gym__scene {
+    padding-bottom: 2.5rem;
+  }
+  .gym__grid {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    grid-template-areas:
+      "title title"
+      "def def"
+      "arena steps";
+    gap: 0 1.25rem;
+    align-items: start;
+  }
+  .gym__text {
+    display: contents;
+  }
+  .gym__title {
+    grid-area: title;
+  }
+  .gym__def {
+    grid-area: def;
+  }
+  .gym__steps {
+    grid-area: steps;
+    margin-top: 1.75rem;
+  }
+  .gym__arena {
+    grid-area: arena;
+    position: sticky;
+    top: calc(var(--nav-h) + 1rem);
+    width: 100%;
+    margin-top: 1.75rem;
+  }
+  .gym__step {
+    gap: 0.3rem;
+    padding-block: 0.85rem;
+  }
+  .gym__step-title {
+    font-size: 1.125rem;
+  }
+  .gym__step-text {
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+  /* the drawing is a third of its desktop size: its marks grow to match */
+  .arena__num {
+    font-size: 30px;
+  }
+  .arena__label {
+    font-size: 24px;
+    letter-spacing: 0.08em;
+  }
+  .arena__line {
+    stroke-width: 4;
+  }
+  .arena__path {
+    stroke-width: 7;
+  }
+
+  /* the nine events: one swipeable row, each card naming its family */
+  .gym__events {
+    padding-top: 1.5rem;
+  }
+  .gym__events-title::after {
+    content: "9 épreuves · faites glisser";
+    color: var(--color-creme);
+  }
+  .gym__families {
+    grid-auto-columns: 64%;
+    margin-top: 1.25rem;
+  }
+  .gym__family,
+  .gym__cards {
+    display: contents;
+  }
+  .gym__family-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .gym__card {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto 1fr;
+    row-gap: 0.4rem;
+    padding: 1.1rem 1.1rem 1.25rem;
+    border: 1px solid color-mix(in srgb, var(--color-sable) 16%, transparent);
+    background: color-mix(in srgb, var(--color-sable) 5%, transparent);
+    scroll-snap-align: start;
+  }
+  .gym__card::before {
+    content: "Jeu de centre";
+    margin-bottom: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-poussiere);
+  }
+  .gym__family + .gym__family .gym__card::before {
+    content: "Jeu de tour";
+  }
+  .gym__card .course {
+    grid-row: auto;
+    margin-bottom: 0.4rem;
+  }
+  /* a card that enters sideways is already there: no rise on top of the swipe */
+  html.js .gym__card[data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* the competition proof: the figure beside its meaning, the action on
+     one line; the rescue-race inset is a desktop aside */
+  .band__facts {
+    gap: 0.75rem;
+  }
+  .band__facts div {
+    grid-template-columns: 6.25rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-top: 0.75rem;
+  }
+  .band__cta {
+    width: 100%;
+    justify-content: space-between;
+    white-space: nowrap;
+  }
+  .band__inset {
+    display: none;
+  }
+  .band__grid {
+    padding-bottom: 0.5rem;
+  }
+
+  /* -- En famille: six cards of one build. A picture on top (the
+     photograph, or the moment's pictogram on its colour), the words on
+     cream below: day and time, name, one line. -- */
+  .act__hint {
+    display: block;
+  }
+  .act__grid {
+    grid-auto-columns: 74%;
+  }
+  .act__tile {
+    grid-area: auto !important; /* each tile carries its desktop place inline */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: var(--color-creme);
+    color: var(--color-nuit);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-nuit) 10%, transparent);
+    scroll-snap-align: start;
+  }
+  .act__tile--photo,
+  .act__tile--lead {
+    min-height: 0;
+    color: var(--color-nuit);
+  }
+  .act__tile--photo::after,
+  .act__tile--photo .act__body::before {
+    display: none;
+  }
+  .act__media,
+  .act__icon {
+    position: relative;
+    inset: auto;
+    flex: none;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+  .act__icon {
+    display: grid;
+    place-items: center;
+  }
+  .act__tile--terre .act__icon {
+    background: var(--color-terre);
+    color: var(--color-sable);
+  }
+  .act__tile--sauge .act__icon {
+    background: var(--color-sauge);
+    color: var(--color-nuit);
+  }
+  .act__tile--nuit .act__icon {
+    background: var(--color-nuit);
+    color: var(--color-sable);
+  }
+  .act__tile--poussiere .act__icon {
+    background: var(--color-poussiere);
+    color: var(--color-nuit);
+  }
+  .act__body,
+  .act__tile:not(.act__tile--photo) .act__body {
+    flex: 1;
+    align-self: stretch;
+    align-content: start;
+    gap: 0.4rem;
+    padding: 1rem 1.1rem 1.25rem;
+  }
+  .act__when {
+    order: -1;
+    color: var(--color-rouge);
+    opacity: 1;
+  }
+  .act__tile .act__name,
+  .act__tile--lead .act__name,
+  .act__tile:not(.act__tile--photo) .act__name {
+    font-size: 1.375rem;
+    line-height: 1;
+    font-variation-settings: "wdth" 100;
+    overflow-wrap: normal;
+  }
+  .act__text {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    opacity: 0.8;
+  }
+  html.js .act__tile[data-reveal] {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+  html.js .act__tile[data-reveal="image"] img {
+    transform: none;
+  }
+
+  /* -- Planifier ma visite: the whole map at its own landscape shape (a
+     third shorter than the portrait crop), the amenities folded, the
+     camping card tighter -- */
+  .vmap {
+    --vbw: var(--map-w);
+  }
+  .visit__rules {
+    gap: 0.5rem;
+  }
+  .visit__camp {
+    position: relative;
+    gap: 0.6rem;
+    padding: 1.25rem;
+  }
+  .visit__camp > svg {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+  }
+  .visit__camp-title {
+    padding-right: 2.75rem;
+  }
+  .visit__camp-price .tabular {
+    font-size: 2.5rem;
+  }
+  .visit__camp-phone a {
+    padding-block: 0.5rem;
+  }
+
+  /* -- L'équipe: the quote and the call stay; the story and the
+     committee fold -- */
+  .team__fold {
+    width: 100%;
+  }
+
+  /* -- Partenaires: the major partners as a two-column wall of plates,
+     the media on one line, the others running past as a ribbon until the
+     full list is asked for -- */
+  /* the call to partners runs straight into the night of the footer */
+  .part {
+    padding-bottom: 0;
+  }
+  .part__head {
+    gap: 0.9rem;
+  }
+  .part__tier,
+  .part__tier--media {
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .part__major {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    border: 0;
+  }
+  .part__major li,
+  .part__major li:first-child {
+    min-height: 4.75rem;
+    padding: 0.85rem 0.9rem;
+    border: 0;
+    background: var(--color-sable-clair);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-nuit) 12%, transparent);
+    font-size: 0.9375rem;
+    line-height: 1.2;
+  }
+  /* a plate is too narrow for the town's name on one line: it breaks at a hyphen */
+  .part__major .place {
+    font-size: 1em;
+    white-space: normal;
+  }
+  .part__media {
+    gap: 0.35rem 1.25rem;
+    font-size: 1rem;
+  }
+  .part__marquee {
+    margin-top: 2rem;
+  }
+  .part__more {
+    text-align: center;
+  }
+  .part__cta {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1.5rem var(--gutter);
+    background: var(--color-nuit);
+    color: var(--color-sable);
+    font-size: 1rem;
+  }
+  .part__cta .btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* -- Footer: the address lives in "Planifier ma visite" and the page
+     links in the menu; the footer keeps the follow and the contacts -- */
+  .foot__cols > div:first-child,
+  .foot__cols > nav {
+    display: none;
+  }
+  .foot__cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* the finish mark answers the start mark, which phones do not show */
+  .foot__end {
+    display: none;
+  }
+  .foot__legal {
+    padding-block: 1.25rem calc(env(safe-area-inset-bottom, 0px) + 1.25rem);
+  }
+}
+
+/* the ribbon of other partners runs on phones too, folded state only */
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  html.js .part__marquee[data-open="false"] {
+    padding-block: 1rem;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  html.js .part__marquee[data-open="false"] .part__track {
+    display: flex;
+    width: max-content;
+    max-height: none;
+    padding-inline: 0;
+    overflow: visible;
+    gap: 1.75rem;
+    white-space: nowrap;
+    font-size: 0.9375rem;
+    -webkit-mask-image: none;
+    mask-image: none;
+    animation: marquee 110s linear infinite;
+  }
+  html.js .part__marquee[data-open="false"] .part__track li,
+  html.js .part__marquee[data-open="false"] .part__track li[aria-hidden="true"] {
+    display: flex;
+    gap: 1.75rem;
+  }
+  html.js .part__marquee[data-open="false"] .part__track li::after {
+    display: block;
+  }
+}
+
+/* ---------------- Phones: finishing pass ---------------- */
+@media (max-width: 767px) {
+  /* folds answer the finger like the other controls */
+  .fold__toggle {
+    transition: opacity 120ms ease-out;
+  }
+  .fold__toggle:active {
+    opacity: 0.6;
+  }
+
+  /* Visite: the address set tight, the route as a full-width action */
+  .visit__where {
+    row-gap: 0.3rem;
+  }
+  .visit__street {
+    font-size: 1.5rem;
+  }
+  .visit__city {
+    font-size: 0.9375rem;
+  }
+  .visit__where .btn {
+    justify-self: stretch;
+    justify-content: space-between;
+    margin-top: 0.85rem;
+  }
+  /* the contacts as call rows: what it is on the left, the number to tap
+     on the right, a full thumb height each */
+  .visit__contacts {
+    gap: 0;
+    margin-top: 1.75rem;
+    padding-top: 0;
+  }
+  .visit__contacts li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    min-height: 3rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-nuit) 14%, transparent);
+  }
+  .visit__contacts span {
+    font-size: 0.875rem;
+  }
+  .visit__contacts a {
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+
+  /* Gymkhana: the competition proof, tighter */
+  .band__title {
+    font-size: 1.625rem;
+    text-wrap: pretty;
+  }
+  .band__grid {
+    padding-top: 1.25rem;
+    gap: 1.5rem;
+  }
+  .band__copy {
+    gap: 1rem;
+  }
+  .band__facts {
+    gap: 0.6rem;
+  }
+  .band__facts div {
+    padding-top: 0.6rem;
+  }
+  .band__facts dt {
+    font-size: 1.125rem;
+  }
+
+  /* Footer: the slogan as a closing line, the contacts as call rows */
+  .foot__close {
+    gap: 1.25rem;
+  }
+  .foot__slogan {
+    font-size: 1.875rem;
+  }
+  .foot__follow {
+    gap: 1rem;
+    font-size: 0.9375rem;
+  }
+  .foot__cols {
+    margin-top: 2rem;
+  }
+  .foot__cols > div {
+    gap: 0;
+  }
+  .foot__cols > div .foot__label {
+    margin-bottom: 0.25rem;
+  }
+  .foot__cols > div p:not(.foot__label) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 1rem;
+    min-height: 3rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-sable) 14%, transparent);
+    font-size: 0.875rem;
+    color: color-mix(in srgb, var(--color-creme) 80%, transparent);
+  }
+  .foot__cols > div p br {
+    display: none;
+  }
+  .foot__cols .foot__link {
+    padding-block: 0.75rem;
+    font-weight: 700;
+    color: var(--color-sable);
+  }
+  .foot__mark {
+    margin-top: 2.5rem;
+  }
 }

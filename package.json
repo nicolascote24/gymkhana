@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "npx serve out",
+    "deploy": "next build && npx -y wrangler@4 deploy",
     "lint": "tsc --noEmit",
     "images": "node scripts/build-images.mjs",
     "map": "node scripts/build-map.mjs",

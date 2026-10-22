@@ -48,6 +48,30 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* no grey flash on tap: every control carries its own :active state */
+  -webkit-tap-highlight-color: transparent;
+}
+/* Controls answer the finger at once (no double-tap wait) and a long press
+   never selects their label; body text stays selectable. */
+a,
+button,
+[role="tab"] {
+  touch-action: manipulation;
+}
+button,
+.btn,
+[role="tab"] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+/* Touch press feedback for the controls without a pressed state of their
+   own (.btn and the film button scale down). */
+@media (hover: none) {
+  a:not(.btn):active,
+  [role="tab"]:active,
+  .part__toggle:active {
+    opacity: 0.6;
+  }
 }
 html.lenis,
 html.lenis body {
@@ -781,14 +805,173 @@ body::after {
   }
 }
 
-@media (max-width: 600px) and (max-aspect-ratio: 3/4) {
+/* Phones held sideways: the hero is exactly one screen (the 34rem floor
+   would push the name below the fold and show through the curtain), and the
+   lockup takes the condensed width so the word keeps room for the date. */
+@media (orientation: landscape) and (max-height: 540px) {
+  .hero {
+    min-height: 0;
+    --wdth: 100;
+    --wf: 6.638;
+    --small-fs: 0.75rem;
+    --word-fs: min((100cqw - 2 * var(--pad)) / var(--wf), 24cqh);
+  }
+  .hero__lead-inner {
+    gap: 0.85rem;
+  }
+  .hero__date {
+    font-size: 1.75rem;
+  }
   .hero__pitch {
     display: none;
   }
+  .hero__cta {
+    margin-top: 0;
+  }
+  /* the menu and the date sit on the bright sky: a deeper top shade */
+  .hero__shade--high {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-nuit) 70%, transparent) 0%,
+      color-mix(in srgb, var(--color-nuit) 35%, transparent) 24%,
+      transparent 42%
+    );
+  }
+}
+/* Phones held upright: the photograph owns the screen. Nothing sits over
+   the sky or the rider; everything is read at the foot of the screen, under
+   the thumb, on the dark ground: the name first, then the date and the
+   action. The pitch is left to the section right under the hero. */
+@media (max-width: 600px) and (max-aspect-ratio: 3/4) {
+  .hero {
+    --stack: 8rem; /* hairline, date and entry row, days row, action */
+    --y-place: calc(var(--stack) + 2.75rem + env(safe-area-inset-bottom, 0px));
+    --small-fs: 0.8125rem;
+  }
+  .hero__lead {
+    top: auto;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    justify-content: flex-end;
+  }
+  .hero__lead-inner {
+    gap: 1rem;
+    width: 100%;
+  }
+  /* under a hairline: the date with the free entry on its right, the days
+     below, then the red action, sized to its label so the photograph
+     keeps the room */
+  .hero__when {
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem 0.75rem;
+    width: 100%;
+    padding-top: 0.9rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-sable) 24%, transparent);
+  }
+  .hero__date {
+    flex-basis: auto;
+    font-size: 1.625rem;
+    font-variation-settings: "wdth" 100;
+  }
+  .hero__badge {
+    order: 2;
+    padding: 0.4rem 0.55rem 0.35rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+  .hero__days {
+    order: 3;
+    flex-basis: 100%;
+  }
+  .hero__pitch {
+    display: none;
+  }
+  .hero__cta {
+    justify-self: start;
+    gap: 0.75rem;
+    min-height: 3rem;
+    padding-inline: 1.25rem 1.1rem;
+    font-size: 0.875rem;
+  }
+  /* The rider stands between the menu and the name, as large as the width
+     allows, her hooves just into the word. Her box spans 39.8% to 90.8% of
+     the plate's height and 60% of its width. */
+  .hero__frame {
+    --rt: calc(var(--nav-h) + 0.5rem);
+    --rb: calc(100cqh - var(--y-word) - var(--word-fs) * 0.18);
+    --H: min((var(--rb) - var(--rt)) / 0.51, 100cqw * 1.85);
+    --W: calc(var(--H) * var(--ratio));
+    --fx: 0.577;
+    top: calc(var(--rb) - var(--H) * 0.908);
+  }
+  /* the plate ends above the text: it dissolves into the night there */
+  .hero__frame--bg {
+    -webkit-mask-image: linear-gradient(180deg, #000 0, #000 72%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0, #000 72%, transparent 100%);
+  }
+  .hero__shade--high {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-nuit) 55%, transparent) 0%,
+      transparent 18%
+    );
+  }
+  .hero__shade--low {
+    background: linear-gradient(
+      0deg,
+      var(--color-nuit) 0%,
+      var(--color-nuit) 26%,
+      color-mix(in srgb, var(--color-nuit) 55%, transparent) 40%,
+      transparent 56%
+    );
+  }
 }
 
-/* Entrance: hidden only while the script is about to animate (see layout). */
-.hero-pending [data-hero-in],
+/* the narrowest phones: the free entry drops under the date */
+@media (max-width: 359px) and (max-aspect-ratio: 3/4) {
+  .hero {
+    --stack: 10rem;
+  }
+}
+
+/* Entrance: only the letters wait for the script (see layout); the date, the
+   free entry and the action are readable from the first paint. */
 .hero-pending [data-hero-letter] {
   opacity: 0;
+}
+
+/* Phones: the menu bar is a band across the top, edge to edge and under
+   the notch, rather than a plaque floating inside the screen. Clear over
+   the hero (its top shade carries the logo), then night glass with a
+   hairline once the page scrolls under it. */
+@media (max-width: 767px) {
+  :root {
+    --nav-h: calc(3.5rem + env(safe-area-inset-top, 0px));
+  }
+  .nav {
+    padding: 0;
+  }
+  .nav .nav__bar {
+    max-width: none;
+    height: var(--nav-h);
+    padding: env(safe-area-inset-top, 0px) var(--gutter) 0;
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 280ms ease,
+      border-color 280ms ease;
+  }
+  .nav[data-solid="true"] .nav__bar {
+    background: color-mix(in oklab, var(--color-nuit) 82%, transparent);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    backdrop-filter: blur(16px) saturate(1.2);
+    border-bottom-color: color-mix(in oklab, var(--color-sable) 14%, transparent);
+    box-shadow: none;
+  }
+  .nav__brand img {
+    width: 2rem;
+    height: 2rem;
+  }
+  .nav__toggle {
+    padding-right: 0;
+  }
 }

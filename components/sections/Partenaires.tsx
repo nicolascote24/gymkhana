@@ -3,10 +3,10 @@ import { grandGalop, medias, partenaires } from "@/content/partenaires";
 import { festival } from "@/content/festival";
 import { fr } from "@/lib/typo";
 import { keepPlaces } from "@/lib/places";
+import PartnerWall from "@/components/sections/PartnerWall";
 
 // Logo files are not available yet: partners are set as typographic marks.
 export default function Partenaires() {
-  const loop = [...partenaires, ...partenaires];
   return (
     <section id="partenaires" className="part" aria-labelledby="part-title">
       <div className="wrap">
@@ -40,15 +40,7 @@ export default function Partenaires() {
         </div>
       </div>
 
-      <div className="part__marquee" aria-label="Autres partenaires">
-        <ul className="part__track">
-          {loop.map((p, i) => (
-            <li key={`${p}-${i}`} aria-hidden={i >= partenaires.length}>
-              {p}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <PartnerWall names={partenaires} />
 
       <div className="wrap part__cta" data-reveal>
         <p>{fr("Votre entreprise veut appuyer le festival ?")}</p>
