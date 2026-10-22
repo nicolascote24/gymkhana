@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Picture from "@/components/Picture";
 import { programme } from "@/content/programmation";
@@ -33,9 +34,9 @@ export default function GrandPrix() {
               "Le moment fort de la fin de semaine, au manège, le samedi soir. En 2025, il réunissait le Grand Prix baril 3D et 4D et le Grand Prix sauvetage.",
             )}
           </p>
-          <a href="/#jour-samedi" className="btn btn--ghost ep-gp__cta" data-reveal>
+          <Link href="/#jour-samedi" className="btn btn--ghost ep-gp__cta" data-reveal>
             Le samedi au programme <ArrowRight size={18} weight="bold" aria-hidden />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

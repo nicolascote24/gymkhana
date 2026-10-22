@@ -72,7 +72,7 @@ export default function Hero() {
         <div className="hero__word" aria-hidden data-scroll="word">
           <div className="hero__word-inner" data-depth="word">
             {WORD.map((c, i) => (
-              <span key={i} data-hero-letter>
+              <span key={i} data-hero-letter style={{ ["--i" as string]: i }}>
                 {c}
               </span>
             ))}
@@ -83,7 +83,7 @@ export default function Hero() {
           <div className="hero__depth" data-depth="rider">
             <div className="hero__frame">
               <div className="hero__rider">
-                <Picture id="hero-rider" alt="" priority sizes="(max-aspect-ratio: 3/4) 56vh, max(33vw, 58vh)" />
+                <Picture id="hero-rider" alt="" eager sizes="(max-aspect-ratio: 3/4) 45vh, max(33vw, 58vh)" />
               </div>
             </div>
           </div>

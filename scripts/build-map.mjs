@@ -93,7 +93,10 @@ function trim(pts) {
   let run = [];
   for (const p of pts) {
     if (inside(p)) run.push(p);
-    else if (run.length) (runs.push(run), (run = []));
+    else if (run.length) {
+      runs.push(run);
+      run = [];
+    }
   }
   if (run.length) runs.push(run);
   return runs.filter((r) => r.length > 1);

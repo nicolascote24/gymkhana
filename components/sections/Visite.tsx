@@ -59,17 +59,28 @@ export default function Visite() {
               style={{ ["--d" as string]: 1 }}
               aria-labelledby="camp-title"
             >
-              <Tent size={34} weight="light" aria-hidden />
               <h3 id="camp-title" className="visit__camp-title">
+                <Tent size={30} weight="light" aria-hidden />
                 Camping sur place
               </h3>
-              <p className="visit__camp-price">
-                <span className="tabular">{festival.camping.price}</span>
-                <span>{festival.camping.period}</span>
-              </p>
-              <p className="visit__camp-terms">{fr(festival.camping.terms)}</p>
-              <p className="visit__camp-phone">
-                Information : <a href={c.info.href}>{c.info.phone}</a>
+              {/* The ticket carries the whole offer: no reservation, what
+                  campers must not miss, is its loudest line; the stub below
+                  the perforation holds the rule and the price. */}
+              <div className="visit__ticket">
+                <p className="visit__ticket-main">
+                  <strong>{festival.camping.ticket}</strong>
+                </p>
+                <div className="visit__ticket-stub">
+                  <p className="visit__ticket-rule">{fr(festival.camping.stub)}</p>
+                  <p className="visit__ticket-price">
+                    <span className="tabular">{festival.camping.price}</span>
+                    <span>{festival.camping.period}</span>
+                  </p>
+                </div>
+              </div>
+              <p className="visit__camp-terms">
+                {fr(festival.camping.terms)} Pour information seulement :{" "}
+                <a href={c.info.href}>{c.info.phone}</a>
               </p>
               <p className="visit__camp-note">Tarif des éditions 2024 et 2025.</p>
             </aside>

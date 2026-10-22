@@ -41,7 +41,10 @@ export const festival = {
   camping: {
     price: `40${nbsp}$`,
     period: "pour la fin de semaine (4 jours)",
-    terms: "Terrains sans service, sans réservation : premier arrivé, premier servi.",
+    // No reservation is the one thing campers must know: it gets the ticket.
+    ticket: "Sans réservation",
+    stub: "Premier arrivé, premier servi",
+    terms: "Terrains sans service.",
   },
   rules: [
     { id: "alcool", text: "N'apportez ni alcool ni bouteilles de verre : le bar est sous le chapiteau." },
@@ -59,3 +62,11 @@ export const festival = {
 } as const;
 
 export const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${festival.address.lat},${festival.address.lng}`;
+
+// Organising committee (2025 official version, references/brief.md section 3).
+export const comite = [
+  { role: "Présidente", name: "Ann-Frédérick Lavoie" },
+  { role: "Trésorière", name: "Andréanne Lessard" },
+  { role: "Secrétaire", name: "Juliette Tremblay" },
+  { role: "Directeurs", name: "Serge Lavoie, Éric Tremblay, Pierre Rousseau, Nicolas Dionne" },
+];

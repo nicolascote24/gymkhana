@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { festival, mapsUrl } from "@/content/festival";
 import { fr } from "@/lib/typo";
@@ -5,17 +6,17 @@ import { keepPlaces } from "@/lib/places";
 import CourseMark from "@/components/CourseMark";
 import Tumbleweed from "@/components/Tumbleweed";
 import type { Page } from "@/components/Nav";
+import { ConsentPreferences } from "@/components/Consent";
 
-// Anchors of the home page, and the events page; away from the home page the
-// anchors lead back to it.
+// Every page of the site, and the home page's sections; away from the home
+// page the anchors lead back to it.
 const LINKS: { href: string; label: string; page?: Page }[] = [
   { href: "#programmation", label: "Programmation" },
-  { href: "#gymkhana", label: "Le gymkhana" },
-  { href: "/epreuves/", label: "Épreuves et inscription", page: "epreuves" },
-  { href: "#activites", label: "Activités" },
+  { href: "/activite-festival/", label: "Activités du festival", page: "activites" },
+  { href: "/epreuves-gymkhana/", label: "Épreuves de gymkhana", page: "epreuves" },
   { href: "#visite", label: "Planifier ma visite" },
-  { href: "#equipe", label: "L'équipe" },
   { href: "#partenaires", label: "Partenaires" },
+  { href: "#equipe", label: "L'équipe" },
 ];
 
 export default function Footer({ page = "accueil" }: { page?: Page }) {
@@ -78,11 +79,13 @@ export default function Footer({ page = "accueil" }: { page?: Page }) {
             <ul>
               {LINKS.map((l) => {
                 const href = !home && l.href.startsWith("#") ? `/${l.href}` : l.href;
+                // Another page: a client navigation, prefetched.
+                const Anchor = href.startsWith("/") ? Link : "a";
                 return (
                   <li key={l.href}>
-                    <a href={href} className="foot__link" aria-current={l.page === page ? "page" : undefined}>
+                    <Anchor href={href} className="foot__link" aria-current={l.page === page ? "page" : undefined}>
                       {l.label}
-                    </a>
+                    </Anchor>
                   </li>
                 );
               })}
@@ -107,6 +110,10 @@ export default function Footer({ page = "accueil" }: { page?: Page }) {
           © {new Date().getFullYear()} {keepPlaces(festival.name)}
         </p>
         <p>Depuis {festival.founded}</p>
+        <Link href="/confidentialite/" className="foot__legal-link" aria-current={page === "confidentialite" ? "page" : undefined}>
+          Politique de confidentialité
+        </Link>
+        <ConsentPreferences className="foot__legal-link foot__legal-btn" />
       </div>
     </footer>
   );

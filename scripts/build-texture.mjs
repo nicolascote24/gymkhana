@@ -63,7 +63,10 @@ for (let y = 0; y < H; y++) {
 }
 
 mkdirSync("public/textures", { recursive: true });
-const info = await sharp(px, { raw: { width: W, height: H, channels: 4 } })
-  .webp({ quality: 70, alphaQuality: 60, effort: 6 })
-  .toFile("public/textures/terrain.webp");
+const raw = () => sharp(px, { raw: { width: W, height: H, channels: 4 } });
+const info = await raw().webp({ quality: 70, alphaQuality: 60, effort: 6 }).toFile("public/textures/terrain.webp");
 console.log(`terrain.webp: ${W}x${H}, ${Math.round(info.size / 1024)} KB`);
+// AVIF carries the same lines at a fifth of the weight; the CSS offers it
+// first (image-set) and keeps the WebP for browsers without AVIF.
+const avif = await raw().avif({ quality: 55, effort: 6 }).toFile("public/textures/terrain.avif");
+console.log(`terrain.avif: ${W}x${H}, ${Math.round(avif.size / 1024)} KB`);

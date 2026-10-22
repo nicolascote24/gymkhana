@@ -7,13 +7,15 @@ type Props = {
   alt: string;
   sizes: string;
   className?: string;
-  priority?: boolean;
+  // Above the fold: load at once. Only the LCP image also gets high fetch
+  // priority (seo_rule.md, rule 5); the hero sets that one itself.
+  eager?: boolean;
   style?: React.CSSProperties;
 };
 
 // Responsive <picture> fed by the build-time manifest (scripts/build-images.mjs).
 // Width and height come from the manifest so the browser reserves space.
-export default function Picture({ id, alt, sizes, className, priority = false, style }: Props) {
+export default function Picture({ id, alt, sizes, className, eager = false, style }: Props) {
   const img = images[id] as {
     width: number;
     height: number;
@@ -32,9 +34,8 @@ export default function Picture({ id, alt, sizes, className, priority = false, s
         height={img.height}
         className={className}
         style={style}
-        loading={priority ? "eager" : "lazy"}
+        loading={eager ? "eager" : "lazy"}
         decoding="async"
-        fetchPriority={priority ? "high" : "auto"}
         draggable={false}
       />
     </picture>

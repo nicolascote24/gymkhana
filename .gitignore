@@ -11,3 +11,6 @@ next-env.d.ts
 # Client video master (1.7 GB, over GitHub limits): kept locally; the site
 # encodes in public/video/ are built from it.
 photo_clients/Recap Gymkhana - V2F 2.mp4
+
+# DataForSEO raw responses (seo_rule.md, rule 11)
+.seo-cache/

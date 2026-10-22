@@ -35,7 +35,7 @@ A four-day western festival built around a real equestrian sport: gymkhana (time
 ## Capabilities and Constraints
 
 - Language: French only.
-- Entry is free. Camping 40 $ for the weekend (2024 and 2025 rate), no reservation, first come first served.
+- Entry is free. Camping 40 $ for the weekend (2024 and 2025 rate), no reservation, first come first served. The client wants the no-reservation rule impossible to miss.
 - Site rules: no alcohol or glass brought on site; dogs on leash at all times and not allowed in the stands.
 - Contacts: 418-540-5700 (information and camping), 418-820-6134 (kiosks and exhibitors), festivalfalardeau@gmail.com.
 - Undecided: 2027 dates and edition number, 2027 programme, hosting, final domain. Until the 2027 programme exists the site may show the 2024 programme, always labelled as a preview of a previous edition.
@@ -52,7 +52,8 @@ A four-day western festival built around a real equestrian sport: gymkhana (time
 
 - Full information bank: `references/brief.md` (history text by founder Suzie Gauthier, committee, rules, 2023-2025 programmes, partner list, sport definitions).
 - Photos: `photo_clients/banque_photos/` (real festival photos, several watermarked; client will supply clean versions later), `photo_clients/hero_idee.jpg` (hero image chosen by the client).
-- Missing, never to be fabricated: 2027 programme and artists, partner logo files, night/show/dance/BMX/inflatable photos, testimonials, attendance figures.
+- Major partners' logos (« Au grand galop », shown obligatorily): `logo_commendit/`, built by `npm run images`.
+- Missing, never to be fabricated: 2027 programme and artists, logo files for the other partners, night/show/dance/BMX/inflatable photos, testimonials, attendance figures.
 
 ## Product Principles
 

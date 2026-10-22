@@ -1,9 +1,7 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import { ArrowRight } from "@phosphor-icons/react";
+import Link from "next/link";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Picture from "@/components/Picture";
-import { getGsap, prefersReducedMotion, whenIdle } from "@/lib/motion";
+import PhotoBandMotion from "@/components/sections/PhotoBandMotion";
 
 // "Une compétition officielle": the proof that closes the gymkhana section.
 // The relay race fills the frame; over it, on the page's own column, the
@@ -17,30 +15,9 @@ const FACTS: { value: string; label: string }[] = [
 ];
 
 export default function PhotoBand() {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const root = ref.current;
-    if (!root || prefersReducedMotion()) return;
-    const { gsap } = getGsap();
-    let ctx: ReturnType<typeof gsap.context> | undefined;
-    const cancel = whenIdle(() => {
-      ctx = gsap.context(() => {
-        const scroll = { trigger: root, start: "top bottom", end: "bottom top", scrub: 0.6 };
-        // The frame is taller than the window it shows through, so it can travel.
-        gsap.fromTo("[data-band-wide]", { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: scroll });
-        gsap.matchMedia().add("(min-width: 1024px)", () => {
-          gsap.fromTo("[data-band-inset]", { yPercent: 12 }, { yPercent: -12, ease: "none", scrollTrigger: scroll });
-        });
-      }, root);
-    });
-    return () => {
-      cancel();
-      ctx?.revert();
-    };
-  }, []);
-
   return (
-    <div className="band" ref={ref} aria-labelledby="band-title">
+    <div className="band" data-band aria-labelledby="band-title">
+      <PhotoBandMotion />
       <div className="band__wide" data-reveal="image">
         <div className="band__frame" data-band-wide>
           <Picture
@@ -64,9 +41,9 @@ export default function PhotoBand() {
               </div>
             ))}
           </dl>
-          <a href="/epreuves/#reglement" className="btn btn--ghost band__cta" data-reveal>
+          <Link href="/epreuves-gymkhana/#reglement" className="btn btn--ghost band__cta" data-reveal>
             Règlement et inscription <ArrowRight size={18} weight="bold" aria-hidden />
-          </a>
+          </Link>
         </div>
 
         <figure className="band__inset" data-band-inset>

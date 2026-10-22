@@ -1,4 +1,5 @@
-import { Church, Coffee, Horse, MusicNotes } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import { ArrowRight, Church, Coffee, Horse } from "@phosphor-icons/react/dist/ssr";
 import type { Icon } from "@phosphor-icons/react";
 import Picture, { type ImageId } from "@/components/Picture";
 import { fr } from "@/lib/typo";
@@ -38,12 +39,12 @@ const TILES: Tile[] = [
     area: "b",
   },
   {
-    id: "danse",
-    icon: MusicNotes,
-    title: "Danse en ligne",
-    text: "Avec les écoles Pascale Dufour et Nathalie Paquet, sous le chapiteau.",
-    when: "Du jeudi au dimanche",
-    tone: "terre",
+    id: "spectacles",
+    title: "Spectacles",
+    text: "Des groupes country et rock sous le chapiteau, puis un DJ.",
+    when: "Jeudi, vendredi et samedi soir",
+    img: "act-spectacle",
+    alt: "Un groupe country sur la scène du chapiteau, sous les projecteurs, devant la foule.",
     area: "c",
   },
   {
@@ -117,6 +118,12 @@ export default function Activites() {
             </li>
           ))}
         </ul>
+
+        <p className="act__more" data-reveal>
+          <Link className="btn" href="/activite-festival/">
+            Toutes les activités <ArrowRight size={18} weight="bold" aria-hidden />
+          </Link>
+        </p>
       </div>
     </section>
   );

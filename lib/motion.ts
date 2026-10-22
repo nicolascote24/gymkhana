@@ -1,17 +1,36 @@
 "use client";
 
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { gsap as Gsap } from "gsap";
+import type { ScrollTrigger as ScrollTriggerType } from "gsap/ScrollTrigger";
 
-let registered = false;
+export type Motion = { gsap: typeof Gsap; ScrollTrigger: typeof ScrollTriggerType };
 
-export function getGsap() {
-  if (!registered && typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.config({ nullTargetWarn: false });
-    registered = true;
-  }
-  return { gsap, ScrollTrigger };
+// GSAP is not part of the first load: it is fetched once, after the page has
+// painted, so the hero's photograph and text never wait for it. Everything
+// the script animates is already readable without it.
+let loading: Promise<Motion> | null = null;
+
+export function loadGsap(): Promise<Motion> {
+  loading ??= Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([g, st]) => {
+    g.gsap.registerPlugin(st.ScrollTrigger);
+    g.gsap.config({ nullTargetWarn: false });
+    return { gsap: g.gsap, ScrollTrigger: st.ScrollTrigger };
+  });
+  return loading;
+}
+
+// Effect helper: runs `setup` once GSAP has loaded (unless the component
+// unmounted first) and returns the cleanup for useEffect.
+export function withGsap(setup: (m: Motion) => void | (() => void)): () => void {
+  let dead = false;
+  let cleanup: void | (() => void);
+  loadGsap().then((m) => {
+    if (!dead) cleanup = setup(m);
+  });
+  return () => {
+    dead = true;
+    cleanup?.();
+  };
 }
 
 export const prefersReducedMotion = () =>

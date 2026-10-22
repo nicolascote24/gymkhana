@@ -53,38 +53,130 @@ const jobs = [
     alpha: true,
     crop: { left: 1787, top: 611, width: 745, height: 784 },
   },
+  // The film's still, under the loop (Film.tsx): already graded with the film.
+  { id: "film-still", src: "public/video/festival-poster.jpg", widths: [828, 1280, 1920], noGrade: true },
   // Shown edge to edge in the widescreen band, so it goes up to 2400px.
-  { id: "relais", src: `${BANK}/CB_20220814_145327-1-scaled.jpg`, widths: [640, 1080, 1600, 2400] },
-  { id: "sauvetage", src: `${BANK}/502.jpg`, widths: [640, 1080, 1600] },
+  { id: "relais", src: `${BANK}/CB_20220814_145327-1-scaled.jpg`, widths: [640, 828, 1080, 1600, 2400] },
+  // 360px: the small frame of the activities hero collage on phones.
+  { id: "sauvetage", src: `${BANK}/502.jpg`, widths: [360, 640, 828, 1080, 1600] },
   {
     id: "baril-gradins",
     src: `${BANK}/486121701_1082639307241061_638791365813437644_n.jpg`,
-    widths: [640, 1080, 1600],
+    widths: [640, 828, 1080, 1600],
   },
   {
     id: "baril-roulottes",
     src: `${BANK}/486177124_1082639060574419_1317052855270604286_n.jpg`,
-    widths: [640, 1080, 1600],
+    widths: [640, 828, 1080, 1600],
   },
-  { id: "baril-foule", src: `${BANK}/486576520_1082639293907729_8661474365982776403_n.jpg`, widths: [640, 1080, 1600] },
+  { id: "baril-foule", src: `${BANK}/486576520_1082639293907729_8661474365982776403_n.jpg`, widths: [640, 828, 1080, 1600] },
   {
     id: "chien",
     src: `${BANK}/486199081_1082632333908425_3091345128069034974_n.jpg`,
-    widths: [640, 1080, 1600],
+    widths: [640, 828, 1080, 1600],
     // The bottom band (signature and badge) would sit under the tile's text.
     trim: { left: 0, top: 60, width: 2048, height: 880 },
   },
   {
     id: "mascotte",
     src: `${BANK}/487212465_1082643843907274_8083644331164335370_n.jpg`,
-    widths: [640, 1080, 1600],
+    widths: [640, 828, 1080, 1600],
     // The bottom band (signature and badge) and the top of the sky, so the
     // faces clear the tile's title.
     trim: { left: 0, top: 200, width: 2048, height: 860 },
   },
   { id: "jeune-cavaliere", src: `${BANK}/432-680x1024.jpg`, widths: [480, 680] },
-  { id: "presidente", src: `${BANK}/Presidente.jpg`, widths: [640, 1080, 1600] },
+  { id: "presidente", src: `${BANK}/Presidente.jpg`, widths: [640, 828, 1080, 1600] },
   { id: "equipe", src: `${BANK}/equipe.jpg`, widths: [640, 1080, 1440] },
+  // Activities page (/activite-festival/). Client photos trimmed of their
+  // signature and badge; 360px is the hero film strip's phone size.
+  {
+    id: "act-jumpai",
+    src: "photo_clients/endants.jpg",
+    widths: [360, 640, 828, 1080],
+    trim: { left: 0, top: 0, width: 1365, height: 1700 },
+  },
+  {
+    id: "act-releve",
+    src: "photo_clients/jeune_cavaliere.jpg",
+    widths: [360, 640, 828, 1080],
+    trim: { left: 440, top: 0, width: 1260, height: 1365 },
+  },
+  {
+    id: "act-gonflables",
+    src: "photo_clients/jeux-endants.jpg",
+    widths: [360, 640, 828, 1080, 1600],
+    trim: { left: 0, top: 180, width: 2048, height: 880 },
+  },
+  { id: "act-bottes", src: "photo_clients/kiosque.jpg", widths: [360, 640, 828, 1080], trim: { left: 0, top: 0, width: 1992, height: 1700 } },
+  { id: "act-vetements", src: "photo_clients/kiosque2.jpg", widths: [360, 640, 828, 1080] },
+  { id: "act-cantine", src: "photo_clients/kiosue3.jpg", widths: [360, 640, 828, 1080, 1600] },
+  // Concert photos come graded by their photographer: kept as delivered.
+  {
+    id: "act-spectacle",
+    src: "photo_clients/spectacle_photo.jpg",
+    widths: [360, 640, 828, 1080, 1600],
+    noGrade: true,
+    trim: { left: 0, top: 0, width: 1870, height: 1152 },
+  },
+  {
+    id: "act-spectacle-2",
+    src: "photo_clients/spectacle.jpg",
+    widths: [640, 828, 1080, 1600],
+    noGrade: true,
+    trim: { left: 0, top: 0, width: 1870, height: 1152 },
+  },
+  // The activities hero: a day at the arena from the 2026 film, wide for
+  // landscape screens and a portrait crop around the rider for phones.
+  {
+    id: "act-hero",
+    src: "assets/film/arene-jour.jpg",
+    widths: [1280, 1640],
+    quality: 58,
+    noGrade: true,
+    trim: { left: 0, top: 0, width: 1640, height: 1080 },
+  },
+  {
+    id: "act-hero-portrait",
+    src: "assets/film/arene-jour.jpg",
+    // shaded under the title, so 640px is plenty even on dense screens
+    widths: [480, 640],
+    quality: 52,
+    noGrade: true,
+    trim: { left: 180, top: 0, width: 800, height: 1080 },
+  },
+  // Stills from the 2026 film (assets/film/), graded with it; each trim
+  // leaves out the videographer's mark in the bottom right corner.
+  { id: "act-bmx", src: "assets/film/bmx.jpg", widths: [360, 640, 828, 1080, 1350], noGrade: true, trim: { left: 300, top: 0, width: 1350, height: 1080 } },
+  {
+    id: "act-enseigne",
+    src: "assets/film/chapiteau-enseigne.jpg",
+    widths: [360, 640, 828, 1080, 1600],
+    noGrade: true,
+    trim: { left: 0, top: 0, width: 1640, height: 1080 },
+  },
+  { id: "act-dj", src: "assets/film/chapiteau-dj.jpg", widths: [640, 828, 1080, 1600], noGrade: true, trim: { left: 0, top: 0, width: 1640, height: 1080 } },
+  {
+    id: "act-arene-nuit",
+    src: "assets/film/arene-nuit.jpg",
+    widths: [828, 1280, 1640],
+    noGrade: true,
+    trim: { left: 0, top: 0, width: 1640, height: 1080 },
+  },
+  {
+    id: "act-foule",
+    src: "assets/film/chapiteau-foule.jpg",
+    widths: [640, 828, 1280, 1920],
+    noGrade: true,
+    trim: { left: 0, top: 0, width: 1920, height: 890 },
+  },
+  {
+    id: "act-camping",
+    src: "assets/film/camping-ciel.jpg",
+    widths: [640, 828, 1280, 1920],
+    noGrade: true,
+    trim: { left: 0, top: 0, width: 1920, height: 890 },
+  },
   // The badge gets a white disc behind it, so the inside of the circle reads
   // white on night as on sand (the black ring covers the disc's edge).
   {
@@ -95,6 +187,28 @@ const jobs = [
     noGrade: true,
     disc: { radius: 0.45, color: "#ffffff" },
   },
+  // Major partners' logos, as supplied by the client (logo_commendit/), never
+  // regraded: their colours belong to them. Trimmed to their ink so the
+  // section can balance them by their real shape.
+  ...[
+    ["350-chicoutimi", "350-chicoutimi.webp"],
+    ["boucherie-ra", "boucherie-raymond-andree.png"],
+    ["desjardins", "desjardins.png"],
+    ["falardeau", "falardeau.png"],
+    ["bmr", "logo_bmr.png"],
+    ["mrc-fjord", "mrc_fjord.png"],
+    ["promotion-saguenay", "promotion-sag.png"],
+    ["quebec", "quebec.png"],
+    ["zone-kubota", "zone-kubota.webp"],
+  ].map(([id, file]) => ({
+    id: `logo-${id}`,
+    src: `logo_commendit/${file}`,
+    widths: [240, 480],
+    quality: 88,
+    alpha: true,
+    noGrade: true,
+    trimInk: true,
+  })),
 ];
 
 // Optional filter: `node scripts/build-images.mjs hero-rider relais` rebuilds only those ids.
@@ -104,6 +218,8 @@ const manifest = only.length ? JSON.parse(await readFile(MANIFEST, "utf8").catch
 
 for (const job of jobs.filter((j) => !only.length || only.includes(j.id))) {
   let base = sharp(job.src).rotate();
+  // Drop the transparent margin around a logo, so its box is its ink.
+  if (job.trimInk) base = sharp(await base.trim({ threshold: 1 }).png().toBuffer());
   const meta = await base.metadata();
   const full = { width: meta.width, height: meta.height };
   if (job.disc) {
@@ -139,9 +255,13 @@ for (const job of jobs.filter((j) => !only.length || only.includes(j.id))) {
     };
   }
 
+  const done = new Set();
   for (const target of job.widths) {
     // Widths are expressed against the full plate for cut-outs so both layers share breakpoints.
     const w = job.crop ? Math.round((target / full.width) * box.width) : Math.min(target, box.width);
+    // A small source caps several targets at its own width: write it once.
+    if (done.has(w)) continue;
+    done.add(w);
     const q = job.quality ?? 64;
     const avif = `${job.id}-${target}.avif`;
     const webp = `${job.id}-${target}.webp`;
@@ -181,6 +301,21 @@ if (!only.length)
     .resize({ width: 1200, height: 630, fit: "cover", position: "right" })
     .jpeg({ quality: 82, mozjpeg: true })
     .toFile(path.join(OUT, "og-festival-gymkhana.jpg"));
+
+// Each inner page shares its own card (`node scripts/build-images.mjs og`):
+// the activities page its hero (a day at the arena, the film's mark left
+// out), the events page the rescue race.
+if (!only.length || only.includes("og")) {
+  await sharp("assets/film/arene-jour.jpg")
+    .extract({ left: 0, top: 0, width: 1640, height: 1080 })
+    .resize({ width: 1200, height: 630, fit: "cover", position: "centre" })
+    .jpeg({ quality: 82, mozjpeg: true })
+    .toFile(path.join(OUT, "og-activites.jpg"));
+  await grade(sharp(`${BANK}/502.jpg`).rotate())
+    .resize({ width: 1200, height: 630, fit: "cover", position: "attention" })
+    .jpeg({ quality: 82, mozjpeg: true })
+    .toFile(path.join(OUT, "og-epreuves.jpg"));
+}
 
 await mkdir(path.dirname(MANIFEST), { recursive: true });
 await writeFile(MANIFEST, JSON.stringify(manifest, null, 2) + "\n");

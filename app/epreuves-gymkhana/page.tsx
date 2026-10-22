@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { pageGraph } from "@/lib/schema";
+import { pageMetadata } from "@/lib/seo";
 import Nav from "@/components/Nav";
 import Footer from "@/components/sections/Footer";
 import QuickBar from "@/components/QuickBar";
@@ -10,45 +13,24 @@ import Reglement from "@/components/epreuves/Reglement";
 import Participer from "@/components/epreuves/Participer";
 import EpreuvesMotion from "@/components/epreuves/EpreuvesMotion";
 import { familles, jugement, articleUrl } from "@/content/epreuves";
-import { festival } from "@/content/festival";
 import { fr } from "@/lib/typo";
 import "./epreuves.css";
 
-const title = "Épreuves de gymkhana, règlement et inscription";
-const description =
-  "Les dix épreuves de gymkhana du festival : barils, slalom, sauvetage, relais, poney express et plus. Règlement officiel de Cheval Québec, exigences et inscription par courriel.";
+const TITLE = "Épreuves de gymkhana et inscription";
+const DESCRIPTION =
+    "Barils, slalom, sauvetage, relais : les dix épreuves du gymkhana de Falardeau, sanctionné par le CBSLC. Règles de Cheval Québec et inscription par courriel.";
 
-export const metadata: Metadata = {
-  title: `${title} | ${festival.shortName}`,
-  description,
-  alternates: { canonical: "/epreuves/" },
-  openGraph: {
-    type: "website",
-    locale: "fr_CA",
-    siteName: festival.name,
-    url: "/epreuves/",
-    title,
-    description,
-    images: [
-      {
-        url: "/images/og-festival-gymkhana.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Cavalière en plein virage autour d'un baril",
-      },
-    ],
+export const metadata: Metadata = pageMetadata({
+  title: TITLE,
+  description: DESCRIPTION,
+  path: "/epreuves-gymkhana/",
+  image: {
+    url: "/images/og-epreuves.jpg",
+    width: 1200,
+    height: 630,
+    alt: "Épreuve de sauvetage au gymkhana de Falardeau : un cavalier saute en croupe d'un cheval au galop",
   },
-};
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://festivalgymkhanafalardeau.ca";
-const breadcrumb = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Accueil", item: `${siteUrl}/` },
-    { "@type": "ListItem", position: 2, name: "Épreuves", item: `${siteUrl}/epreuves/` },
-  ],
-};
+});
 
 // Phones: the four chapters stay one tap away under the menu bar.
 const CHAPTERS = [
@@ -111,7 +93,7 @@ export default function Epreuves() {
       <QuickBar page="epreuves" />
       <CourseRun selector="[data-run]" />
       <EpreuvesMotion />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+      <JsonLd data={pageGraph({ path: "/epreuves-gymkhana/", title: TITLE, description: DESCRIPTION })} />
     </>
   );
 }

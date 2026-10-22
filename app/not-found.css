@@ -1,0 +1,97 @@
+/* 404: night, like the footer; one heading-step title, square buttons. */
+.lost {
+  min-height: 100svh;
+  background: var(--color-nuit);
+  color: var(--color-sable);
+}
+.lost__inner {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100svh;
+  padding-block: clamp(1.25rem, 3vw, 2rem);
+}
+.lost__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-self: start;
+  min-height: 2.75rem;
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.lost__body {
+  align-self: center;
+  display: grid;
+  justify-items: start;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  max-width: 44rem;
+  padding-block: 3rem;
+}
+.lost__title {
+  font-size: min(clamp(2.5rem, 6vw, 5rem), calc((100vw - 2 * var(--gutter)) / 10));
+  font-weight: 900;
+  line-height: 0.86;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 125;
+}
+.lost__text {
+  max-width: 46ch;
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+  color: var(--color-creme);
+}
+.lost__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.lost .btn--ghost {
+  --ghost-ink: var(--color-sable);
+  --btn-hover-fg: var(--color-nuit);
+}
+.lost__foot {
+  font-size: var(--fs-small);
+  color: color-mix(in oklab, var(--color-sable) 70%, transparent);
+}
+/* the pages people usually look for, ruled like the site's lists */
+.lost__useful {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+.lost__useful-title {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--color-sable) 75%, transparent);
+}
+.lost__useful ul {
+  display: grid;
+  margin-top: 0.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-sable) 18%, transparent);
+}
+.lost__useful a {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-sable) 18%, transparent);
+}
+.lost__useful strong {
+  font-weight: 800;
+  font-variation-settings: "wdth" 110;
+  color: var(--color-sable);
+}
+.lost__useful span {
+  font-size: var(--fs-small);
+  color: var(--color-creme);
+}
+@media (hover: hover) and (pointer: fine) {
+  .lost__useful a:hover strong {
+    text-decoration: underline;
+    text-decoration-color: var(--color-rouge);
+    text-underline-offset: 0.25em;
+  }
+}

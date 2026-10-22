@@ -1,16 +1,9 @@
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Picture from "@/components/Picture";
 import MobileFold from "@/components/MobileFold";
-import { festival } from "@/content/festival";
+import { festival, comite as COMITE } from "@/content/festival";
 import { fr } from "@/lib/typo";
 import { keepPlaces } from "@/lib/places";
-
-const COMITE = [
-  { role: "Présidente", name: "Ann-Frédérick Lavoie" },
-  { role: "Trésorière", name: "Andréanne Lessard" },
-  { role: "Secrétaire", name: "Juliette Tremblay" },
-  { role: "Directeurs", name: "Serge Lavoie, Éric Tremblay, Pierre Rousseau, Nicolas Dionne" },
-];
 
 export default function Equipe() {
   return (

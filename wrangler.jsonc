@@ -1,10 +1,25 @@
 // Cloudflare Worker serving the static export (next build writes ./out).
-// Deploy: npm run deploy
+// Production: npm run deploy          -> festivalfalardeau.ca
+// Staging:    npm run deploy:staging  -> password protected (worker/index.js)
 {
   "name": "festival-gymkhana",
+  "main": "worker/index.js",
   "compatibility_date": "2026-10-01",
   "assets": {
     "directory": "./out",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
+  },
+  "env": {
+    "staging": {
+      "name": "festival-gymkhana-staging",
+      // Every request goes through the password check first.
+      "assets": {
+        "directory": "./out",
+        "binding": "ASSETS",
+        "not_found_handling": "404-page",
+        "run_worker_first": true
+      }
+    }
   }
 }

@@ -18,6 +18,8 @@ const ext = () => (document.createElement("video").canPlayType('video/webm; code
 const loopSrc = () => `/video/festival-boucle-${window.matchMedia("(max-width: 767px)").matches ? 1280 : 1920}.${ext()}`;
 const fullSrc = () => `/video/festival-2026.${ext()}`;
 const POSTER = "/video/festival-poster.jpg";
+// The still under the loop, at three widths (scripts/build-images.mjs, "film-still").
+const STILL = (type: string) => [828, 1280, 1920].map((w) => `/images/film-still-${w}.${type} ${w}w`).join(", ");
 
 export default function Film({ chapters }: { chapters: Chapter[] }) {
   const frame = useRef<HTMLDivElement>(null);
@@ -63,10 +65,16 @@ export default function Film({ chapters }: { chapters: Chapter[] }) {
   return (
     <section className="film" aria-labelledby="film-title" data-playing={playing || undefined}>
       <div className="film__frame" ref={frame}>
+        {/* The still under the loop is an image, not the video's poster, so
+            it loads lazily like any picture below the fold. */}
+        <picture>
+          <source type="image/avif" srcSet={STILL("avif")} sizes="100vw" />
+          <source type="image/webp" srcSet={STILL("webp")} sizes="100vw" />
+          <img className="film__still" src={POSTER} alt="" width={1920} height={1080} loading="lazy" decoding="async" />
+        </picture>
         <video
           ref={loop}
           className="film__loop"
-          poster={POSTER}
           muted
           loop
           playsInline

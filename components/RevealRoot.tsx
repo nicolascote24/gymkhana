@@ -1,18 +1,22 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 // One observer for the whole page: elements marked [data-reveal] get `is-in`
 // the first time they enter the viewport. Content is visible without
-// JavaScript and under reduced motion (see sections.css).
+// JavaScript and under reduced motion (see sections.css). This lives in the
+// layout, which stays mounted across client navigations: it starts over on
+// each new page (pathname) so that page's elements are watched too.
 //
 // Titles and images start fully clipped (clip-path), and Chromium counts the
 // target's own clip-path when computing intersection, so a fully clipped
 // element never "enters". Those are observed through their parent instead.
 export default function RevealRoot() {
+  const pathname = usePathname();
   useEffect(() => {
     const groups = new Map<Element, HTMLElement[]>();
-    document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+    document.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-in)").forEach((el) => {
       const clipped = el.dataset.reveal === "title" || el.dataset.reveal === "image";
       // A parent laid out with display: contents has no box and never
       // intersects: watch the first ancestor that has one.
@@ -40,6 +44,6 @@ export default function RevealRoot() {
     );
     groups.forEach((_, target) => io.observe(target));
     return () => io.disconnect();
-  }, []);
+  }, [pathname]);
   return null;
 }

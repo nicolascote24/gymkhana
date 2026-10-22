@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CalendarBlank, EnvelopeSimple, NavigationArrow } from "@phosphor-icons/react";
-import { getGsap } from "@/lib/motion";
+import { withGsap } from "@/lib/motion";
 import { mapsUrl } from "@/content/festival";
 import type { Page } from "@/components/Nav";
 
@@ -17,59 +17,60 @@ export default function QuickBar({ page = "accueil" }: { page?: Page }) {
   const [show, setShow] = useState(false);
   const [route, setRoute] = useState(false);
   useEffect(() => {
-    const { ScrollTrigger } = getGsap();
-    const hero = document.querySelector<HTMLElement>("[data-hero]");
-    // The section the shortcut itself leads to.
-    const prog = document.getElementById(home ? "programmation" : "inscription");
-    const visit = document.getElementById("visite");
-    const foot = document.querySelector("footer.foot");
-    // The sections' own action buttons (the route, the competition schedule,
-    // volunteering...): never two red actions stacked on screen.
-    const buttons = document.querySelectorAll("main .btn:not(.hero__cta)");
-    const onScreen = new Set<Element>();
-    let pastHero = false;
-    let inProg = false;
-    let inFoot = false;
-    const sync = () => setShow(pastHero && !inProg && !inFoot && onScreen.size === 0);
-    const triggers = [
-      ScrollTrigger.create({
-        start: () => (hero ? hero.offsetHeight : window.innerHeight),
-        end: "max",
-        onToggle: (s) => ((pastHero = s.isActive), sync()),
-      }),
-      prog &&
+    return withGsap(({ ScrollTrigger }) => {
+      const hero = document.querySelector<HTMLElement>("[data-hero]");
+      // The section the shortcut itself leads to.
+      const prog = document.getElementById(home ? "programmation" : "inscription");
+      const visit = document.getElementById("visite");
+      const foot = document.querySelector("footer.foot");
+      // The sections' own action buttons (the route, the competition schedule,
+      // volunteering...): never two red actions stacked on screen.
+      const buttons = document.querySelectorAll("main .btn:not(.hero__cta)");
+      const onScreen = new Set<Element>();
+      let pastHero = false;
+      let inProg = false;
+      let inFoot = false;
+      const sync = () => setShow(pastHero && !inProg && !inFoot && onScreen.size === 0);
+      const triggers = [
         ScrollTrigger.create({
-          trigger: prog,
-          start: "top bottom",
-          end: "bottom top",
-          onToggle: (s) => ((inProg = s.isActive), sync()),
+          start: () => (hero ? hero.offsetHeight : window.innerHeight),
+          end: "max",
+          onToggle: (s) => ((pastHero = s.isActive), sync()),
         }),
-      visit &&
-        ScrollTrigger.create({
-          trigger: visit,
-          start: "top 60%",
-          end: "bottom 40%",
-          refreshPriority: -1,
-          onToggle: (s) => setRoute(s.isActive),
-        }),
-      ...Array.from(buttons, (b) =>
-        ScrollTrigger.create({
-          trigger: b,
-          start: "top bottom",
-          end: "bottom top",
-          refreshPriority: -1,
-          onToggle: (s) => (s.isActive ? onScreen.add(b) : onScreen.delete(b), sync()),
-        }),
-      ),
-      foot &&
-        ScrollTrigger.create({
-          trigger: foot,
-          start: "top bottom",
-          refreshPriority: -1,
-          onToggle: (s) => ((inFoot = s.isActive), sync()),
-        }),
-    ];
-    return () => triggers.forEach((t) => t && t.kill());
+        prog &&
+          ScrollTrigger.create({
+            trigger: prog,
+            start: "top bottom",
+            end: "bottom top",
+            onToggle: (s) => ((inProg = s.isActive), sync()),
+          }),
+        visit &&
+          ScrollTrigger.create({
+            trigger: visit,
+            start: "top 60%",
+            end: "bottom 40%",
+            refreshPriority: -1,
+            onToggle: (s) => setRoute(s.isActive),
+          }),
+        ...Array.from(buttons, (b) =>
+          ScrollTrigger.create({
+            trigger: b,
+            start: "top bottom",
+            end: "bottom top",
+            refreshPriority: -1,
+            onToggle: (s) => (s.isActive ? onScreen.add(b) : onScreen.delete(b), sync()),
+          }),
+        ),
+        foot &&
+          ScrollTrigger.create({
+            trigger: foot,
+            start: "top bottom",
+            refreshPriority: -1,
+            onToggle: (s) => ((inFoot = s.isActive), sync()),
+          }),
+      ];
+      return () => triggers.forEach((t) => t && t.kill());
+    });
   }, [home]);
   return (
     <div className="quickbar" data-show={show} aria-hidden={!show}>

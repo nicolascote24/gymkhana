@@ -18,15 +18,15 @@ export default function EpHero() {
     <section className="ep-hero" data-hero aria-labelledby="ep-title">
       <div className="wrap ep-hero__grid">
         <div className="ep-hero__text">
-          <h1 id="ep-title" className="ep-hero__title" data-reveal="title">
-            Les épreuves
+          <h1 id="ep-title" className="ep-hero__title" data-enter="title">
+            <span className="ep-hero__kicker">Les épreuves de</span> <span className="ep-hero__word">gymkhana</span>
           </h1>
-          <p className="ep-hero__lead" data-reveal style={{ ["--d" as string]: 1 }}>
+          <p className="ep-hero__lead" data-enter style={{ ["--d" as string]: 1 }}>
             {fr(
               "Dix épreuves chronométrées, courues selon le règlement de Cheval Québec et sanctionnées par le CBSLC. Voici en quoi consiste chacune, les règles à connaître et comment s'inscrire.",
             )}
           </p>
-          <nav aria-label="Sur cette page" className="ep-hero__ways" data-reveal style={{ ["--d" as string]: 2 }}>
+          <nav aria-label="Sur cette page" className="ep-hero__ways" data-enter style={{ ["--d" as string]: 2 }}>
             <ul>
               {WAYS.map((w) => (
                 <li key={w.href}>

@@ -26,7 +26,7 @@
       color-mix(in srgb, var(--color-creme) 55%, transparent),
       transparent 72%
     ),
-    url("/textures/terrain.webp");
+    var(--terrain-img);
   background-repeat: no-repeat, repeat;
   background-size:
     auto,
@@ -88,14 +88,24 @@
 .ep-hero__text {
   container-type: inline-size;
 }
-/* Fitted to its column: ÉPREUVES measures 7.62 em at wdth 125. */
+/* The title in two sizes: « Les épreuves de » as a wide line over the one
+   word that matters, GYMKHANA, fitted to the column (8.07 em at wdth 125). */
 .ep-hero__title {
-  font-size: min(6.5rem, 100cqi / 7.7);
   font-weight: 900;
   line-height: 0.8;
   letter-spacing: 0;
   text-transform: uppercase;
   font-variation-settings: "wdth" 125;
+}
+.ep-hero__kicker {
+  display: block;
+  font-size: min(2.75rem, 100cqi / 8.2 * 0.42);
+  line-height: 1;
+}
+.ep-hero__word {
+  display: block;
+  margin-top: 0.12em;
+  font-size: min(7rem, 100cqi / 8.3);
 }
 .ep-hero__lead {
   max-width: 34ch;
@@ -319,6 +329,22 @@ html.js [data-reveal="course"][data-run].is-in .course__path {
   margin-top: 0.85rem;
   color: var(--ink-soft);
 }
+/* the way to the spectator's guide, under the two rules */
+.ep-judge__guide {
+  grid-column: 2;
+  font-weight: 600;
+}
+.ep-judge__guide a {
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: var(--color-rouge);
+  text-underline-offset: 0.25em;
+}
+@media (max-width: 1023px) {
+  .ep-judge__guide {
+    grid-column: auto;
+  }
+}
 
 /* Article references: small, underlined in red, after the text they source. */
 .ep-judge__list dd a,
@@ -494,6 +520,34 @@ html.js [data-reveal="course"][data-run].is-in .course__path {
   margin-top: 1.25rem;
   font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
   line-height: 1.5;
+}
+/* An event's key figures, figure first, open on every screen. */
+.ep-fiche__chiffres {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1.5rem;
+  max-width: 34rem;
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+.ep-fiche__chiffres > div {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.ep-fiche__chiffres dd {
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-variation-settings: "wdth" 110;
+}
+.ep-fiche__chiffres dt {
+  font-size: var(--fs-small);
+  line-height: 1.35;
 }
 .ep-fiche__points,
 .ep-fiche__dq ul {

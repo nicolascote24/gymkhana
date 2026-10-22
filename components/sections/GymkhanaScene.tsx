@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react";
-import { getGsap, prefersReducedMotion, whenIdle } from "@/lib/motion";
+import { withGsap, prefersReducedMotion, whenIdle } from "@/lib/motion";
 
 // The cloverleaf barrel pattern, drawn by the reader's scroll. On wide
 // screens the scene is pinned while the course draws and the three steps
@@ -32,54 +33,55 @@ export default function GymkhanaScene({ steps, definition }: { steps: Step[]; de
       barrels.forEach((b) => b.classList.add("is-lit"));
       return;
     }
-    const { gsap, ScrollTrigger } = getGsap();
-    // Fractions of the path where each barrel is rounded, then the finish.
-    const lit = [0.38, 0.62, 0.86];
-    let ctx: ReturnType<typeof gsap.context> | undefined;
-    const cancel = whenIdle(() => {
-      ctx = gsap.context(() => {
-        // pathLength is 1000 (not 1): GSAP rounds px values to whole units,
-        // so a 1 to 0 offset would jump instead of drawing.
-        gsap.set(path, { strokeDasharray: 1000, strokeDashoffset: 1000 });
-        const mm = gsap.matchMedia();
-        const update = (p: number) => {
-          barrels.forEach((b, i) => b.classList.toggle("is-lit", p >= lit[i]));
-          setStep(p < 0.3 ? 0 : p < 0.88 ? 1 : 2);
-        };
-        mm.add("(min-width: 1024px)", () => {
-          gsap.to(path, {
-            strokeDashoffset: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: root,
-              start: "top top",
-              end: "+=110%",
-              pin: true,
-              scrub: 0.6,
-              onUpdate: (self) => update(self.progress),
-            },
+    return withGsap(({ gsap, ScrollTrigger }) => {
+      // Fractions of the path where each barrel is rounded, then the finish.
+      const lit = [0.38, 0.62, 0.86];
+      let ctx: ReturnType<typeof gsap.context> | undefined;
+      const cancel = whenIdle(() => {
+        ctx = gsap.context(() => {
+          // pathLength is 1000 (not 1): GSAP rounds px values to whole units,
+          // so a 1 to 0 offset would jump instead of drawing.
+          gsap.set(path, { strokeDasharray: 1000, strokeDashoffset: 1000 });
+          const mm = gsap.matchMedia();
+          const update = (p: number) => {
+            barrels.forEach((b, i) => b.classList.toggle("is-lit", p >= lit[i]));
+            setStep(p < 0.3 ? 0 : p < 0.88 ? 1 : 2);
+          };
+          mm.add("(min-width: 1024px)", () => {
+            gsap.to(path, {
+              strokeDashoffset: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: root,
+                start: "top top",
+                end: "+=110%",
+                pin: true,
+                scrub: 0.6,
+                onUpdate: (self) => update(self.progress),
+              },
+            });
           });
-        });
-        mm.add("(max-width: 1023px)", () => {
-          gsap.to(path, {
-            strokeDashoffset: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: path,
-              start: "top 80%",
-              end: "bottom 45%",
-              scrub: 0.6,
-              onUpdate: (self) => update(self.progress),
-            },
+          mm.add("(max-width: 1023px)", () => {
+            gsap.to(path, {
+              strokeDashoffset: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: path,
+                start: "top 80%",
+                end: "bottom 45%",
+                scrub: 0.6,
+                onUpdate: (self) => update(self.progress),
+              },
+            });
           });
-        });
-      }, root);
-      ScrollTrigger.refresh();
+        }, root);
+        ScrollTrigger.refresh();
+      });
+      return () => {
+        cancel();
+        ctx?.revert();
+      };
     });
-    return () => {
-      cancel();
-      ctx?.revert();
-    };
   }, []);
 
   return (
@@ -93,9 +95,9 @@ export default function GymkhanaScene({ steps, definition }: { steps: Step[]; de
             {definition}
           </p>
           {/* The way to the events page, in view as soon as the section is. */}
-          <a href="/epreuves/" className="btn gym__more" data-reveal>
+          <Link href="/epreuves-gymkhana/" className="btn gym__more" data-reveal>
             Épreuves et inscription <ArrowRight size={18} weight="bold" aria-hidden />
-          </a>
+          </Link>
           <ol className="gym__steps">
             {steps.map((s, i) => (
               <li key={s.title} className="gym__step" data-active={i === step} data-done={i < step}>

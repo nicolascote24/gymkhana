@@ -76,6 +76,16 @@ function Fiche({ e }: { e: Epreuve }) {
         <p className="ep-fiche__desc" data-reveal>
           {fr(e.description)}
         </p>
+        {e.chiffres && (
+          <dl className="ep-fiche__chiffres" data-reveal>
+            {e.chiffres.map((c) => (
+              <div key={c.value}>
+                <dt>{fr(c.label)}</dt>
+                <dd>{c.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
         {/* On phones the rules fold behind one button, so the ten sheets stay a
             quick read; everywhere else they are open. */}
         {(e.points.length > 0 || e.disqualif.length > 0) && (

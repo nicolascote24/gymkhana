@@ -2,10 +2,11 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { grandGalop, medias, partenaires } from "@/content/partenaires";
 import { festival } from "@/content/festival";
 import { fr } from "@/lib/typo";
-import { keepPlaces } from "@/lib/places";
+import images from "@/content/images.json";
+import Picture from "@/components/Picture";
 import PartnerWall from "@/components/sections/PartnerWall";
 
-// Logo files are not available yet: partners are set as typographic marks.
+// Major partners by their logo; every other partner as a typographic mark.
 export default function Partenaires() {
   return (
     <section id="partenaires" className="part" aria-labelledby="part-title">
@@ -19,14 +20,37 @@ export default function Partenaires() {
           </p>
         </div>
 
-        <div className="part__tier" data-reveal>
-          <p className="part__tier-name">Au grand galop</p>
-          <ul className="part__major">
-            {grandGalop.map((p) => (
-              <li key={p}>
-                <span>{keepPlaces(p)}</span>
-              </li>
-            ))}
+        <div className="part__tier part__tier--logos">
+          <p className="part__tier-name" data-reveal>
+            Au grand galop
+          </p>
+          {/* The arena's sponsor boards: each logo at the same optical
+              weight, sized from its trimmed shape (--k = sqrt of its ratio). */}
+          <ul className="part__logos">
+            {grandGalop.map((p, i) => {
+              const img = images[p.logo];
+              const k = Math.sqrt(img.width / img.height) * (p.optic ?? 1);
+              const logo = (
+                <Picture id={p.logo} alt={p.name} sizes="240px" className="part__logo" />
+              );
+              return (
+                <li
+                  key={p.name}
+                  className={p.night ? "part__plate on-night" : "part__plate"}
+                  style={{ ["--k" as string]: k.toFixed(3), ["--i" as string]: i }}
+                  data-reveal
+                >
+                  {p.href ? (
+                    <a href={p.href} target="_blank" rel="noopener noreferrer">
+                      {logo}
+                      <span className="sr-only"> (nouvel onglet)</span>
+                    </a>
+                  ) : (
+                    logo
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
 

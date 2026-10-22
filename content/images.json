@@ -103,6 +103,10 @@
           "w": 640
         },
         {
+          "src": "/images/relais-828.avif",
+          "w": 828
+        },
+        {
           "src": "/images/relais-1080.avif",
           "w": 1080
         },
@@ -119,6 +123,10 @@
         {
           "src": "/images/relais-640.webp",
           "w": 640
+        },
+        {
+          "src": "/images/relais-828.webp",
+          "w": 828
         },
         {
           "src": "/images/relais-1080.webp",
@@ -142,8 +150,16 @@
     "sources": {
       "avif": [
         {
+          "src": "/images/sauvetage-360.avif",
+          "w": 360
+        },
+        {
           "src": "/images/sauvetage-640.avif",
           "w": 640
+        },
+        {
+          "src": "/images/sauvetage-828.avif",
+          "w": 828
         },
         {
           "src": "/images/sauvetage-1080.avif",
@@ -156,8 +172,16 @@
       ],
       "webp": [
         {
+          "src": "/images/sauvetage-360.webp",
+          "w": 360
+        },
+        {
           "src": "/images/sauvetage-640.webp",
           "w": 640
+        },
+        {
+          "src": "/images/sauvetage-828.webp",
+          "w": 828
         },
         {
           "src": "/images/sauvetage-1080.webp",
@@ -181,6 +205,10 @@
           "w": 640
         },
         {
+          "src": "/images/baril-gradins-828.avif",
+          "w": 828
+        },
+        {
           "src": "/images/baril-gradins-1080.avif",
           "w": 1080
         },
@@ -193,6 +221,10 @@
         {
           "src": "/images/baril-gradins-640.webp",
           "w": 640
+        },
+        {
+          "src": "/images/baril-gradins-828.webp",
+          "w": 828
         },
         {
           "src": "/images/baril-gradins-1080.webp",
@@ -216,6 +248,10 @@
           "w": 640
         },
         {
+          "src": "/images/baril-roulottes-828.avif",
+          "w": 828
+        },
+        {
           "src": "/images/baril-roulottes-1080.avif",
           "w": 1080
         },
@@ -228,6 +264,10 @@
         {
           "src": "/images/baril-roulottes-640.webp",
           "w": 640
+        },
+        {
+          "src": "/images/baril-roulottes-828.webp",
+          "w": 828
         },
         {
           "src": "/images/baril-roulottes-1080.webp",
@@ -251,6 +291,10 @@
           "w": 640
         },
         {
+          "src": "/images/baril-foule-828.avif",
+          "w": 828
+        },
+        {
           "src": "/images/baril-foule-1080.avif",
           "w": 1080
         },
@@ -263,6 +307,10 @@
         {
           "src": "/images/baril-foule-640.webp",
           "w": 640
+        },
+        {
+          "src": "/images/baril-foule-828.webp",
+          "w": 828
         },
         {
           "src": "/images/baril-foule-1080.webp",
@@ -286,6 +334,10 @@
           "w": 640
         },
         {
+          "src": "/images/chien-828.avif",
+          "w": 828
+        },
+        {
           "src": "/images/chien-1080.avif",
           "w": 1080
         },
@@ -300,6 +352,10 @@
           "w": 640
         },
         {
+          "src": "/images/chien-828.webp",
+          "w": 828
+        },
+        {
           "src": "/images/chien-1080.webp",
           "w": 1080
         },
@@ -308,6 +364,14 @@
           "w": 1600
         }
       ]
+    },
+    "region": {
+      "left": 0,
+      "top": 60,
+      "width": 2048,
+      "height": 880,
+      "plateWidth": 2048,
+      "plateHeight": 1236
     },
     "fallback": "/images/chien.jpg"
   },
@@ -319,6 +383,10 @@
         {
           "src": "/images/mascotte-640.avif",
           "w": 640
+        },
+        {
+          "src": "/images/mascotte-828.avif",
+          "w": 828
         },
         {
           "src": "/images/mascotte-1080.avif",
@@ -335,6 +403,10 @@
           "w": 640
         },
         {
+          "src": "/images/mascotte-828.webp",
+          "w": 828
+        },
+        {
           "src": "/images/mascotte-1080.webp",
           "w": 1080
         },
@@ -343,6 +415,14 @@
           "w": 1600
         }
       ]
+    },
+    "region": {
+      "left": 0,
+      "top": 200,
+      "width": 2048,
+      "height": 860,
+      "plateWidth": 2048,
+      "plateHeight": 1365
     },
     "fallback": "/images/mascotte.jpg"
   },
@@ -383,6 +463,10 @@
           "w": 640
         },
         {
+          "src": "/images/presidente-828.avif",
+          "w": 828
+        },
+        {
           "src": "/images/presidente-1080.avif",
           "w": 1080
         },
@@ -395,6 +479,10 @@
         {
           "src": "/images/presidente-640.webp",
           "w": 640
+        },
+        {
+          "src": "/images/presidente-828.webp",
+          "w": 828
         },
         {
           "src": "/images/presidente-1080.webp",
@@ -565,5 +653,1067 @@
     },
     "placeholder": "data:image/webp;base64,UklGRroAAABXRUJQVlA4IK4AAABwBgCdASogACgAPulcp02pJSOiNVgIASAdCUAWo2MARvE0VCi9uLJrr2PG3oBiFo59FWFVrYCvL1q6/3gA/t5/ORVlj53/kt3fBrg8WAs4A4bs/5HVWl1iSLOxafMYhFQNudvqdUVAqMYNzU7bILVhHWswKY0zKLGO1lPMKxXFrUJZWkcmcBvxorcfBliLCVqDsVs8zxEzlEwspixBo/vWBtdvspXjw84vu40QAAA=",
     "fallback": "/images/hero-clean-portrait.jpg"
+  },
+  "logo-350-chicoutimi": {
+    "width": 390,
+    "height": 199,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-350-chicoutimi-240.avif",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-350-chicoutimi-480.avif",
+          "w": 390
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-350-chicoutimi-240.webp",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-350-chicoutimi-480.webp",
+          "w": 390
+        }
+      ]
+    },
+    "fallback": "/images/logo-350-chicoutimi.png"
+  },
+  "logo-boucherie-ra": {
+    "width": 307,
+    "height": 61,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-boucherie-ra-240.avif",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-boucherie-ra-480.avif",
+          "w": 307
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-boucherie-ra-240.webp",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-boucherie-ra-480.webp",
+          "w": 307
+        }
+      ]
+    },
+    "fallback": "/images/logo-boucherie-ra.png"
+  },
+  "logo-desjardins": {
+    "width": 313,
+    "height": 67,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-desjardins-240.avif",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-desjardins-480.avif",
+          "w": 313
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-desjardins-240.webp",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-desjardins-480.webp",
+          "w": 313
+        }
+      ]
+    },
+    "fallback": "/images/logo-desjardins.png"
+  },
+  "logo-falardeau": {
+    "width": 161,
+    "height": 82,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-falardeau-240.avif",
+          "w": 161
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-falardeau-240.webp",
+          "w": 161
+        }
+      ]
+    },
+    "fallback": "/images/logo-falardeau.png"
+  },
+  "logo-bmr": {
+    "width": 165,
+    "height": 72,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-bmr-240.avif",
+          "w": 165
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-bmr-240.webp",
+          "w": 165
+        }
+      ]
+    },
+    "fallback": "/images/logo-bmr.png"
+  },
+  "logo-mrc-fjord": {
+    "width": 320,
+    "height": 221,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-mrc-fjord-240.avif",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-mrc-fjord-480.avif",
+          "w": 320
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-mrc-fjord-240.webp",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-mrc-fjord-480.webp",
+          "w": 320
+        }
+      ]
+    },
+    "fallback": "/images/logo-mrc-fjord.png"
+  },
+  "logo-promotion-saguenay": {
+    "width": 1216,
+    "height": 478,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-promotion-saguenay-240.avif",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-promotion-saguenay-480.avif",
+          "w": 480
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-promotion-saguenay-240.webp",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-promotion-saguenay-480.webp",
+          "w": 480
+        }
+      ]
+    },
+    "fallback": "/images/logo-promotion-saguenay.png"
+  },
+  "logo-quebec": {
+    "width": 2330,
+    "height": 460,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-quebec-240.avif",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-quebec-480.avif",
+          "w": 480
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-quebec-240.webp",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-quebec-480.webp",
+          "w": 480
+        }
+      ]
+    },
+    "fallback": "/images/logo-quebec.png"
+  },
+  "logo-zone-kubota": {
+    "width": 492,
+    "height": 500,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-zone-kubota-240.avif",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-zone-kubota-480.avif",
+          "w": 480
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-zone-kubota-240.webp",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-zone-kubota-480.webp",
+          "w": 480
+        }
+      ]
+    },
+    "fallback": "/images/logo-zone-kubota.png"
+  },
+  "film-still": {
+    "width": 1920,
+    "height": 1080,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/film-still-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/film-still-1280.avif",
+          "w": 1280
+        },
+        {
+          "src": "/images/film-still-1920.avif",
+          "w": 1920
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/film-still-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/film-still-1280.webp",
+          "w": 1280
+        },
+        {
+          "src": "/images/film-still-1920.webp",
+          "w": 1920
+        }
+      ]
+    },
+    "fallback": "/images/film-still.jpg"
+  },
+  "act-jumpai": {
+    "width": 1365,
+    "height": 1700,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-jumpai-360.avif",
+          "w": 360
+        },
+        {
+          "src": "/images/act-jumpai-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-jumpai-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-jumpai-1080.avif",
+          "w": 1080
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-jumpai-360.webp",
+          "w": 360
+        },
+        {
+          "src": "/images/act-jumpai-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-jumpai-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-jumpai-1080.webp",
+          "w": 1080
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1365,
+      "height": 1700,
+      "plateWidth": 1365,
+      "plateHeight": 2048
+    },
+    "fallback": "/images/act-jumpai.jpg"
+  },
+  "act-releve": {
+    "width": 1260,
+    "height": 1365,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-releve-360.avif",
+          "w": 360
+        },
+        {
+          "src": "/images/act-releve-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-releve-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-releve-1080.avif",
+          "w": 1080
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-releve-360.webp",
+          "w": 360
+        },
+        {
+          "src": "/images/act-releve-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-releve-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-releve-1080.webp",
+          "w": 1080
+        }
+      ]
+    },
+    "region": {
+      "left": 440,
+      "top": 0,
+      "width": 1260,
+      "height": 1365,
+      "plateWidth": 2048,
+      "plateHeight": 1365
+    },
+    "fallback": "/images/act-releve.jpg"
+  },
+  "act-gonflables": {
+    "width": 2048,
+    "height": 880,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-gonflables-360.avif",
+          "w": 360
+        },
+        {
+          "src": "/images/act-gonflables-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-gonflables-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-gonflables-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-gonflables-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-gonflables-360.webp",
+          "w": 360
+        },
+        {
+          "src": "/images/act-gonflables-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-gonflables-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-gonflables-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-gonflables-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 180,
+      "width": 2048,
+      "height": 880,
+      "plateWidth": 2048,
+      "plateHeight": 1365
+    },
+    "fallback": "/images/act-gonflables.jpg"
+  },
+  "act-bottes": {
+    "width": 1992,
+    "height": 1700,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-bottes-360.avif",
+          "w": 360
+        },
+        {
+          "src": "/images/act-bottes-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-bottes-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-bottes-1080.avif",
+          "w": 1080
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-bottes-360.webp",
+          "w": 360
+        },
+        {
+          "src": "/images/act-bottes-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-bottes-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-bottes-1080.webp",
+          "w": 1080
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1992,
+      "height": 1700,
+      "plateWidth": 1992,
+      "plateHeight": 2048
+    },
+    "fallback": "/images/act-bottes.jpg"
+  },
+  "act-vetements": {
+    "width": 1536,
+    "height": 2048,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-vetements-360.avif",
+          "w": 360
+        },
+        {
+          "src": "/images/act-vetements-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-vetements-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-vetements-1080.avif",
+          "w": 1080
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-vetements-360.webp",
+          "w": 360
+        },
+        {
+          "src": "/images/act-vetements-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-vetements-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-vetements-1080.webp",
+          "w": 1080
+        }
+      ]
+    },
+    "fallback": "/images/act-vetements.jpg"
+  },
+  "act-cantine": {
+    "width": 2048,
+    "height": 1536,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-cantine-360.avif",
+          "w": 360
+        },
+        {
+          "src": "/images/act-cantine-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-cantine-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-cantine-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-cantine-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-cantine-360.webp",
+          "w": 360
+        },
+        {
+          "src": "/images/act-cantine-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-cantine-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-cantine-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-cantine-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "fallback": "/images/act-cantine.jpg"
+  },
+  "act-spectacle": {
+    "width": 1870,
+    "height": 1152,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-spectacle-360.avif",
+          "w": 360
+        },
+        {
+          "src": "/images/act-spectacle-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-spectacle-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-spectacle-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-spectacle-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-spectacle-360.webp",
+          "w": 360
+        },
+        {
+          "src": "/images/act-spectacle-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-spectacle-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-spectacle-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-spectacle-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1870,
+      "height": 1152,
+      "plateWidth": 2048,
+      "plateHeight": 1152
+    },
+    "fallback": "/images/act-spectacle.jpg"
+  },
+  "act-spectacle-2": {
+    "width": 1870,
+    "height": 1152,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-spectacle-2-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-spectacle-2-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-spectacle-2-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-spectacle-2-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-spectacle-2-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-spectacle-2-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-spectacle-2-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-spectacle-2-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1870,
+      "height": 1152,
+      "plateWidth": 2048,
+      "plateHeight": 1152
+    },
+    "fallback": "/images/act-spectacle-2.jpg"
+  },
+  "act-bmx": {
+    "width": 1350,
+    "height": 1080,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-bmx-360.avif",
+          "w": 360
+        },
+        {
+          "src": "/images/act-bmx-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-bmx-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-bmx-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-bmx-1350.avif",
+          "w": 1350
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-bmx-360.webp",
+          "w": 360
+        },
+        {
+          "src": "/images/act-bmx-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-bmx-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-bmx-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-bmx-1350.webp",
+          "w": 1350
+        }
+      ]
+    },
+    "region": {
+      "left": 300,
+      "top": 0,
+      "width": 1350,
+      "height": 1080,
+      "plateWidth": 1920,
+      "plateHeight": 1080
+    },
+    "fallback": "/images/act-bmx.jpg"
+  },
+  "act-enseigne": {
+    "width": 1640,
+    "height": 1080,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-enseigne-360.avif",
+          "w": 360
+        },
+        {
+          "src": "/images/act-enseigne-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-enseigne-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-enseigne-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-enseigne-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-enseigne-360.webp",
+          "w": 360
+        },
+        {
+          "src": "/images/act-enseigne-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-enseigne-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-enseigne-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-enseigne-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1640,
+      "height": 1080,
+      "plateWidth": 1920,
+      "plateHeight": 1080
+    },
+    "fallback": "/images/act-enseigne.jpg"
+  },
+  "act-dj": {
+    "width": 1640,
+    "height": 1080,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-dj-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-dj-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-dj-1080.avif",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-dj-1600.avif",
+          "w": 1600
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-dj-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-dj-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-dj-1080.webp",
+          "w": 1080
+        },
+        {
+          "src": "/images/act-dj-1600.webp",
+          "w": 1600
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1640,
+      "height": 1080,
+      "plateWidth": 1920,
+      "plateHeight": 1080
+    },
+    "fallback": "/images/act-dj.jpg"
+  },
+  "act-arene-nuit": {
+    "width": 1640,
+    "height": 1080,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-arene-nuit-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-arene-nuit-1280.avif",
+          "w": 1280
+        },
+        {
+          "src": "/images/act-arene-nuit-1640.avif",
+          "w": 1640
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-arene-nuit-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-arene-nuit-1280.webp",
+          "w": 1280
+        },
+        {
+          "src": "/images/act-arene-nuit-1640.webp",
+          "w": 1640
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1640,
+      "height": 1080,
+      "plateWidth": 1920,
+      "plateHeight": 1080
+    },
+    "fallback": "/images/act-arene-nuit.jpg"
+  },
+  "act-foule": {
+    "width": 1920,
+    "height": 890,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-foule-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-foule-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-foule-1280.avif",
+          "w": 1280
+        },
+        {
+          "src": "/images/act-foule-1920.avif",
+          "w": 1920
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-foule-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-foule-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-foule-1280.webp",
+          "w": 1280
+        },
+        {
+          "src": "/images/act-foule-1920.webp",
+          "w": 1920
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1920,
+      "height": 890,
+      "plateWidth": 1920,
+      "plateHeight": 1080
+    },
+    "fallback": "/images/act-foule.jpg"
+  },
+  "act-camping": {
+    "width": 1920,
+    "height": 890,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-camping-640.avif",
+          "w": 640
+        },
+        {
+          "src": "/images/act-camping-828.avif",
+          "w": 828
+        },
+        {
+          "src": "/images/act-camping-1280.avif",
+          "w": 1280
+        },
+        {
+          "src": "/images/act-camping-1920.avif",
+          "w": 1920
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-camping-640.webp",
+          "w": 640
+        },
+        {
+          "src": "/images/act-camping-828.webp",
+          "w": 828
+        },
+        {
+          "src": "/images/act-camping-1280.webp",
+          "w": 1280
+        },
+        {
+          "src": "/images/act-camping-1920.webp",
+          "w": 1920
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1920,
+      "height": 890,
+      "plateWidth": 1920,
+      "plateHeight": 1080
+    },
+    "fallback": "/images/act-camping.jpg"
+  },
+  "act-hero": {
+    "width": 1640,
+    "height": 1080,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-hero-1280.avif",
+          "w": 1280
+        },
+        {
+          "src": "/images/act-hero-1640.avif",
+          "w": 1640
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-hero-1280.webp",
+          "w": 1280
+        },
+        {
+          "src": "/images/act-hero-1640.webp",
+          "w": 1640
+        }
+      ]
+    },
+    "region": {
+      "left": 0,
+      "top": 0,
+      "width": 1640,
+      "height": 1080,
+      "plateWidth": 1920,
+      "plateHeight": 1080
+    },
+    "fallback": "/images/act-hero.jpg"
+  },
+  "act-hero-portrait": {
+    "width": 800,
+    "height": 1080,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/act-hero-portrait-480.avif",
+          "w": 480
+        },
+        {
+          "src": "/images/act-hero-portrait-640.avif",
+          "w": 640
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/act-hero-portrait-480.webp",
+          "w": 480
+        },
+        {
+          "src": "/images/act-hero-portrait-640.webp",
+          "w": 640
+        }
+      ]
+    },
+    "region": {
+      "left": 180,
+      "top": 0,
+      "width": 800,
+      "height": 1080,
+      "plateWidth": 1920,
+      "plateHeight": 1080
+    },
+    "fallback": "/images/act-hero-portrait.jpg"
   }
 }

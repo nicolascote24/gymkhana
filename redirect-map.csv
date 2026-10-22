@@ -1,0 +1,9 @@
+ancienne_url,nouvelle_url,code,raison
+https://www.festivalfalardeau.ca/*,https://festivalfalardeau.ca/$1,301,"Hôte canonique sans www. À créer dans Cloudflare : Règles > Redirect Rules > « Redirect from WWW to root » (301, conserve le chemin et les paramètres). Une seule redirection, sans chaîne."
+http://festivalfalardeau.ca/*,https://festivalfalardeau.ca/$1,301,"HTTPS seulement. Cloudflare > SSL/TLS > Edge Certificates > « Always Use HTTPS » (301)."
+/epreuves/ et /epreuves,/epreuves-gymkhana/,301,"Page renommée pour le SEO (nom et titre optimisés). Elle n'a jamais été publiée en production ; la 301 protège les liens d'un éventuel aperçu. Appliqué dans out/_redirects."
+/<page> (sans barre finale),/<page>/,301,"Appliqué au build : out/_redirects généré par scripts/write-redirects.mjs pour chaque page (ex. /activite-festival → /activite-festival/). Direct, sans chaîne."
+https://festivalfalardeau.com/portail2/,https://festivalfalardeau.ca/,impossible,"Domaine perdu (repris par un tiers) : aucune redirection possible de notre côté. C'est le « site web » de la fiche Google et de saguenayfjord.ca [Fait]. L'utilisateur fait corriger ces liens à la source (link-plan.md, n° 1 et 2)."
+https://festivalfalardeau.com/,https://festivalfalardeau.ca/,impossible,"Même raison. Liens entrants corrigés à la source par l'utilisateur (profils Facebook et Instagram, annuaires)."
+mailto:info@festivalfalardeau.com,mailto:festivalfalardeau@gmail.com,impossible,"Courriel sur le domaine perdu, encore publié sur saguenayfjord.ca [Fait]. À faire retirer partout (risque de confidentialité)."
+https://festivalgymkhanafalardeau.ca/*,,aucune,"Ancien domaine provisoire du code, jamais publié ni enregistré : remplacé par festivalfalardeau.ca dans lib/site.ts. Aucune redirection nécessaire."

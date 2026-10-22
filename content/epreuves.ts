@@ -25,6 +25,9 @@ export type Epreuve = {
   // When the event has no article of its own in the rule book.
   note?: string;
   points: string[];
+  // Key figures of the event, straight from its article, shown open on every
+  // screen (they answer the questions people ask about it).
+  chiffres?: { value: string; label: string }[];
   disqualif: string[];
   // Simplified course drawn on a 100x100 grid (SVG path).
   trace: string;
@@ -43,9 +46,16 @@ export const epreuves: Epreuve[] = [
     description: "Trois barils placés en triangle, un parcours en trèfle à boucler le plus vite possible sans les faire tomber.",
     article: { num: "409", page: 222 },
     points: [
-      "Départ par la gauche ou par la droite, au choix, en respectant la forme du trèfle.",
-      "Chaque baril renversé ajoute cinq secondes au temps.",
+      "Le parcours garde toujours la forme du trèfle, quel que soit le sens de départ.",
       "Les Futurités sont réservées aux chevaux de 4 et 5 ans, aux conditions de l'article 409.",
+    ],
+    // Articles 406 and 409 of the 2026 rule book. The distances between the
+    // barrels are on the official diagram (page 222), not restated here.
+    chiffres: [
+      { value: "3", label: "barils en triangle, un parcours en trèfle" },
+      { value: "+5 s", label: "par baril renversé ; le retenir de la main est permis" },
+      { value: "200 L", label: "par baril (45 gallons), en plastique ou en métal" },
+      { value: "2", label: "sens de départ possibles, par la gauche ou par la droite" },
     ],
     disqualif: ["Ne pas respecter le parcours.", "Renverser une borne de la ligne de départ."],
     trace: "M50 96 L66 62 A9 9 0 1 1 72 70 L34 62 A9 9 0 1 0 28 70 L46 24 A8 8 0 1 1 54 24 L50 96",

@@ -21,6 +21,7 @@
   --font-sans: var(--font-archivo), "Arial Narrow", Arial, sans-serif;
 
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1); /* GSAP expo.out */
   --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
@@ -38,6 +39,18 @@
   --fs-body: clamp(1rem, 1.05vw, 1.0625rem);
   --fs-small: 0.875rem;
   --fs-label: 0.8125rem;
+
+  /* The terrain texture of the pale grounds (scripts/build-texture.mjs). */
+  --terrain-img: url("/textures/terrain.webp");
+}
+/* AVIF draws the same lines at a quarter of the weight, where supported. */
+@supports (background-image: image-set(url("/x.avif") type("image/avif"))) {
+  :root {
+    --terrain-img: image-set(
+      url("/textures/terrain.avif") type("image/avif"),
+      url("/textures/terrain.webp") type("image/webp")
+    );
+  }
 }
 
 /* ---------------------------- base ---------------------------- */
@@ -409,11 +422,22 @@ body::after {
   }
 }
 
-/* Mobile menu: full-screen sheet on night. */
+/* Mobile menu: full-screen sheet on night. It is a native popover (Nav.tsx):
+   the browser's default popover box is undone, and the sheet stays laid out
+   while closed so it can slide shut instead of vanishing (author styles
+   outrank the browser's display: none for closed popovers). Open is
+   :popover-open, or data-open where popovers are not supported. */
 .menu {
   position: fixed;
   inset: 0;
   z-index: 55;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  overflow: visible;
   display: grid;
   grid-template-rows: auto 1fr auto;
   padding: env(safe-area-inset-top, 0px) var(--gutter) calc(env(safe-area-inset-bottom, 0px) + 1.5rem);
@@ -431,7 +455,7 @@ body::after {
   margin: 0.75rem calc(0.75rem - var(--gutter)) 0;
   padding-inline: max(0.75rem, calc(clamp(1rem, 2.4vw, 2.75rem) - 0.75rem));
 }
-.menu[data-open="true"] {
+.menu:is(:popover-open, [data-open="true"]) {
   clip-path: inset(0 0 0 0);
   visibility: visible;
   transition:
@@ -458,7 +482,7 @@ body::after {
     opacity 300ms ease,
     transform 420ms var(--ease-out-strong);
 }
-.menu[data-open="true"] .menu__links a {
+.menu:is(:popover-open, [data-open="true"]) .menu__links a {
   opacity: 1;
   transform: none;
   transition-delay: calc(120ms + var(--i) * 40ms);
@@ -472,7 +496,7 @@ body::after {
       opacity 200ms ease,
       visibility 0s linear 200ms;
   }
-  .menu[data-open="true"] {
+  .menu:is(:popover-open, [data-open="true"]) {
     opacity: 1;
     transition:
       opacity 200ms ease,
@@ -945,10 +969,43 @@ body::after {
   }
 }
 
-/* Entrance: only the letters wait for the script (see layout); the date, the
-   free entry and the action are readable from the first paint. */
-.hero-pending [data-hero-letter] {
-  opacity: 0;
+/* Entrance, played by CSS from the first paint, before any script: a
+   dolly-in where each depth plane settles at its own pace (the rider
+   travels further than the background), and the letters of the name run in
+   from the left, the direction of the run, and widen. The individual
+   scale/translate properties compose with the transforms the script adds
+   later (pointer parallax), so nothing jumps when it takes over. The date,
+   the free entry and the action never move. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero [data-depth="bg"] {
+    animation: hero-dolly-bg 2.6s var(--ease-expo-out) both;
+  }
+  .hero [data-depth="rider"] {
+    animation: hero-dolly-rider 2.4s var(--ease-expo-out) both;
+  }
+  .hero [data-hero-letter] {
+    transform-origin: 0% 100%;
+    animation: hero-letter 1.15s var(--ease-expo-out) both;
+    animation-delay: calc(0.3s + var(--i, 0) * 0.055s);
+  }
+}
+@keyframes hero-dolly-bg {
+  from {
+    scale: 1.16;
+  }
+}
+@keyframes hero-dolly-rider {
+  from {
+    scale: 1.3;
+    translate: 0 4%;
+  }
+}
+@keyframes hero-letter {
+  from {
+    opacity: 0;
+    scale: 0.8 1;
+    translate: -40% 0;
+  }
 }
 
 /* Phones: the menu bar is a band across the top, edge to edge and under
@@ -985,4 +1042,81 @@ body::after {
   .nav__toggle {
     padding-right: 0;
   }
+}
+
+/* Consent bar (components/Consent.tsx): fixed to the bottom, so it never
+   moves the page, and compact, so it is never the largest element. The two
+   choices carry the same weight (Loi 25). */
+.consent {
+  position: fixed;
+  inset: auto 0.75rem calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
+  z-index: 70;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem 1.5rem;
+  max-width: 56rem;
+  margin-inline: auto;
+  padding: 1rem 1.25rem;
+  background: var(--color-nuit);
+  color: var(--color-creme);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+  font-size: var(--fs-small);
+  line-height: 1.45;
+}
+.consent__text {
+  flex: 1 1 22rem;
+}
+.consent__title {
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sable);
+}
+.consent__text p {
+  margin-top: 0.35rem;
+}
+.consent__text a {
+  color: var(--color-sable);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.consent__actions {
+  display: flex;
+  gap: 0.6rem;
+}
+.consent__btn {
+  min-width: 7.5rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 0;
+  background: var(--color-sable);
+  color: var(--color-nuit);
+  font: inherit;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) {
+  .consent__btn:hover {
+    background: var(--color-creme);
+  }
+}
+@media (max-width: 479px) {
+  .consent__actions {
+    width: 100%;
+  }
+  .consent__btn {
+    flex: 1;
+  }
+}
+.foot__legal-btn {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
 }

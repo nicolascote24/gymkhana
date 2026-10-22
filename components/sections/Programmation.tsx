@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, MoonStars } from "@phosphor-icons/react";
 import { programme, type Jour } from "@/content/programmation";
 import { festival } from "@/content/festival";
-import { getGsap, scrollToY, whenIdle } from "@/lib/motion";
+import { withGsap, scrollToY, whenIdle } from "@/lib/motion";
 import { fr } from "@/lib/typo";
 
 const HIGHLIGHT = "Grand Prix barils et sauvetage";
@@ -54,54 +54,55 @@ export default function Programmation() {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const { gsap, ScrollTrigger } = getGsap();
-    const marker = section.querySelector("[data-evening]");
-    let ctx: ReturnType<typeof gsap.context> | undefined;
-    const setup = () => {
-      ctx = gsap.context(() => {
-        const night = section.querySelector("[data-night]");
-        gsap.set(night, { opacity: 0 });
-        section.classList.remove("is-night");
-        // A switch, not a scrub: the evening marker must reach the upper
-        // third of the screen, then day turns to night in one short move, so
-        // a reader who stops scrolling is never left between the two.
-        if (marker) {
-          const turn = (on: boolean) => {
-            section.classList.toggle("is-night", on);
-            gsap.to(night, { opacity: on ? 1 : 0, duration: 0.7, ease: "power2.inOut", overwrite: true });
-          };
-          ScrollTrigger.create({
-            trigger: marker,
-            start: "top 35%",
-            onEnter: () => turn(true),
-            onLeaveBack: () => turn(false),
-            onRefresh: (self) => {
-              const on = self.progress > 0 || self.scroll() > self.start;
+    return withGsap(({ gsap, ScrollTrigger }) => {
+      const marker = section.querySelector("[data-evening]");
+      let ctx: ReturnType<typeof gsap.context> | undefined;
+      const setup = () => {
+        ctx = gsap.context(() => {
+          const night = section.querySelector("[data-night]");
+          gsap.set(night, { opacity: 0 });
+          section.classList.remove("is-night");
+          // A switch, not a scrub: the evening marker must reach the upper
+          // third of the screen, then day turns to night in one short move, so
+          // a reader who stops scrolling is never left between the two.
+          if (marker) {
+            const turn = (on: boolean) => {
               section.classList.toggle("is-night", on);
-              gsap.set(night, { opacity: on ? 1 : 0 });
-            },
-          });
+              gsap.to(night, { opacity: on ? 1 : 0, duration: 0.7, ease: "power2.inOut", overwrite: true });
+            };
+            ScrollTrigger.create({
+              trigger: marker,
+              start: "top 35%",
+              onEnter: () => turn(true),
+              onLeaveBack: () => turn(false),
+              onRefresh: (self) => {
+                const on = self.progress > 0 || self.scroll() > self.start;
+                section.classList.toggle("is-night", on);
+                gsap.set(night, { opacity: on ? 1 : 0 });
+              },
+            });
+          }
+        }, section);
+      };
+      let cancel = () => {};
+      if (mounted.current) {
+        setup();
+        ScrollTrigger.refresh();
+        // A shorter or longer day must not leave the reader outside the list.
+        if (keepPlace.current) {
+          keepPlace.current = false;
+          const panel = document.getElementById("prog-panel");
+          if (panel) scrollToY(panel.getBoundingClientRect().top + window.scrollY - stickyOffset());
         }
-      }, section);
-    };
-    let cancel = () => {};
-    if (mounted.current) {
-      setup();
-      ScrollTrigger.refresh();
-      // A shorter or longer day must not leave the reader outside the list.
-      if (keepPlace.current) {
-        keepPlace.current = false;
-        const panel = document.getElementById("prog-panel");
-        if (panel) scrollToY(panel.getBoundingClientRect().top + window.scrollY - stickyOffset());
+      } else {
+        mounted.current = true;
+        cancel = whenIdle(setup);
       }
-    } else {
-      mounted.current = true;
-      cancel = whenIdle(setup);
-    }
-    return () => {
-      cancel();
-      ctx?.revert();
-    };
+      return () => {
+        cancel();
+        ctx?.revert();
+      };
+    });
   }, [active]);
 
   const onKey = (e: React.KeyboardEvent, i: number) => {
