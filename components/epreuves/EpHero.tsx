@@ -21,10 +21,17 @@ export default function EpHero() {
           <h1 id="ep-title" className="ep-hero__title" data-enter="title">
             <span className="ep-hero__kicker">Les épreuves de</span> <span className="ep-hero__word">gymkhana</span>
           </h1>
-          <p className="ep-hero__lead" data-enter style={{ ["--d" as string]: 1 }}>
+          {/* The page's largest paint: shown at once, no entrance animation.
+              Its last words lead to registration, the one way in on phones
+              (the chapter list below is hidden there). */}
+          <p className="ep-hero__lead">
             {fr(
-              "Dix épreuves chronométrées, courues selon le règlement de Cheval Québec et sanctionnées par le CBSLC. Voici en quoi consiste chacune, les règles à connaître et comment s'inscrire.",
-            )}
+              "Les dix épreuves chronométrées du festival, courues selon le règlement de Cheval Québec et sanctionnées par le CBSLC : en quoi consiste chacune, les règles à connaître et",
+            )}{" "}
+            <a href="#inscription" className="ep-hero__sign">
+              {fr("comment s'inscrire")}
+            </a>
+            .
           </p>
           <nav aria-label="Sur cette page" className="ep-hero__ways" data-enter style={{ ["--d" as string]: 2 }}>
             <ul>

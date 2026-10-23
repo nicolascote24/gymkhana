@@ -1,5 +1,6 @@
-import { festival } from "@/content/festival";
+import { festival, mapsUrl } from "@/content/festival";
 import { siteUrl } from "@/lib/site";
+import { lastModified } from "@/lib/lastmod";
 
 // One JSON-LD graph per page, its nodes linked by @id. Everything in it is
 // visible on the site (seo_rule.md, rule 6).
@@ -22,10 +23,10 @@ const organization = {
   name: festival.name,
   alternateName: [festival.shortName, "FGF"],
   url: `${siteUrl}/`,
-  logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo.png` },
+  logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo.png`, width: 384, height: 384 },
   image: `${siteUrl}/images/og-festival-gymkhana.jpg`,
   description:
-    "Festival country gratuit organisé chaque août par des bénévoles, autour d'une compétition de gymkhana sanctionnée par le CBSLC.",
+    "Festival de gymkhana gratuit organisé en août par des bénévoles : une compétition officielle sanctionnée par le CBSLC, entourée de spectacles country et d'activités familiales.",
   foundingDate: String(festival.founded),
   founder: { "@type": "Person", name: festival.founder },
   email: c.email,
@@ -82,6 +83,84 @@ const place = {
   name: a.venue,
   address: organization.address,
   geo: { "@type": "GeoCoordinates", latitude: a.lat, longitude: a.lng },
+  hasMap: mapsUrl,
+};
+
+const SERIES = `${siteUrl}/#festival`;
+
+// The festival as a recurring event: needs no dates, so it ships now. Each
+// year's edition hangs from it once its dates are confirmed (editionNodes).
+const eventSeries = {
+  "@type": "EventSeries",
+  "@id": SERIES,
+  name: festival.name,
+  description:
+    "Festival de gymkhana gratuit, en août à Saint-David-de-Falardeau depuis 2007 : compétition officielle sanctionnée par le CBSLC, spectacles country et activités familiales.",
+  url: `${siteUrl}/`,
+  image: `${siteUrl}/images/og-festival-gymkhana.jpg`,
+  organizer: { "@id": ORG },
+  location: { "@id": PLACE },
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  isAccessibleForFree: true,
+  inLanguage: "fr-CA",
+};
+
+// This year's festival and its competition, only when festival.edition has
+// datesKnown: true with startDate and endDate (ISO 8601 with offset, e.g.
+// "2027-08-05T09:00:00-04:00"). Until then nothing is claimed (rule 6).
+function editionNodes() {
+  const e = festival.edition as { datesKnown: boolean; startDate?: string; endDate?: string };
+  if (!e.datesKnown || !e.startDate || !e.endDate) return [];
+  const year = e.startDate.slice(0, 4);
+  const EDITION = `${siteUrl}/#edition-${year}`;
+  const when = {
+    startDate: e.startDate,
+    endDate: e.endDate,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: { "@id": PLACE },
+    organizer: { "@id": ORG },
+  };
+  return [
+    {
+      "@type": "Festival",
+      "@id": EDITION,
+      name: `${festival.name} ${year}`,
+      description: eventSeries.description,
+      url: `${siteUrl}/`,
+      image: [`${siteUrl}/images/og-festival-gymkhana.jpg`],
+      ...when,
+      isAccessibleForFree: true,
+      inLanguage: "fr-CA",
+      superEvent: { "@id": SERIES },
+      offers: { "@type": "Offer", url: `${siteUrl}/`, price: "0", priceCurrency: "CAD", availability: "https://schema.org/InStock" },
+      subEvent: { "@id": `${EDITION}-gymkhana` },
+    },
+    {
+      "@type": "SportsEvent",
+      "@id": `${EDITION}-gymkhana`,
+      name: `Compétition de gymkhana du ${festival.shortName} ${year}`,
+      sport: "Gymkhana",
+      url: `${siteUrl}/epreuves-gymkhana/`,
+      ...when,
+      superEvent: { "@id": EDITION },
+    },
+  ];
+}
+
+// The 2026 film shown on the home page ("Voir le film", 1 min 25). Its date
+// is the day the file was added to the site.
+const film = {
+  "@type": "VideoObject",
+  "@id": `${siteUrl}/#film-2026`,
+  name: "Film de l'édition 2026 du Festival Gymkhana de Falardeau",
+  description: "Le film de l'édition 2026 du Festival Gymkhana de Saint-David-de-Falardeau, au Saguenay–Lac-Saint-Jean.",
+  thumbnailUrl: `${siteUrl}/video/festival-poster.jpg`,
+  contentUrl: `${siteUrl}/video/festival-2026.mp4`,
+  uploadDate: "2026-10-16",
+  duration: "PT1M26S",
+  inLanguage: "fr-CA",
+  publisher: { "@id": ORG },
 };
 
 const website = {
@@ -100,17 +179,23 @@ type PageGraph = {
   type?: "WebPage" | "AboutPage";
   // Only when the same trail is visible on the page.
   breadcrumb?: { label: string; href: string }[];
+  // Questions answered visibly on the page (content/faq.ts).
+  faq?: { q: string; a: string }[];
 };
 
 export function pageGraph(p: PageGraph) {
   const url = `${siteUrl}${p.path}`;
   const crumbs = p.breadcrumb ? [{ label: "Accueil", href: "/" }, ...p.breadcrumb] : null;
+  const home = p.path === "/";
+  const modified = lastModified(p.path);
   return {
     "@context": "https://schema.org",
     "@graph": [
       organization,
       place,
       website,
+      // The festival itself, its edition and its film live on the home page.
+      ...(home ? [eventSeries, ...editionNodes(), film] : []),
       {
         "@type": p.type ?? "WebPage",
         "@id": `${url}#page`,
@@ -119,9 +204,25 @@ export function pageGraph(p: PageGraph) {
         description: p.description,
         inLanguage: "fr-CA",
         isPartOf: { "@id": SITE },
-        about: { "@id": ORG },
+        about: { "@id": home ? SERIES : ORG },
+        ...(modified ? { dateModified: modified.toISOString() } : {}),
+        ...(home ? { video: { "@id": `${siteUrl}/#film-2026` } } : {}),
         ...(crumbs ? { breadcrumb: { "@id": `${url}#fil` } } : {}),
       },
+      ...(p.faq
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": `${url}#faq`,
+              isPartOf: { "@id": `${url}#page` },
+              mainEntity: p.faq.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ]
+        : []),
       ...(crumbs
         ? [
             {

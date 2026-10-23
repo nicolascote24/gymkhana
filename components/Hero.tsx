@@ -106,7 +106,7 @@ export default function Hero() {
                 <p className="hero__badge">Entrée gratuite</p>
               </div>
               <p className="hero__pitch" data-hero-in>
-                Compétition équestre, musique country et plaisirs en famille, au cœur du Saguenay.
+                Compétition de gymkhana, musique country et plaisirs en famille, au cœur du Saguenay.
               </p>
               <a href="#programmation" className="btn hero__cta" data-hero-in>
                 Voir la programmation <ArrowDownRight size={18} weight="bold" aria-hidden />

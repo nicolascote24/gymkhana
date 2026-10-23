@@ -20,7 +20,8 @@ async function walk(dir) {
     const p = path.join(dir, e.name);
     if (await stat(path.join(p, "index.html")).catch(() => null)) {
       const url = "/" + path.relative(OUT, p).split(path.sep).join("/");
-      lines.push(`${url} ${url}/ 301`);
+      // A renamed address already has its 301 above; a second rule would be dead or a chain.
+      if (!RENAMED.some(([from]) => from === url)) lines.push(`${url} ${url}/ 301`);
     }
     await walk(p);
   }

@@ -5,7 +5,7 @@ import { programme } from "@/content/programmation";
 import { fr } from "@/lib/typo";
 
 // The evening highlight, the one full-frame photograph of the page. The time
-// comes from the 2024 programme and is labelled as such; the 2025 line-up
+// comes from the 2026 programme and is labelled as such; the 2025 line-up
 // from the former site (references/brief.md, section 6).
 export default function GrandPrix() {
   return (
@@ -26,8 +26,7 @@ export default function GrandPrix() {
             {fr("Barils et sauvetage, le samedi à 19 h")}
           </p>
           <p className="ep-gp__tag" data-reveal>
-            <span>Aperçu</span>
-            {programme.edition}
+            {fr(`Horaire de l'${programme.edition.toLowerCase()}`)}
           </p>
           <p className="ep-gp__text" data-reveal>
             {fr(

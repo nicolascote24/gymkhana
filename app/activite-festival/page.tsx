@@ -15,11 +15,11 @@ import { fr } from "@/lib/typo";
 import { keepPlaces } from "@/lib/places";
 import "./activites.css";
 
-const TITLE = "Activités du festival country, Saguenay";
+const TITLE = "Activités du festival, Saguenay";
 const H1 = "Les activités du festival";
 const PATH = "/activite-festival/";
 const DESCRIPTION =
-  "Spectacles country, danse en ligne, zone familiale, kiosques et gymkhana à 20 min de Chicoutimi : les activités du festival, en août. Entrée gratuite.";
+  "Gymkhana, spectacles country, danse en ligne, zone familiale et kiosques à 20 min de Chicoutimi : les activités du festival, en août. Entrée gratuite.";
 
 export const metadata = pageMetadata({
   title: TITLE,
@@ -95,7 +95,7 @@ export default function ActiviteFestival() {
             </h1>
             <div className="ac-hero__bar" data-enter style={{ ["--d" as string]: 2 }}>
               <p className="ac-hero__lead">
-                {fr("Un festival country et western de quatre jours en août, à 20 minutes de Chicoutimi. Entrée gratuite pour tout le monde.")}
+                {fr("Un festival de gymkhana et de musique country, quatre jours en août, à 20 minutes de Chicoutimi. Entrée gratuite pour tout le monde.")}
               </p>
               <a className="ac-ticket" href="#planifier">
                 <span className="ac-ticket__main">Camping sans réservation</span>

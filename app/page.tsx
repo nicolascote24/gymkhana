@@ -12,10 +12,11 @@ import QuickBar from "@/components/QuickBar";
 import JsonLd from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/seo";
 import { pageGraph } from "@/lib/schema";
+import { faq } from "@/content/faq";
 
 const TITLE = "Festival Gymkhana de Falardeau, Saguenay | Entrée gratuite";
 const DESCRIPTION =
-  "Festival country et western gratuit à 20 min de Chicoutimi : une centaine de cavaliers au gymkhana, des spectacles et des activités en famille, en août.";
+  "Festival de gymkhana gratuit à 20 min de Chicoutimi : une centaine de cavaliers en compétition, des spectacles country et des activités en famille, en août.";
 
 export const metadata = pageMetadata({ title: TITLE, absolute: true, description: DESCRIPTION, path: "/" });
 
@@ -35,7 +36,7 @@ export default function Home() {
       </main>
       <Footer />
       <QuickBar />
-      <JsonLd data={pageGraph({ path: "/", title: TITLE, description: DESCRIPTION })} />
+      <JsonLd data={pageGraph({ path: "/", title: TITLE, description: DESCRIPTION, faq })} />
     </>
   );
 }

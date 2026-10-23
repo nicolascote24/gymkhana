@@ -17,6 +17,12 @@ const ext = () => (document.createElement("video").canPlayType('video/webm; code
 // phones (their 4:5 crop of the frame still fills a high-density screen).
 const loopSrc = () => `/video/festival-boucle-${window.matchMedia("(max-width: 767px)").matches ? 1280 : 1920}.${ext()}`;
 const fullSrc = () => `/video/festival-2026.${ext()}`;
+// Data saver on, or a slow link: the still stays and the ~3 MB loop is never
+// fetched. The full film still plays on request.
+const saveData = () => {
+  const c = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+  return !!c && (c.saveData === true || /(^|-)2g|3g/.test(c.effectiveType ?? ""));
+};
 const POSTER = "/video/festival-poster.jpg";
 // The still under the loop, at three widths (scripts/build-images.mjs, "film-still").
 const STILL = (type: string) => [828, 1280, 1920].map((w) => `/images/film-still-${w}.${type} ${w}w`).join(", ");
@@ -31,7 +37,7 @@ export default function Film({ chapters }: { chapters: Chapter[] }) {
   useEffect(() => {
     const v = loop.current;
     const box = frame.current;
-    if (!v || !box || prefersReducedMotion()) return;
+    if (!v || !box || prefersReducedMotion() || saveData()) return;
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -58,7 +64,7 @@ export default function Film({ chapters }: { chapters: Chapter[] }) {
   const close = () => {
     full.current?.pause();
     setPlaying(false);
-    if (!prefersReducedMotion()) loop.current?.play().catch(() => {});
+    if (!prefersReducedMotion() && loop.current?.src) loop.current.play().catch(() => {});
     requestAnimationFrame(() => playBtn.current?.focus());
   };
 

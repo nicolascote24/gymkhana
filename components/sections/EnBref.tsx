@@ -58,19 +58,22 @@ export default function EnBref() {
         </StatementScrub>
 
         <div className="bref__free" data-reveal>
+          {/* One paragraph in the HTML. Phones hide the sentences the hero
+              just above already says (month, four days, free entry). The
+              first sentence names its subject, so it still reads when quoted
+              alone by a search engine or an AI answer. */}
           <p className="bref__copy">
+            {fr("Le gymkhana est une discipline équestre western : des courses de chevaux contre la montre, autour de barils et de piquets.")}{" "}
+            <span className="bref__long">
+              {fr("Depuis 2007, le festival lui consacre quatre jours en août, à 20 minutes de Chicoutimi.")}{" "}
+            </span>
             {fr(
-              "Le gymkhana, ce sont des courses de chevaux contre la montre, autour de barils et de piquets. Pendant quatre jours en août, une centaine de cavaliers s'affrontent dans l'arène, et tout autour : spectacles country, danse en ligne, activités pour les enfants et camping.",
-            )}{" "}
-            <strong>{fr("L'entrée est gratuite.")}</strong>
-          </p>
-          {/* Phones: the hero just above already gives the month, the four
-              days and the free entry, so the short version keeps only what
-              the hero does not say. */}
-          <p className="bref__copy bref__copy--short">
-            {fr(
-              "Le gymkhana, ce sont des courses de chevaux contre la montre, autour de barils et de piquets. Une centaine de cavaliers s'affrontent dans l'arène ; tout autour, spectacles country, danse en ligne, activités pour les enfants et camping.",
+              "Une centaine de cavaliers s'affrontent dans l'arène, en compétition sanctionnée par le CBSLC ; tout autour, spectacles country, danse en ligne, activités pour les enfants et camping.",
             )}
+            <span className="bref__long">
+              {" "}
+              <strong>{fr("L'entrée est gratuite.")}</strong>
+            </span>
           </p>
           <div className="bref__links">
             <a href="#gymkhana" className="bref__more">

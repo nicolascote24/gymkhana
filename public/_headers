@@ -18,3 +18,12 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
   X-Frame-Options: SAMEORIGIN
   Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Cross-Origin-Opener-Policy: same-origin
+  # Report-Only first: violations show in the browser console and nothing is
+  # blocked. Once a few weeks pass clean, rename it Content-Security-Policy.
+  # Google Analytics is listed for when NEXT_PUBLIC_GA_ID is set (lib/consent.ts).
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; font-src 'self'; media-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'
+
+# Read by AI assistants: plain text, cached like a page.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8

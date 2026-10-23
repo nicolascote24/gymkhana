@@ -129,11 +129,12 @@ export default function Programmation() {
 
         <div className="prog__grid">
           <div className="prog__side">
+            {/* Says plainly which year this is, so nobody takes the last
+                edition's programme for next summer's. */}
             <p className="prog__edition">
-              <span className="prog__tag">Aperçu</span>
-              {programme.edition}, {fr(programme.dates)}
+              {fr(`Programme de l'${programme.edition.toLowerCase()}, ${programme.dates}`)}
             </p>
-            <div className="prog__tabs" role="tablist" aria-label="Jours de l'édition 2024">
+            <div className="prog__tabs" role="tablist" aria-label={`Jours de l'${programme.edition.toLowerCase()}`}>
               {jours.map((j, i) => {
                 const [num] = j.date.split(" ");
                 return (

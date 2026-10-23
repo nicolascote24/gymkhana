@@ -9,10 +9,12 @@ import {
   Horse,
   MicrophoneStage,
   Phone,
+  Plus,
   Tent,
   Wine,
 } from "@phosphor-icons/react/dist/ssr";
 import { festival, mapsUrl } from "@/content/festival";
+import { faq } from "@/content/faq";
 import { fr } from "@/lib/typo";
 import { keepPlaces } from "@/lib/places";
 import RouteMap from "@/components/sections/RouteMap";
@@ -117,6 +119,23 @@ export default function Visite() {
               );
             })}
           </ul>
+        </div>
+
+        {/* Short answers, folded to one line each so the page barely grows;
+            the text is in the HTML for search engines and AI answers. */}
+        <div className="visit__rules visit__faq" data-reveal>
+          <h3 className="visit__rules-title">Questions fréquentes</h3>
+          <div className="faq">
+            {faq.map((item) => (
+              <details key={item.q} className="faq__item">
+                <summary className="faq__q">
+                  {fr(item.q)}
+                  <Plus className="faq__icon" size={16} weight="bold" aria-hidden />
+                </summary>
+                <p className="faq__a">{fr(item.a)}</p>
+              </details>
+            ))}
+          </div>
         </div>
 
         <ul className="visit__contacts" data-reveal>

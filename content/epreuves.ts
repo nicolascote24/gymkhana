@@ -255,8 +255,10 @@ export const familles = [
 export const sanction =
   "Compétitions régionales sanctionnées par le Club de barils du Saguenay–Lac-Saint-Jean–Côte-Nord (CBSLC), selon les règlements officiels de Cheval Québec.";
 
+// Opens with its subject, so the sentence still makes sense when a search
+// engine or an AI answer quotes it alone.
 export const definition =
-  "Discipline d'équitation western très répandue en Amérique du Nord, où l'agilité et la rapidité du cheval sont mises à l'épreuve sur des parcours chronométrés, exécutés selon des patrons précis.";
+  "Le gymkhana est une discipline d'équitation western très répandue en Amérique du Nord, où l'agilité et la rapidité du cheval sont mises à l'épreuve sur des parcours chronométrés, exécutés selon des patrons précis.";
 
 // The official rule book. Section IV covers gymkhana (pages 213 to 229).
 export const reglement = {

@@ -14,7 +14,9 @@ export const festival = {
   volunteers: 60,
   competitors: 100,
   days: 4,
-  // PROVISOIRE: dates 2027 non annoncées.
+  // PROVISOIRE: dates 2027 non annoncées. Once confirmed, set datesKnown: true
+  // and add startDate / endDate (ISO with offset, "2027-08-05T09:00:00-04:00"):
+  // the Festival and SportsEvent structured data switch on by themselves.
   edition: { label: `Août${nbsp}2027`, datesKnown: false },
   slogans: {
     main: `Au triple galop vers Falardeau${nbsp}!`,

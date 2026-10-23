@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Page introuvable",
   // Not the home page's address: a 404 has no canonical of its own.
   alternates: { canonical: null },
+  // Replaces the layout's "index, follow", which would contradict the noindex
+  // Next.js adds to a 404.
+  robots: { index: false, follow: true },
 };
 
 // The pages people usually look for, one tap away.
