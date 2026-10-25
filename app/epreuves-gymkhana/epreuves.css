@@ -1033,6 +1033,7 @@ html.js [data-reveal="course"][data-run].is-in .course__path {
   }
   /* below the drawing and the title, the text takes the full width */
   .ep-fiche__desc,
+  .ep-fiche__chiffres,
   .ep-fiche__fold,
   .ep-fiche__note {
     grid-column: 1 / -1;

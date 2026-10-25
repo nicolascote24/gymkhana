@@ -1,8 +1,9 @@
 import { execFileSync } from "node:child_process";
 import type { Page } from "@/components/Nav";
 
-// When each page last changed, for the sitemap, the page's dateModified and
-// the date shown in its footer: one source, so the three always agree.
+// When each page last changed, for the sitemap only: Google uses lastmod to
+// decide what to recrawl and never shows it. Pages carry no date of their own
+// (see pageGraph), so the search result shows none either.
 
 // The files that hold each page's own content (not the menu and footer every
 // page shares), so its date moves only when the page itself changes.

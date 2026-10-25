@@ -30,7 +30,7 @@ const dateFr = (iso: string) =>
 // sections. Everything is rendered on the server.
 export default function PageShell({ page, crumbs, title, description, fp, lead, updated, children }: Props) {
   const trail = [{ label: "Accueil", href: "/" }, ...crumbs];
-  const graph = pageGraph({ path: crumbs[crumbs.length - 1].href, title, description, breadcrumb: crumbs });
+  const graph = pageGraph({ path: crumbs[crumbs.length - 1].href, title, description, breadcrumb: crumbs, updated });
   return (
     <>
       <Nav page={page} />

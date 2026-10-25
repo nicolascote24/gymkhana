@@ -1,6 +1,5 @@
 import { festival, mapsUrl } from "@/content/festival";
 import { siteUrl } from "@/lib/site";
-import { lastModified } from "@/lib/lastmod";
 
 // One JSON-LD graph per page, its nodes linked by @id. Everything in it is
 // visible on the site (seo_rule.md, rule 6).
@@ -181,13 +180,16 @@ type PageGraph = {
   breadcrumb?: { label: string; href: string }[];
   // Questions answered visibly on the page (content/faq.ts).
   faq?: { q: string; a: string }[];
+  // A date written in the page itself (the privacy policy's revision), never
+  // the build or commit date: Google prints it next to the result, where an
+  // aging date makes an off-season festival look abandoned.
+  updated?: string;
 };
 
 export function pageGraph(p: PageGraph) {
   const url = `${siteUrl}${p.path}`;
   const crumbs = p.breadcrumb ? [{ label: "Accueil", href: "/" }, ...p.breadcrumb] : null;
   const home = p.path === "/";
-  const modified = lastModified(p.path);
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -205,7 +207,7 @@ export function pageGraph(p: PageGraph) {
         inLanguage: "fr-CA",
         isPartOf: { "@id": SITE },
         about: { "@id": home ? SERIES : ORG },
-        ...(modified ? { dateModified: modified.toISOString() } : {}),
+        ...(p.updated ? { dateModified: p.updated } : {}),
         ...(home ? { video: { "@id": `${siteUrl}/#film-2026` } } : {}),
         ...(crumbs ? { breadcrumb: { "@id": `${url}#fil` } } : {}),
       },

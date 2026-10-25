@@ -19,7 +19,7 @@ const TITLE = "Activités du festival, Saguenay";
 const H1 = "Les activités du festival";
 const PATH = "/activite-festival/";
 const DESCRIPTION =
-  "Gymkhana, spectacles country, danse en ligne, zone familiale et kiosques à 20 min de Chicoutimi : les activités du festival, en août. Entrée gratuite.";
+  "Gymkhana, spectacles country, danse en ligne, zone familiale et kiosques, gratuits en août à 20 min de Chicoutimi.";
 
 export const metadata = pageMetadata({
   title: TITLE,

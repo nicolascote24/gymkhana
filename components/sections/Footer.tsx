@@ -7,9 +7,6 @@ import CourseMark from "@/components/CourseMark";
 import Tumbleweed from "@/components/Tumbleweed";
 import type { Page } from "@/components/Nav";
 import { ConsentPreferences } from "@/components/Consent";
-import { lastModified, pagePath } from "@/lib/lastmod";
-
-const dateFr = (d: Date) => d.toLocaleDateString("fr-CA", { day: "numeric", month: "long", year: "numeric", timeZone: "America/Toronto" });
 
 // Every page of the site, and the home page's sections; away from the home
 // page the anchors lead back to it.
@@ -24,8 +21,6 @@ const LINKS: { href: string; label: string; page?: Page }[] = [
 
 export default function Footer({ page = "accueil" }: { page?: Page }) {
   const home = page === "accueil";
-  // Shown in plain sight: search engines and AI answers favour dated pages.
-  const updated = lastModified(pagePath[page]);
   const a = festival.address;
   const c = festival.contact;
   return (
@@ -115,11 +110,6 @@ export default function Footer({ page = "accueil" }: { page?: Page }) {
           © {new Date().getFullYear()} {keepPlaces(festival.name)}
         </p>
         <p>Depuis {festival.founded}</p>
-        {updated && (
-          <p>
-            Page mise à jour le <time dateTime={updated.toLocaleDateString("en-CA", { timeZone: "America/Toronto" })}>{dateFr(updated)}</time>
-          </p>
-        )}
         <Link href="/confidentialite/" className="foot__legal-link" aria-current={page === "confidentialite" ? "page" : undefined}>
           Politique de confidentialité
         </Link>
