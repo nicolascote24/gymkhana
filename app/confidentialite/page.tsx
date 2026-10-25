@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 import { fr } from "@/lib/typo";
 
 const DESCRIPTION =
-  "Le site du Festival Gymkhana de Falardeau ne recueille aucune donnée. Qui est responsable de vos renseignements et comment exercer vos droits selon la Loi 25.";
+  "Le site du Festival Gymkhana de Falardeau ne recueille aucune donnée. Qui est responsable et comment exercer vos droits selon la Loi 25.";
 
 export const metadata = pageMetadata({
   title: "Politique de confidentialité",

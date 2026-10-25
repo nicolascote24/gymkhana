@@ -18,7 +18,7 @@ import "./epreuves.css";
 
 const TITLE = "Épreuves de gymkhana et inscription";
 const DESCRIPTION =
-    "Barils, slalom, sauvetage, relais : les dix épreuves du gymkhana de Falardeau, sanctionné par le CBSLC. Règles de Cheval Québec et inscription par courriel.";
+    "Barils, slalom, sauvetage, relais : les dix épreuves du gymkhana de Falardeau, sanctionné par le CBSLC. Règles de Cheval Québec et inscription.";
 
 export const metadata: Metadata = pageMetadata({
   title: TITLE,

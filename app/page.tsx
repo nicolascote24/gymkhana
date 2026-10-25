@@ -16,7 +16,7 @@ import { faq } from "@/content/faq";
 
 const TITLE = "Festival Gymkhana de Falardeau, Saguenay | Entrée gratuite";
 const DESCRIPTION =
-  "Festival de gymkhana gratuit en août, à 20 min de Chicoutimi : une centaine de cavaliers, spectacles country et activités en famille.";
+  "Festival de gymkhana gratuit en août à 20 min de Chicoutimi : une centaine de cavaliers en compétition, spectacles country et activités en famille.";
 
 export const metadata = pageMetadata({ title: TITLE, absolute: true, description: DESCRIPTION, path: "/" });
 
