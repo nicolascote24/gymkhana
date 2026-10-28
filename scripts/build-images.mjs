@@ -191,6 +191,7 @@ const jobs = [
   // regraded: their colours belong to them. Trimmed to their ink so the
   // section can balance them by their real shape.
   ...[
+    ["ckaj", "ckaj.png"],
     ["350-chicoutimi", "350-chicoutimi.webp"],
     ["boucherie-ra", "boucherie-raymond-andree.png"],
     ["desjardins", "desjardins.png"],

@@ -1715,5 +1715,32 @@
       "plateHeight": 1080
     },
     "fallback": "/images/act-hero-portrait.jpg"
+  },
+  "logo-ckaj": {
+    "width": 1100,
+    "height": 702,
+    "sources": {
+      "avif": [
+        {
+          "src": "/images/logo-ckaj-240.avif",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-ckaj-480.avif",
+          "w": 480
+        }
+      ],
+      "webp": [
+        {
+          "src": "/images/logo-ckaj-240.webp",
+          "w": 240
+        },
+        {
+          "src": "/images/logo-ckaj-480.webp",
+          "w": 480
+        }
+      ]
+    },
+    "fallback": "/images/logo-ckaj.png"
   }
 }

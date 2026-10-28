@@ -35,7 +35,7 @@ export const grandGalop: Major[] = [
   { name: "Zone Kubota", logo: "logo-zone-kubota", optic: 1.15 },
   { name: "BMR St-Honoré", logo: "logo-bmr" },
   { name: "MRC du Fjord-du-Saguenay", logo: "logo-mrc-fjord", href: "https://mrc-fjord.qc.ca/" },
-  { name: "Saguenay célèbre le 350e de Chicoutimi", logo: "logo-350-chicoutimi", href: "https://350chicoutimi.ca/" },
+  { name: "92,5 CKAJ", logo: "logo-ckaj", href: "https://ckaj.org/" },
   { name: "Gouvernement du Québec", logo: "logo-quebec", href: "https://www.quebec.ca/" },
 ];
 

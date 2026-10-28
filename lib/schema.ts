@@ -65,9 +65,9 @@ const organization = {
       },
       {
         "@type": "Offer",
-        price: "40",
+        price: "50",
         priceCurrency: "CAD",
-        description: "Tarif des éditions 2024 et 2025, sans réservation",
+        description: "Sans réservation, pour la fin de semaine",
         itemOffered: { "@type": "Service", name: "Camping temporaire pour la fin de semaine" },
       },
       { "@type": "Offer", itemOffered: { "@type": "Service", name: "Inscription aux épreuves de gymkhana" } },

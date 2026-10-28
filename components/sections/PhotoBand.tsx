@@ -9,7 +9,7 @@ import PhotoBandMotion from "@/components/sections/PhotoBandMotion";
 // registration, on the events page. The rescue race sits on the corner as a second camera, captioned
 // with what the event actually is. The two planes move at different speeds.
 const FACTS: { value: string; label: string }[] = [
-  { value: "≈ 100", label: "cavaliers par édition" },
+  { value: "150", label: "cavaliers par édition" },
   { value: "CBSLC", label: "compétition sanctionnée par le Club de barils du Saguenay–Lac-Saint-Jean–Côte-Nord" },
   { value: "Cheval Québec", label: "règlements officiels" },
 ];
@@ -50,13 +50,12 @@ export default function PhotoBand() {
           <div className="band__inset-img" data-reveal="image">
             <Picture
               id="sauvetage"
-              alt="Course de sauvetage : le cavalier se jette sur la croupe du cheval de son coéquipier."
+              alt="Échange de cavaliers : changement d'athlète en pleine course devant les spectateurs."
               sizes="(max-width: 1023px) 92vw, 32vw"
             />
           </div>
           <figcaption>
-            <strong>Course de sauvetage.</strong> Un cavalier contourne l&apos;arène, charge son coéquipier en croupe et
-            termine la course à deux.
+            <strong>Échange de cavaliers.</strong> Changement d&apos;athlète en cours d&apos;épreuve devant les estrades.
           </figcaption>
         </figure>
       </div>

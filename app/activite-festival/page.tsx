@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Phone, Tent } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, ArrowUpRight, EnvelopeSimple, Phone, Tent } from "@phosphor-icons/react/dist/ssr";
 import Nav from "@/components/Nav";
 import Footer from "@/components/sections/Footer";
 import JsonLd from "@/components/JsonLd";
@@ -40,7 +40,7 @@ const ch = Object.fromEntries(chapitres.map((c) => [c.id, c])) as Record<string,
 const FACTS = [
   { value: "0 $", label: "Entrée, compétition et spectacles", key: true },
   { value: "4 jours", label: "En août, du jeudi au dimanche" },
-  { value: "20 000+", label: "Visiteurs à l'édition 2026" },
+  { value: "25 000+", label: "Visiteurs à l'édition 2026" },
   { value: "20 min", label: "Au nord de Chicoutimi" },
 ];
 
@@ -147,7 +147,7 @@ export default function ActiviteFestival() {
           <figure className="ch__fig ch__cinema" data-reveal="image">
             <Picture id={manege.figures[0].img} alt={manege.figures[0].alt} sizes="(max-width: 1023px) 92vw, 90vw" />
           </figure>
-          <List c={manege} className="acts--4" />
+          <List c={manege} className="acts--3" />
         </section>
 
         {/* ---------------- 03 family: a spread, edges aligned ---------------- */}
@@ -195,6 +195,10 @@ export default function ActiviteFestival() {
                 {fr("Vous voulez tenir un kiosque ?")}{" "}
                 <a href={festival.contact.kiosks.href}>
                   <Phone size={16} weight="bold" aria-hidden /> {festival.contact.kiosks.phone}
+                </a>
+                {" · "}
+                <a href={`mailto:${festival.contact.kiosks.email}`}>
+                  <EnvelopeSimple size={16} weight="bold" aria-hidden /> {festival.contact.kiosks.email}
                 </a>
               </p>
             </div>
@@ -292,7 +296,7 @@ export default function ActiviteFestival() {
                   </div>
                   <div>
                     <dt>Sur place</dt>
-                    <dd>{fr("Stationnement, cantine et bar sous le chapiteau.")}</dd>
+                    <dd>{fr("Stationnement, camions de cuisine de rue et bars.")}</dd>
                   </div>
                   {festival.rules.slice(0, 2).map((r) => (
                     <div key={r.id}>

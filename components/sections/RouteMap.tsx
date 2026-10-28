@@ -6,7 +6,7 @@ import map from "@/content/map.json";
 // the map comes into view. Place names are HTML laid over the drawing, so
 // they keep a readable size on a phone.
 const CLOVER =
-  "M200 492 L256 310 A34 34 0 1 1 270 327 C 232 352, 172 352, 144 310 A34 34 0 1 0 130 328 C 156 290, 150 190, 166 118 A34 34 0 1 1 214 141 C 212 250, 204 380, 200 492";
+  "M200 492 L256 310 A34 34 0 1 1 270 327 C 232 352, 172 352, 144 310 A34 34 0 1 0 130 328 C 160 280, 240 190, 234 118 A34 34 0 1 0 186 141 C 188 250, 196 380, 200 492";
 
 // Lines of latitude and longitude every tenth of a degree, as on a survey map.
 function graticule() {
@@ -29,7 +29,7 @@ export default function RouteMap({ access }: { access: string }) {
       <div className="vmap__canvas">
         <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="vmap-desc">
           <desc id="vmap-desc">
-            {`Carte du trajet routier de ${route.km} km, du centre-ville de Chicoutimi à la Place des Festivals de Saint-David-de-Falardeau, au nord de la rivière Saguenay.`}
+            {`Carte du trajet routier de ${route.km} km, du centre-ville de Chicoutimi au Site événementiel de Saint-David-de-Falardeau, au nord de la rivière Saguenay.`}
           </desc>
           <path d={graticule()} className="vmap__grid" />
           {map.features.map((f) => (
@@ -61,7 +61,7 @@ export default function RouteMap({ access }: { access: string }) {
           Chicoutimi
         </span>
         <span className="vmap__label vmap__label--site" style={pos(site.x, site.y)} aria-hidden>
-          <strong>Place des Festivals</strong>
+          <strong>Site événementiel</strong>
           51, rue du Chalet
         </span>
         <span

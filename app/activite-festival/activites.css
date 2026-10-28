@@ -409,6 +409,7 @@
 }
 /* Side by side, the heavy rule runs above each column instead of across. */
 .acts--2,
+.acts--3,
 .acts--4 {
   column-gap: clamp(1.25rem, 3vw, 3rem);
   border-top: 0;
@@ -416,26 +417,34 @@
 .acts--2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+.acts--3 {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 .acts--4 {
   grid-column: 1 / -1;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .acts--2 > .acts__item,
+.acts--3 > .acts__item,
 .acts--4 > .acts__item {
   border-top: 2px solid currentColor;
   border-bottom: 0;
 }
 @media (max-width: 1023px) {
+  .acts--3,
   .acts--4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 599px) {
   .acts--2,
+  .acts--3,
   .acts--4 {
     grid-template-columns: minmax(0, 1fr);
   }
   .acts--2 > .acts__item + .acts__item,
+  .acts--3 > .acts__item + .acts__item,
   .acts--4 > .acts__item + .acts__item {
     border-top: 1px solid var(--rule);
   }

@@ -26,16 +26,19 @@ export const chapitres: Chapitre[] = [
     moment: "Matin",
     title: "Traditions et repas",
     intro:
-      "La journée commence autour d'une table. Ici, on accueille le public et les compétiteurs comme des membres de la famille.",
+      "La journée commence autour d'une table. Ici, on accueille les visiteurs et les compétiteurs comme des membres de la famille.",
     items: [
       {
-        name: "Déjeuner communautaire",
-        text: "Le samedi et le dimanche matin, au chalet des loisirs, avant les premières courses.",
-      },
-      { name: "Messe country", text: "Une tradition du dimanche matin, sous le chapiteau." },
-      {
         name: "Cuisine de rue",
-        text: "Des camions de cuisine de rue et une cantine nourrissent le site pendant tout le festival.",
+        text: "Des camions de cuisine de rue (food trucks) nourrissent le site pendant tout le festival.",
+      },
+      {
+        name: "Bars et rafraîchissements",
+        text: "Deux points de service pour étancher la soif : sous le grand chapiteau et aux estrades avec vue sur le manège.",
+      },
+      {
+        name: "Messe country",
+        text: "Une tradition du dimanche matin, à la place des Fondateurs, dans une ambiance country.",
       },
     ],
     figures: [{ img: "act-cantine", alt: "Des festivaliers commandent au camion de cuisine de rue Le Churros et Le Tacos." }],
@@ -47,10 +50,9 @@ export const chapitres: Chapitre[] = [
     title: "Les spectacles du manège",
     intro: "Entre les courses, le sable du manège accueille d'autres spectacles, devant les mêmes gradins.",
     items: [
-      { name: "Spectacle canin", text: "Les chiens d'Agilité Sag-Lac font leur démonstration d'agilité." },
       { name: "Derby d'attelage", text: "Avec l'Association des meneurs du Saguenay–Lac-Saint-Jean." },
       { name: "Course de relais à pied", text: "Une course en équipes, dans le sable du manège." },
-      { name: "BMX et vélo de montagne", text: "Des sauts acrobatiques au-dessus d'un coussin gonflable géant." },
+      { name: "BMX et vélo freestyle", text: "Des sauts acrobatiques et démonstrations au-dessus d'un coussin gonflable géant." },
     ],
     figures: [{ img: "act-bmx", alt: "Un cycliste en plein saut au-dessus du coussin gonflable, devant la forêt." }],
   },
@@ -63,7 +65,7 @@ export const chapitres: Chapitre[] = [
     items: [
       { name: "Jeux gonflables", text: "Châteaux et glissades, au milieu de la zone familiale." },
       { name: "Jumpaï", text: "Le trampoline à élastiques. Même la mascotte s'y essaie." },
-      { name: "Théâtre", text: "Une pièce pour les petits et les grands." },
+      { name: "Spectacle", text: "Atchoum le clown en 2027, pour le bonheur des petits et des grands." },
       { name: "Amuseurs publics", text: "Des artistes de rue animent la zone." },
       { name: "Tours de poney", text: "Un premier tour pour les plus jeunes." },
     ],
@@ -80,7 +82,7 @@ export const chapitres: Chapitre[] = [
     intro:
       "Le cœur du festival : une compétition officielle de gymkhana, sanctionnée par le CBSLC, qu'on regarde gratuitement depuis les gradins.",
     items: [
-      { name: "Une centaine de cavaliers", text: "Contre la montre, autour des barils et des piquets." },
+      { name: "150 cavaliers", text: "Contre la montre, autour des barils et des pôles." },
       { name: "Grand Prix barils et sauvetage", text: "Le samedi soir, le moment fort de la fin de semaine." },
       { name: "La relève", text: "Les jeunes cavaliers ont leurs propres classes." },
     ],
@@ -114,10 +116,13 @@ export const chapitres: Chapitre[] = [
         text: "Aux éditions récentes : Les Johnnys, MGM Band et Rock Story (2024) ; Boogie Wonder Band, Blueberry Country Band, Jeffos et Brisson (2025).",
       },
       { name: "DJ Jello Musique", text: "La soirée continue après le spectacle." },
-      { name: "Danse en ligne", text: "Cours et après-midi de danse avec les écoles Pascale Dufour et Nathalie Paquet." },
+      {
+        name: "Danse en ligne",
+        text: "Cours et après-midi de danse avec Pier-Luc et Joanie, l'École A.G, ainsi que les écoles Pascale Dufour et Nathalie Paquet.",
+      },
       {
         name: "Le bar",
-        text: "Le seul endroit pour prendre un verre : l'alcool et le verre apportés ne sont pas permis sur le site.",
+        text: "Des bars sont à votre disposition sous le chapiteau et aux estrades. L'alcool et le verre apportés ne sont pas permis sur le site.",
       },
     ],
     figures: [

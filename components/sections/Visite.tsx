@@ -84,7 +84,6 @@ export default function Visite() {
                 {fr(festival.camping.terms)} Pour information seulement :{" "}
                 <a href={c.info.href}>{c.info.phone}</a>
               </p>
-              <p className="visit__camp-note">Tarif des éditions 2024 et 2025.</p>
             </aside>
           </div>
         </div>

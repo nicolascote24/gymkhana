@@ -1,7 +1,7 @@
 // A small cloverleaf course with its label: "Départ" under the hero,
 // "Arrivée" in the footer. Same pattern as the arena in the Gymkhana section.
 const PATH =
-  "M200 492 L256 310 A34 34 0 1 1 270 327 C 232 352, 172 352, 144 310 A34 34 0 1 0 130 328 C 156 290, 150 190, 166 118 A34 34 0 1 1 214 141 C 212 250, 204 380, 200 492";
+  "M200 492 L256 310 A34 34 0 1 1 270 327 C 232 352, 172 352, 144 310 A34 34 0 1 0 130 328 C 160 280, 240 190, 234 118 A34 34 0 1 0 186 141 C 188 250, 196 380, 200 492";
 
 export default function CourseMark({ label, className }: { label: string; className?: string }) {
   return (

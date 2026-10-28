@@ -9,7 +9,7 @@ import { fr } from "@/lib/typo";
 // The hero already says "compétition, country, famille": the statement keeps
 // only the festival's promise, and the three rows below give the proof.
 const STATEMENT: { t: string; em?: boolean }[] = [
-  { t: "Depuis 2007, Saint-David-de-Falardeau accueille le public et les compétiteurs" },
+  { t: "Depuis 2007, Saint-David-de-Falardeau accueille les visiteurs et les compétiteurs" },
   { t: "comme des membres de la famille.", em: true },
 ];
 
@@ -24,13 +24,13 @@ const CHAPTERS = [
   {
     id: "country",
     title: "Country",
-    text: "Spectacles, soirées DJ et danse en ligne sous le chapiteau, où se trouve le bar.",
+    text: "Spectacles, soirées DJ et danse en ligne sous le chapiteau avec bar.",
     href: "#programmation",
   },
   {
     id: "famille",
     title: "Famille",
-    text: "Zone familiale, spectacle canin, déjeuners au chalet des loisirs et camping sur place.",
+    text: "Zone familiale, vélo freestyle et camping sur place.",
     href: "#activites",
   },
 ];
@@ -63,12 +63,12 @@ export default function EnBref() {
               first sentence names its subject, so it still reads when quoted
               alone by a search engine or an AI answer. */}
           <p className="bref__copy">
-            {fr("Le gymkhana est une discipline équestre western : des courses de chevaux contre la montre, autour de barils et de piquets.")}{" "}
+            {fr("Le gymkhana est une discipline équestre western : des courses de chevaux contre la montre, autour de barils et de pôles.")}{" "}
             <span className="bref__long">
               {fr("Depuis 2007, le festival lui consacre quatre jours en août, à 20 minutes de Chicoutimi.")}{" "}
             </span>
             {fr(
-              "Une centaine de cavaliers s'affrontent dans l'arène, en compétition sanctionnée par le CBSLC ; tout autour, spectacles country, danse en ligne, activités pour les enfants et camping.",
+              "Une centaine de cavaliers s'affrontent dans le manège, dans une compétition sanctionnée par le CBSLC ; tout autour, spectacles country, danse en ligne, activités pour les enfants et camping.",
             )}
             <span className="bref__long">
               {" "}

@@ -1,10 +1,10 @@
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { grandGalop, medias, partenaires } from "@/content/partenaires";
+import { grandGalop } from "@/content/partenaires";
 import { festival } from "@/content/festival";
 import { fr } from "@/lib/typo";
 import images from "@/content/images.json";
 import Picture from "@/components/Picture";
-import PartnerWall from "@/components/sections/PartnerWall";
+// Partenaires majeurs et appel aux nouveaux partenaires
 
 // Major partners by their logo; every other partner as a typographic mark.
 export default function Partenaires() {
@@ -53,18 +53,7 @@ export default function Partenaires() {
             })}
           </ul>
         </div>
-
-        <div className="part__tier part__tier--media" data-reveal>
-          <p className="part__tier-name">Médias</p>
-          <ul className="part__media">
-            {medias.map((p) => (
-              <li key={p}>{p}</li>
-            ))}
-          </ul>
-        </div>
       </div>
-
-      <PartnerWall names={partenaires} />
 
       <div className="wrap part__cta" data-reveal>
         <p>{fr("Votre entreprise veut appuyer le festival ?")}</p>

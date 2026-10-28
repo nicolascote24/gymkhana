@@ -12,23 +12,23 @@ const c = festival.contact;
 export const faq: { q: string; a: string }[] = [
   {
     q: "Qu'est-ce que le gymkhana ?",
-    a: "Le gymkhana est une discipline d'équitation western où le cheval et son cavalier courent contre la montre, autour de barils et de piquets, selon des patrons précis. Au Festival Gymkhana de Falardeau, une centaine de cavaliers disputent dix épreuves, dont la course de barils et la course de sauvetage, sanctionnées par le CBSLC.",
+    a: "Le gymkhana est une discipline d'équitation western où le cheval et son cavalier courent contre la montre, autour de barils et de pôles, selon des patrons précis. Au Festival Gymkhana de Falardeau, 150 cavaliers disputent dix épreuves, dont la course de barils et la course de sauvetage, sanctionnées par le CBSLC.",
   },
   {
     q: "L'entrée au festival est-elle gratuite ?",
-    a: "Oui. L'entrée au Festival Gymkhana de Falardeau est gratuite : le site, la compétition de gymkhana, qu'on regarde depuis les gradins, et les spectacles sous le chapiteau. Seul le camping temporaire est payant, à 40 $ pour la fin de semaine.",
+    a: "Oui. L'entrée au Festival Gymkhana de Falardeau est gratuite : le site, la compétition de gymkhana, qu'on regarde depuis les gradins, et les spectacles sous le chapiteau. Seul le camping temporaire est payant, à 50 $ pour la fin de semaine.",
   },
   {
     q: "Quand a lieu le festival en 2027 ?",
-    a: "Le Festival Gymkhana de Falardeau a lieu en août, pendant quatre jours. Les dates de l'édition 2027 ne sont pas encore annoncées : elles seront publiées sur ce site et sur la page Facebook officielle du festival dès qu'elles seront connues.",
+    a: "Le Festival Gymkhana de Falardeau a lieu du 12 au 15 août 2027, pendant quatre jours, du jeudi au dimanche à Saint-David-de-Falardeau.",
   },
   {
     q: "Où se trouve le festival ?",
-    a: `Le festival se tient à la ${a.venue}, au ${a.street}, à ${a.city} (Québec), au Saguenay–Lac-Saint-Jean, à 20 minutes au nord de Chicoutimi. Le manège de compétition, le chapiteau, le chalet des loisirs et le stationnement sont sur le même site.`,
+    a: `Le festival se tient au ${a.venue}, au ${a.street}, à ${a.city} (Québec), au Saguenay–Lac-Saint-Jean, à 20 minutes au nord de Chicoutimi. Le manège de compétition, le chapiteau, la zone familiale et le stationnement sont sur le même site.`,
   },
   {
     q: "Peut-on camper sur place ?",
-    a: `Oui. Un camping temporaire est installé sur le site du festival : 40 $ pour la fin de semaine, selon le tarif des éditions 2024 et 2025. Il n'y a pas de réservation, c'est premier arrivé, premier servi, sur des terrains sans service. Information : ${c.info.phone}.`,
+    a: `Oui. Un camping temporaire est installé sur le site du festival : 50 $ pour la fin de semaine (4 jours). Il n'y a pas de réservation, c'est premier arrivé, premier servi, sur des terrains sans service. Information : ${c.info.phone}.`,
   },
   {
     q: "Comment s'inscrire aux épreuves de gymkhana ?",

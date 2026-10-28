@@ -101,7 +101,7 @@ export default function Hero() {
               <div className="hero__when" data-hero-in>
                 <p className="hero__date">{festival.edition.label}</p>
                 <p className="hero__days">
-                  {festival.days} jours{festival.edition.datesKnown ? "" : ", dates à venir"}
+                  {festival.days} jours{festival.edition.datesKnown ? `, ${festival.edition.datesLabel}` : ", dates à venir"}
                 </p>
                 <p className="hero__badge">Entrée gratuite</p>
               </div>
@@ -119,7 +119,7 @@ export default function Hero() {
               Festival
             </p>
             <p className="hero__place" data-hero-in>
-              de Saint-David-de-Falardeau
+              de Falardeau
             </p>
           </div>
         </div>

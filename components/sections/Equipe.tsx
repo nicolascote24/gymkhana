@@ -33,7 +33,7 @@ export default function Equipe() {
             <p className="team__story" data-reveal>
               {keepPlaces(
                 fr(
-                  `Le festival est né en ${festival.founded} de la passion de sa fondatrice, rejointe par deux amies. Aujourd'hui, un comité et une soixantaine de bénévoles le font vivre chaque été, avec l'appui de la municipalité et des organismes de Saint-David-de-Falardeau.`,
+                  `Le festival est né en ${festival.founded} de la passion de sa fondatrice, rejointe par deux amies. Aujourd'hui, un comité et près de 100 bénévoles le font vivre chaque été, avec l'appui de la municipalité et des organismes de Saint-David-de-Falardeau.`,
                 ),
               )}
             </p>

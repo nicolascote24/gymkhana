@@ -15,7 +15,7 @@ const BARRELS = [
   { x: 200, y: 110, lx: 0, ly: -46 },
 ];
 const PATH =
-  "M200 492 L256 310 A34 34 0 1 1 270 327 C 232 352, 172 352, 144 310 A34 34 0 1 0 130 328 C 156 290, 150 190, 166 118 A34 34 0 1 1 214 141 C 212 250, 204 380, 200 492";
+  "M200 492 L256 310 A34 34 0 1 1 270 327 C 232 352, 172 352, 144 310 A34 34 0 1 0 130 328 C 160 280, 240 190, 234 118 A34 34 0 1 0 186 141 C 188 250, 196 380, 200 492";
 
 type Step = { title: string; text: string };
 
@@ -98,6 +98,9 @@ export default function GymkhanaScene({ steps, definition }: { steps: Step[]; de
           <Link href="/epreuves-gymkhana/" className="btn gym__more" data-reveal>
             Épreuves et inscription <ArrowRight size={18} weight="bold" aria-hidden />
           </Link>
+          <p className="gym__course-label" data-reveal>
+            La course de barils
+          </p>
           <ol className="gym__steps">
             {steps.map((s, i) => (
               <li key={s.title} className="gym__step" data-active={i === step} data-done={i < step}>

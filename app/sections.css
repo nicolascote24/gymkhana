@@ -784,9 +784,17 @@ html.js [data-reveal="image"].is-in img {
     color: var(--color-nuit);
   }
 }
+.gym__course-label {
+  margin-top: clamp(2rem, 3.5vw, 3rem);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-rouge);
+}
 .gym__steps {
   display: grid;
-  margin-top: clamp(2rem, 4vw, 3.5rem);
+  margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
   border-top: 1px solid color-mix(in srgb, var(--color-sable) 18%, transparent);
 }
 .gym__step {

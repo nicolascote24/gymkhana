@@ -11,21 +11,24 @@ export const festival = {
   region: "Saguenay–Lac-Saint-Jean",
   founded: 2007,
   founder: "Suzie Gauthier",
-  volunteers: 60,
-  competitors: 100,
+  volunteers: 100,
+  competitors: 150,
   days: 4,
-  // PROVISOIRE: dates 2027 non annoncées. Once confirmed, set datesKnown: true
-  // and add startDate / endDate (ISO with offset, "2027-08-05T09:00:00-04:00"):
-  // the Festival and SportsEvent structured data switch on by themselves.
-  edition: { label: `Août${nbsp}2027`, datesKnown: false },
+  edition: {
+    label: `Août${nbsp}2027`,
+    datesKnown: true,
+    datesLabel: `12 au 15 août`,
+    startDate: "2027-08-12T09:00:00-04:00",
+    endDate: "2027-08-15T23:59:59-04:00",
+  },
   slogans: {
     main: `Au triple galop vers Falardeau${nbsp}!`,
     saddle: `En selle vers Falardeau${nbsp}!`,
     meet: `C'est un rendez-vous${nbsp}!`,
   },
-  motto: "Accueillir le public et les compétiteurs comme des membres de la famille.",
+  motto: "Accueillir les visiteurs et les compétiteurs comme des membres de la famille.",
   address: {
-    venue: "Place des Festivals",
+    venue: "Site événementiel",
     street: "51, rue du Chalet",
     city: "Saint-David-de-Falardeau",
     province: "Québec",
@@ -36,12 +39,17 @@ export const festival = {
   },
   contact: {
     info: { label: "Information et camping", phone: "418-540-5700", href: "tel:+14185405700" },
-    kiosks: { label: "Kiosques et exposants", phone: "418-820-6134", href: "tel:+14188206134" },
+    kiosks: {
+      label: "Kiosques et exposants",
+      phone: "418-820-6134",
+      href: "tel:+14188206134",
+      email: "w.harvey@icloud.com",
+    },
     email: "festivalfalardeau@gmail.com",
     facebook: "https://www.facebook.com/FGF2015",
   },
   camping: {
-    price: `40${nbsp}$`,
+    price: `50${nbsp}$`,
     period: "pour la fin de semaine (4 jours)",
     // No reservation is the one thing campers must know: it gets the ticket.
     ticket: "Sans réservation",
@@ -49,7 +57,10 @@ export const festival = {
     terms: "Terrains sans service.",
   },
   rules: [
-    { id: "alcool", text: "N'apportez ni alcool ni bouteilles de verre : le bar est sous le chapiteau." },
+    {
+      id: "alcool",
+      text: "N'apportez ni alcool ni bouteilles de verre : des bars sont à votre disposition sous le chapiteau et aux estrades.",
+    },
     { id: "chiens", text: "Chiens en laisse en tout temps, interdits dans les gradins." },
     { id: "securite", text: "Respect des consignes de sécurité équestre aux abords de l'arène." },
   ],
@@ -57,7 +68,6 @@ export const festival = {
   amenities: [
     { id: "gradins", text: "Manège de compétition avec gradins" },
     { id: "chapiteau", text: "Chapiteau des spectacles et de la danse, avec bar" },
-    { id: "chalet", text: "Chalet des loisirs, où sont servis les déjeuners" },
     { id: "famille", text: "Zone familiale" },
     { id: "stationnement", text: "Stationnement sur place" },
   ],
